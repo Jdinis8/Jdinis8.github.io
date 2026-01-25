@@ -32,11 +32,10 @@ body {
       width: 110px;
       height: 110px; 
       object-fit: cover;
-      border-radius: 50%;
       border: 3px solid #000000;
       display: block;
       margin: 0 auto 20px auto;
-      transform: scale(2);
+      transform: scale(1.4);
     }
 
     .avatar {
@@ -110,4 +109,8 @@ body {
       color: rgba(255, 255, 255, 0.5); /* faded color */
       font-size: 0.85rem;          /* slightly smaller than main text */
       padding-top: 20px;           /* spacing above footer */
+    }
+
+    .sidebar-footer p + img {
+      margin-top: 25px;
     }
