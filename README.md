@@ -1,7 +1,3 @@
-# joaodalvares.github.io
+# Personal page
 
-dor e sofrimento
-
-## O Início da Dor
-
-dor
+Nothing remarkable of notice to say here.
