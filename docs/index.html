@@ -6,13 +6,54 @@
   <style>
     body {
       font-family: Garamond, serif;
-      margin: 40px;
+      margin: 0;
       background-color: #eb8871;
       color: #333;
     }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Left column */
+    .sidebar {
+      width: 220px;
+      background: #fdfdfd;
+      padding: 20px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    }
+
+    .sidebar img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .sidebar nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Main content */
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
     .card {
       background: white;
-      padding: 20px;
+      padding: 30px;
       border-radius: 8px;
       max-width: 600px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -21,18 +62,38 @@
 </head>
 <body>
 
-  <div class="card">
-    <h1>Welcome to my personal page</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-      vehicula, libero nec fermentum varius, justo erat ultrices lorem,
-      at tincidunt sapien nisi non urna.
-    </p>
-    <p>
-      Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-      accusantium doloremque laudantium, totam rem aperiam.
-    </p>
-    <button>Click Me</button>
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <img src="photo.jpg" alt="Photo of João">
+
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Research</a>
+        <a href="#">Publications</a>
+        <a href="#">Contact</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content">
+      <div class="card">
+        <h1>Welcome to my personal page</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
+          vehicula, libero nec fermentum varius, justo erat ultrices lorem,
+          at tincidunt sapien nisi non urna.
+        </p>
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem aperiam.
+        </p>
+        <button>Click Me</button>
+      </div>
+    </main>
+
   </div>
 
 </body>
