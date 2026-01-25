@@ -1,0 +1,113 @@
+body {
+      font-family: Ubuntu;
+      margin: 0;
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Left column */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 170px;
+      background: #000000;
+      padding: 25px;
+      box-shadow: 10px 0 8px rgba(0,0,0,0.1);
+      border-right: 2px solid white;
+      transition: box-shadow 0.3s, border-color 0.3s; /* smooth hover transition */
+    }
+
+      /* Glow effect on hover */
+    .sidebar:hover {
+      border-right-color: #ffcc00; /* optional: reinforce white border */
+      box-shadow: 5px 0 10px rgba(255, 255, 255, 0.6); /* white glow on right */
+    }
+
+    .sidebar img {
+      width: 110px;
+      height: 110px; 
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #000000;
+      display: block;
+      margin: 0 auto 20px auto;
+      transform: scale(2);
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px auto;
+      border: 3px solid white;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.6) translateX(15px) translateY(5px);
+      margin: 0 auto 24px auto;
+    }
+
+    .avatar img:hover{
+      transform: scale(1.7) translateX(15px) translateY(5px);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar nav a {
+      display: block;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border-bottom: 1px solid white;
+      padding-bottom: 8px;
+    }
+
+    /* Remove line after last link */
+    .sidebar nav a:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar nav a:hover {
+      color: #ffcc00;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Main content */
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    nav a.active {
+      color: #ffcc00;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .content div {
+      max-width: 50ch; 
+      margin: 0 auto;  /* centers the column horizontally */
+      line-height: 1.8; /* improves readability */
+      padding: 20px;    /* spacing around the text */
+    }
+
+    .sidebar-footer {
+      margin-top: auto;            /* pushes the footer to the bottom */
+      text-align: center;          /* center the text */
+      color: rgba(255, 255, 255, 0.5); /* faded color */
+      font-size: 0.85rem;          /* slightly smaller than main text */
+      padding-top: 20px;           /* spacing above footer */
+    }
