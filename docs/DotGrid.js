@@ -1,8 +1,9 @@
 export class DotGrid {
-    constructor(spacing, canvas) {
+    constructor(spacing, canvas, maincolor) {
         this.dots = [];
         this.forceActivate = false;
         this.canvas = canvas;
+        this.maincolor = maincolor;
 
         const countX = Math.ceil(canvas.width / spacing);
         const countY = Math.ceil(canvas.height / spacing);
@@ -41,8 +42,8 @@ export class DotGrid {
     draw(ctx) {
         this.dots.forEach(dot => {
             ctx.beginPath();
-            ctx.arc(dot.x, dot.y, 2, 0, Math.PI*2);
-            ctx.fillStyle = "#ff0000";
+            ctx.arc(dot.x, dot.y, 0.7, 0, Math.PI*2);
+            ctx.fillStyle = this.maincolor;
             ctx.fill();
         });
     }

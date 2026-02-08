@@ -7,11 +7,12 @@ const blurOverlay = document.getElementById("blur-overlay");
 
 let behindScene = null;
 let currentScene = null;
+const maincolor = "#6291bd";
 
 function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    behindScene?.onResize();
+    behindScene?.onResize(maincolor);
     currentScene?.onResize();
 }
 
@@ -35,7 +36,7 @@ function replayBlur() {
 currentScene = new IntroScene(canvas, ctx);
 currentScene.init(blurOverlay);
 
-behindScene = new HomeScene(canvas, ctx, mouse);
+behindScene = new HomeScene(canvas, ctx, mouse, maincolor);
 behindScene.init();
 
 let lastTime = 0;
