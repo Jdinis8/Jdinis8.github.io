@@ -24,13 +24,12 @@ export class DiagonalRectangle {
             let maxLength = Math.min(canvas.width, canvas.height) * Math.sqrt(2); // diagonal length of canvas
             if (this.currentLength < maxLength) {
                 this.currentLength += this.speed * dt;
-                if (this.currentLength > 0.8*maxLength) this.rotating = true; // start rotating when 90% of max length is reached
-            } else {
+            } else if (this.currentLength > 0.8*maxLength){ // start rotation a bit before reaching full diagonal to sync with circle animation
                 this.currentLength = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
                 this.rotating = true;
             }
         } else {
-            if (!this.splitting){
+            if (!this.splitting && this.rotating){
                 // smooth interpolation
                 this.angle -= this.rotatespeed * dt;
 
