@@ -29,6 +29,9 @@ function replayBlur() {
 let currentScene = new IntroScene(canvas, ctx);
 currentScene.init(blurOverlay);
 
+let behindScene = new HomeScene(canvas, ctx, mouse);
+behindScene.init();
+
 let lastTime = 0;
 
 // Main loop
@@ -39,17 +42,11 @@ function animate(time) {
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     ctx.save();
+    behindScene?.update(dt);
+    behindScene?.draw(ctx);
     currentScene?.update(dt);
     currentScene?.draw(ctx);
     ctx.restore();
-
-    if (currentScene instanceof IntroScene && currentScene.completed) {
-        console.log("Transitioning to HomeScene");
-        replayBlur();
-        currentScene.destroy();
-        currentScene = new HomeScene(canvas, ctx, mouse);
-        currentScene.init();
-    }
 
     requestAnimationFrame(animate);
 }
