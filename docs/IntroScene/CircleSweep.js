@@ -11,7 +11,7 @@ export class CircleSweep {
 
         this.angle = 0;
         this.fillProgress = 0;
-        this.sweepSpeed = 0.004;
+        this.sweepSpeed = -0.003; //0.004
         this.fillSpeed = 0.001;
         this.completed = false;
         this.clicked = false;
@@ -22,9 +22,9 @@ export class CircleSweep {
     update(dt) {
         if (this.completed) return;
 
-        if (this.angle < Math.PI*2 - this.sweepSpeed*2) {
-            this.angle += (Math.PI*2 - this.angle) * this.sweepSpeed * dt;
-        } else if (this.angle > Math.PI * 2 - this.sweepSpeed*2 && this.angle < Math.PI * 2) {
+        if (Math.abs(this.angle) < Math.PI*2*0.92) {
+            this.angle += (Math.PI*2 - Math.abs(this.angle)) * this.sweepSpeed * dt;
+        } else if (Math.abs(this.angle) > Math.PI * 2 *0.92 && Math.abs(this.angle) < Math.PI * 2) {
             this.angle += this.sweepSpeed * dt;
         } else {
             this.angle = Math.PI*2;
@@ -45,7 +45,7 @@ export class CircleSweep {
         // Pie sweep
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
-        ctx.arc(this.x, this.y, this.currentRadius, -Math.PI/2, this.angle - Math.PI/2);
+        ctx.arc(this.x, this.y, this.currentRadius, this.angle - Math.PI/2, -Math.PI/2);
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill();

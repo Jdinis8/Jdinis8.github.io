@@ -71,11 +71,11 @@ export class IntroScene {
 
     onKeyDown(e) {
         // Prevent page scroll when pressing space
-        if (e.code === "Space" || e.code === "Enter") {
+        if (e.code) {
             e.preventDefault();
 
             if (!this.completed) {
-                this.onButtonClick(); // reuse the same skip logic
+                this.circle.clicked = true;
             }
         }
     }
