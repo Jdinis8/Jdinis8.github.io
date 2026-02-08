@@ -21,23 +21,24 @@ export class DiagonalRectangle {
 
         if(!this.rotating) {
             // increase length until it covers the canvas diagonally
-            const maxLength = Math.min(canvas.width, canvas.height) * Math.sqrt(2); // diagonal length of canvas
+            let maxLength = Math.min(canvas.width, canvas.height) * Math.sqrt(2); // diagonal length of canvas
             if (this.currentLength < maxLength) {
                 this.currentLength += this.speed * dt;
                 if (this.currentLength > 0.8*maxLength) this.rotating = true; // start rotating when 90% of max length is reached
             } else {
-                this.currentLength = maxLength;
+                this.currentLength = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
                 this.rotating = true;
             }
         } else {
+            if (!this.splitting){
+                // smooth interpolation
+                this.angle -= this.rotatespeed * dt;
 
-            // smooth interpolation
-            this.angle -= this.rotatespeed * dt;
-
-            if (Math.abs(this.angle) < 0.01) {
-                this.angle = 0;
-                this.splitting = true;
-                this.circleAttached = true;             
+                if (Math.abs(this.angle) < this.rotatespeed * dt) {
+                    this.angle = 0;
+                    this.splitting = true;
+                    this.circleAttached = true;             
+                }
             }
         }
 
@@ -48,7 +49,6 @@ export class DiagonalRectangle {
             if (this.splitOffset > canvas.height/2 + this.circle.radius + 1) {
                 this.splitting = false;
                 this.completed = true;
-                completed = true; // signal to scene that animation is done
             }
         }
     }

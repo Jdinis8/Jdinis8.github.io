@@ -18,6 +18,13 @@ window.addEventListener("mousemove", e => {
     mouse.y = e.clientY;
 });
 
+function replayBlur() {
+    const blurOverlay = document.createElement("div");
+    blurOverlay.id = "blur-overlay";
+    document.body.appendChild(blurOverlay);
+    console.log(blurOverlay);
+}
+
 // Initialize scene
 let currentScene = new IntroScene(canvas, ctx);
 currentScene.init(blurOverlay);
@@ -31,19 +38,18 @@ function animate(time) {
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
+    ctx.save();
     currentScene?.update(dt);
     currentScene?.draw(ctx);
+    ctx.restore();
 
     if (currentScene instanceof IntroScene && currentScene.completed) {
+        console.log("Transitioning to HomeScene");
+        replayBlur();
         currentScene.destroy();
         currentScene = new HomeScene(canvas, ctx, mouse);
         currentScene.init();
     }
-
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "16px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("Created by João D. Álvares", canvas.width/2, canvas.height - 30);
 
     requestAnimationFrame(animate);
 }
