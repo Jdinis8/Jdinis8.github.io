@@ -88,7 +88,6 @@ export class IntroScene {
                 ctx.fillRect(0,0,canvas.width,canvas.height/2);
                 ctx.fillRect(0,canvas.height/2,canvas.width,canvas.height/2);
             } else {
-                console.log("aqui");
                 ctx.fillStyle = "#000000";
                 ctx.fillRect(0,-this.diagonalRect.splitOffset,canvas.width,canvas.height/2);
                 ctx.fillRect(0,canvas.height/2+this.diagonalRect.splitOffset,canvas.width,canvas.height/2);

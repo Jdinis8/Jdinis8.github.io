@@ -1,7 +1,8 @@
 export class DotGrid {
-    constructor(spacing) {
+    constructor(spacing, canvas) {
         this.dots = [];
         this.forceActivate = false;
+        this.canvas = canvas;
 
         const countX = Math.ceil(canvas.width / spacing);
         const countY = Math.ceil(canvas.height / spacing);

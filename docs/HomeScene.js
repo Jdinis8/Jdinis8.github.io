@@ -10,7 +10,7 @@ export class HomeScene {
     }
 
     init() {
-        this.dotGrid = new DotGrid(30,30);
+        this.dotGrid = new DotGrid(30, this.canvas);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.canvas.addEventListener("mousemove", this.onMouseMove);
     }
@@ -31,5 +31,9 @@ export class HomeScene {
 
     destroy() {
         this.canvas.removeEventListener("mousemove", this.onMouseMove);
+    }
+
+    onResize() {
+        this.dotGrid = new DotGrid(30, this.canvas);
     }
 }

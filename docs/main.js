@@ -5,10 +5,14 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const blurOverlay = document.getElementById("blur-overlay");
 
+let behindScene = null;
+
 function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    behindScene?.onResize();
 }
+
 resize();
 window.addEventListener("resize", resize);
 
@@ -29,7 +33,7 @@ function replayBlur() {
 let currentScene = new IntroScene(canvas, ctx);
 currentScene.init(blurOverlay);
 
-let behindScene = new HomeScene(canvas, ctx, mouse);
+behindScene = new HomeScene(canvas, ctx, mouse);
 behindScene.init();
 
 let lastTime = 0;
