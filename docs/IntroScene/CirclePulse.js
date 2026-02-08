@@ -1,5 +1,5 @@
 export class CirclePulse {
-    constructor(circle, ringCount = 3, maxRadius = 80, speed = 0.02) {
+    constructor(circle, ringCount = 3, maxRadius = 80, speed = 0.04) {
         this.circle = circle; // reference to CircleSweep
         this.ringCount = ringCount;
         this.maxRadius = maxRadius;

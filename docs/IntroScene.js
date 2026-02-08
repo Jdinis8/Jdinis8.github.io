@@ -36,6 +36,18 @@ export class IntroScene {
             blurOverlay.remove();
             this.blur_removed = true;
         });
+
+        // Skip button
+        this.button = document.getElementById("skip-button");
+        this.button.addEventListener("click", this.onButtonClick.bind(this));
+        this.button.classList.add("visible");
+    }
+
+    onButtonClick() {
+        this.completed = true; // signal to main scene that intro is done
+        this.button.removeEventListener("click", this.onButtonClick);
+        this.button.remove();
+        this.button = null;
     }
 
     onMouseMove(e) {
@@ -82,6 +94,7 @@ export class IntroScene {
     }
 
     draw(ctx) {
+
         if (!this.diagonalRect.completed){
             if (!this.diagonalRect.rotating){
                 ctx.fillStyle = "#000000";
@@ -106,5 +119,16 @@ export class IntroScene {
         this.canvas.removeEventListener("mousemove", this.onMouseMove);
         this.canvas.removeEventListener("click", this.onClick);
         this.canvas.style.cursor = "default";
+        if(this.button){
+            this.button.removeEventListener("click", this.onButtonClick);
+            this.button.remove();
+            this.button = null;
+        }
+    }
+
+    onResize() {
+        this.circle.x = canvas.width/2;
+        this.circle.y = canvas.height/2;
+        this.circlePulse.updatePosition(this.circle);
     }
 }

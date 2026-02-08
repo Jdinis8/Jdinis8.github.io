@@ -6,11 +6,13 @@ const ctx = canvas.getContext("2d");
 const blurOverlay = document.getElementById("blur-overlay");
 
 let behindScene = null;
+let currentScene = null;
 
 function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     behindScene?.onResize();
+    currentScene?.onResize();
 }
 
 resize();
@@ -30,7 +32,7 @@ function replayBlur() {
 }
 
 // Initialize scene
-let currentScene = new IntroScene(canvas, ctx);
+currentScene = new IntroScene(canvas, ctx);
 currentScene.init(blurOverlay);
 
 behindScene = new HomeScene(canvas, ctx, mouse);
@@ -48,8 +50,14 @@ function animate(time) {
     ctx.save();
     behindScene?.update(dt);
     behindScene?.draw(ctx);
-    currentScene?.update(dt);
-    currentScene?.draw(ctx);
+    if(currentScene instanceof IntroScene && currentScene.completed){
+        currentScene.destroy();
+        currentScene = null;
+    }
+    if(currentScene instanceof IntroScene && !currentScene.completed){
+        currentScene?.update(dt);
+        currentScene?.draw(ctx);
+    }
     ctx.restore();
 
     requestAnimationFrame(animate);
