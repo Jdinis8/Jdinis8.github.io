@@ -16,6 +16,7 @@ export class IntroScene {
         // bind event handlers
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
 
         // completed flag
         this.completed = false;
@@ -31,6 +32,7 @@ export class IntroScene {
         // attach event listeners
         canvas.addEventListener("mousemove", this.onMouseMove);
         canvas.addEventListener("click", this.onClick);
+        window.addEventListener("keydown", this.onKeyDown);
 
         blurOverlay.addEventListener("animationend", () => {
             blurOverlay.remove();
@@ -65,6 +67,17 @@ export class IntroScene {
             (dist <= this.circle.radius && !this.circle.clicked && this.circle.completed)
                 ? "pointer"
                 : "default";
+    }
+
+    onKeyDown(e) {
+        // Prevent page scroll when pressing space
+        if (e.code === "Space" || e.code === "Enter") {
+            e.preventDefault();
+
+            if (!this.completed) {
+                this.onButtonClick(); // reuse the same skip logic
+            }
+        }
     }
 
     onClick(e) {
@@ -118,6 +131,8 @@ export class IntroScene {
         // remove event listeners
         this.canvas.removeEventListener("mousemove", this.onMouseMove);
         this.canvas.removeEventListener("click", this.onClick);
+        window.removeEventListener("keydown", this.onKeyDown);
+
         this.canvas.style.cursor = "default";
         if(this.button){
             this.button.removeEventListener("click", this.onButtonClick);

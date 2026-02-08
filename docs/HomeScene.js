@@ -27,6 +27,14 @@ export class HomeScene {
 
     draw(ctx) {
         this.dotGrid.draw(ctx);
+
+        ctx.fillStyle = "#ff0000";
+        ctx.fillRect(20, 20, 200, 100);
+        ctx.fillStyle = "#000000";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("Welcome!", 100, 50);
     }
 
     destroy() {
