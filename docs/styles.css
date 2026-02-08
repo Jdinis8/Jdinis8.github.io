@@ -1,0 +1,35 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000000;
+  }
+
+canvas {
+display: block;
+}
+
+/* Blur overlay */
+#blur-overlay {
+position: fixed;
+inset: 0;
+z-index: 10;
+
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+
+background: rgba(0, 0, 0, 0.25);
+
+animation: blurFadeOut 0.5s cubic-bezier(.22,1,.36,1) forwards;
+animation-delay: 0.5s;
+
+pointer-events: none;
+}
+
+@keyframes blurFadeOut {
+to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+}
+}
