@@ -2,7 +2,6 @@
 import { CircleSweep } from './IntroScene/CircleSweep.js'
 import { CirclePulse } from './IntroScene/CirclePulse.js';
 import { DiagonalRectangle } from './IntroScene/DiagonalRectangle.js'
-
 export class IntroScene {
     constructor(canvas, ctx) {
         this.canvas = canvas;
