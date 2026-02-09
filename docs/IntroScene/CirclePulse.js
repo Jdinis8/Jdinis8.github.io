@@ -85,7 +85,7 @@ export class CirclePulse {
             ctx.fillStyle = `rgba(255,255,255,${this.textAlpha})`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.font = "bold 11px 'Courier New', monospace";
+            ctx.font = "bold 13px 'Courier New', monospace";
             ctx.fillText(this.texts[this.currentTextIndex].content, this.circle.x, this.circle.y - this.circle.radius - 50);
         }
     }
