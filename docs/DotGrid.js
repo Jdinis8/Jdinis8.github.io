@@ -203,7 +203,7 @@ export class DotGrid {
                 (0.4 + dot.flash * 0.6);
 
             const radius =
-                0.5 * p.scale * (2 + dot.flash * 1.5);
+                0.5 * p.scale * (3 + dot.flash * 1.5);
 
             const baseTint = 0.4; // 6% accent tint
             const depthTint = baseTint * p.scale;
