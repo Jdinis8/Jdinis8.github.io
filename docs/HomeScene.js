@@ -1,92 +1,87 @@
 // HomeScene.js
-import { DotGrid } from './DotGrid.js';
+import { DotGrid } from "./DotGrid.js";
 
 export class HomeScene {
-    constructor(canvas, ctx, mouse, maincolor) {
+    constructor(canvas, ctx, mouse) {
         this.canvas = canvas;
         this.ctx = ctx;
         this.mouse = mouse;
-        this.maincolor = maincolor;
-        this.dotGrid = null;
+
+        this.layers = [];
+
+        this.scroll = 0;
+        this.scrollTarget = 0;
     }
 
     init() {
-        this.dotGrid = new DotGrid(30, this.canvas, this.maincolor);
+        this.layers = [
+            new DotGrid({
+                spacing: 20,
+                canvas: this.canvas,
+                depth: -250,
+                opacity: 0.15,
+                rotationStrength: 0.3
+            }),
+            new DotGrid({
+                spacing: 26,
+                canvas: this.canvas,
+                depth: 0,
+                opacity: 0.4,
+                rotationStrength: 0.6
+            }),
+            new DotGrid({
+                spacing: 34,
+                canvas: this.canvas,
+                depth: 250,
+                opacity: 0.8,
+                rotationStrength: 1.0
+            })
+        ];
+
         this.onMouseMove = this.onMouseMove.bind(this);
+        this.onScroll = this.onScroll.bind(this);
+
         this.canvas.addEventListener("mousemove", this.onMouseMove);
+        window.addEventListener("scroll", this.onScroll);
     }
 
     onMouseMove(e) {
         const rect = this.canvas.getBoundingClientRect();
-        this.mouse.x = e.clientX - rect.left;
-        this.mouse.y = e.clientY - rect.top;
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        this.mouse.vx = x - (this.mouse.x ?? x);
+        this.mouse.vy = y - (this.mouse.y ?? y);
+
+        this.mouse.x = x;
+        this.mouse.y = y;
+    }
+
+    onScroll() {
+        this.scrollTarget = window.scrollY;
     }
 
     update(dt) {
-        this.dotGrid.update(dt, this.mouse);
+        this.scroll += (this.scrollTarget - this.scroll) * 0.05;
+
+        this.layers.forEach((layer, i) => {
+            layer.scrollRotation = this.scroll * 0.00002 * (i + 1);
+            layer.update(dt, this.mouse);
+        });
     }
 
     draw(ctx) {
-        this.dotGrid.draw(ctx);
-
-        this.Topics(ctx);
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.layers.forEach(layer => layer.draw(ctx, this.mouse));
     }
 
     destroy() {
         this.canvas.removeEventListener("mousemove", this.onMouseMove);
+        window.removeEventListener("scroll", this.onScroll);
     }
 
-    onResize(maincolor) {
-        this.dotGrid = new DotGrid(30, this.canvas, maincolor);
-    }
-
-Topics(ctx) {
-    const rectangles = [
-        { text: "GRAVITY", width: 700 },
-        { text: "DESIGN", width: 640 },
-        { text: "HISTORY", width: 710 }
-    ];
-
-    let rectX = -20;
-    let rectY = 20;
-    const rectHeight = 200;
-    const spacing = 20;
-
-    rectangles.forEach(rect => {
-        const rectWidth = rect.width;
-
-        // Check if mouse is inside rectangle
-        let hovered = this.mouse.x >= rectX &&
-                      this.mouse.x <= rectX + rectWidth &&
-                      this.mouse.y >= rectY &&
-                      this.mouse.y <= rectY + rectHeight;
-
-        // Calculate hover offset
-        const offset = hovered ? 10 : 0; // 10px shift when hovered
-
-        // Draw rectangle with hover offset
-        ctx.fillStyle = this.maincolor;
-        ctx.fillRect(rectX, rectY, rectWidth + offset, rectHeight);
-
-        // Save state and clip
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(rectX, rectY, rectWidth + offset, rectHeight);
-        ctx.clip();
-
-        // Draw centered text
-        ctx.fillStyle = "#000000";
-        ctx.font = "140px 'Raleway', sans-serif";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        const textX = rectX + rectWidth / 2 + offset;
-        const textY = rectY + rectHeight / 2;
-        ctx.fillText(rect.text, textX, textY);
-
-        ctx.restore();
-
-        // Move rectY down for next rectangle
-        rectY += rectHeight + spacing;
-        });
+    onResize() {
+        this.layers.forEach(layer => layer.onResize());
     }
 }

@@ -39,20 +39,22 @@ display: block;
     bottom: 20px;
     right: 20px;
 
-    z-index: 5; /* higher than canvas and blur */
+    z-index: 9999; /* ensure it's above the blur overlay */
+    opacity: 0;
+    pointer-events: none;
 
     padding: 10px 16px;
     font-family: monospace;
     font-size: 14px;
 
-    cursor: pointer;
     background: black;
     color: white;
     border: 1px solid white;
+    transition: opacity 240ms ease;
     cursor: pointer;
 }
 
-
+/* Visible state */
 #skip-button.visible {
     opacity: 1;
     pointer-events: auto;

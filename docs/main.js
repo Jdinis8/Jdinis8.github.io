@@ -50,6 +50,31 @@ function animate(time) {
 
     ctx.save();
     behindScene?.update(dt);
+
+    // --- Gravity attraction logic
+    const gravitySection = document.getElementById('gravity');
+    if (gravitySection) {
+        const rect = gravitySection.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        behindScene.layers.forEach(layer => {
+            layer.dots.forEach(dot => {
+                const dx = centerX - (dot.x + canvas.width/2);
+                const dy = centerY - (dot.y + canvas.height/2);
+                const dist = Math.hypot(dx, dy);
+
+                const influenceRadius = 300;
+                if (dist < influenceRadius) {
+                    const force = (1 - dist / influenceRadius) * 0.05;
+                    dot.vx += dx / dist * force;
+                    dot.vy += dy / dist * force;
+                }
+            });
+        });
+    }
+
+behindScene?.draw(ctx);
     behindScene?.draw(ctx);
     if(currentScene instanceof IntroScene && currentScene.completed){
         currentScene.destroy();

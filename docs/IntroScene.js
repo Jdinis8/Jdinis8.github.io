@@ -1,55 +1,98 @@
 // IntroScene.js
-import { CircleSweep } from './IntroScene/CircleSweep.js'
+import { CircleSweep } from './IntroScene/CircleSweep.js';
 import { CirclePulse } from './IntroScene/CirclePulse.js';
-import { DiagonalRectangle } from './IntroScene/DiagonalRectangle.js'
+import { DiagonalRectangle } from './IntroScene/DiagonalRectangle.js';
+
 export class IntroScene {
-    constructor(canvas, ctx) {
+    /**
+     * @param {HTMLCanvasElement} canvas
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {(done:boolean)=>void} onComplete - callback called when intro finishes
+     */
+    constructor(canvas, ctx, onComplete = () => {}) {
         this.canvas = canvas;
         this.ctx = ctx;
+        this.onComplete = onComplete;
 
         this.circle = null;
         this.circlePulse = null;
         this.diagonalRect = null;
 
-        this.blur_removed = false;
+        this.blurRemoved = false;
+        this.completed = false;
 
-        // bind event handlers
+        // event handler singletons
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
 
-        // completed flag
-        this.completed = false;
+        // button handler reference (so removeEventListener works)
+        this.boundOnButtonClick = null;
+        this.button = null;
     }
 
+    /**
+     * Initialize the intro. Pass the blur overlay element (so we can wait for animationend)
+     * and optionally call site-wide setup here.
+     */
     init(blurOverlay) {
         const canvas = this.canvas;
 
-        this.circle = new CircleSweep(canvas.width/2, canvas.height/2, 50, "#ffffff", "DDD");
+        this.circle = new CircleSweep(canvas.width / 2, canvas.height / 2, 50, "#ffffff", "DDD");
         this.circlePulse = new CirclePulse(this.circle);
         this.diagonalRect = new DiagonalRectangle(this.circle, 5, 5);
 
-        // attach event listeners
+        // Canvas / window listeners
         canvas.addEventListener("mousemove", this.onMouseMove);
         canvas.addEventListener("click", this.onClick);
         window.addEventListener("keydown", this.onKeyDown);
 
-        blurOverlay.addEventListener("animationend", () => {
-            blurOverlay.remove();
-            this.blur_removed = true;
-        });
+        // Wait for blur overlay animation to finish, then remove it and enable intro
+        if (blurOverlay) {
+            const onAnimEnd = () => {
+                blurOverlay.removeEventListener("animationend", onAnimEnd);
+                if (blurOverlay.parentElement) blurOverlay.remove();
+                this.blurRemoved = true;
+            };
+            blurOverlay.addEventListener("animationend", onAnimEnd);
+        } else {
+            // If overlay isn't provided, enable immediately
+            this.blurRemoved = true;
+        }
 
-        // Skip button
+        // Setup skip button and handler (store bound reference)
         this.button = document.getElementById("skip-button");
-        this.button.addEventListener("click", this.onButtonClick.bind(this));
-        this.button.classList.add("visible");
+        if (this.button) {
+            this.boundOnButtonClick = this.onButtonClick.bind(this);
+            this.button.addEventListener("click", this.boundOnButtonClick);
+            // show button
+            this.button.classList.add("visible");
+        }
     }
 
-    onButtonClick() {
-        this.completed = true; // signal to main scene that intro is done
-        this.button.removeEventListener("click", this.onButtonClick);
-        this.button.remove();
-        this.button = null;
+    onButtonClick(e) {
+        // mark completed and call callback immediately
+        this.completed = true;
+
+        // safeguard: remove listener/DOM entry right away
+        if (this.button && this.boundOnButtonClick) {
+            try {
+                this.button.removeEventListener("click", this.boundOnButtonClick);
+            } catch (err) { /* ignore */ }
+            // hide instead of immediate remove to avoid race conditions with CSS/overlay
+            this.button.classList.remove("visible");
+            // remove after short delay so UI can update
+            setTimeout(() => {
+                if (this.button && this.button.parentElement) {
+                    this.button.remove();
+                }
+                this.button = null;
+                this.boundOnButtonClick = null;
+            }, 60);
+        }
+
+        // Notify the app immediately
+        try { this.onComplete(true); } catch (err) { /* noop */ }
     }
 
     onMouseMove(e) {
@@ -57,9 +100,10 @@ export class IntroScene {
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
 
+        if (!this.circle) return;
         const dx = mouseX - this.circle.x;
         const dy = mouseY - this.circle.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
+        const dist = Math.hypot(dx, dy);
 
         this.circle.hovered = dist <= this.circle.radius && this.circle.completed;
 
@@ -70,11 +114,10 @@ export class IntroScene {
     }
 
     onKeyDown(e) {
-        // Prevent page scroll when pressing space
-        if (e.code) {
+        // Prevent page scroll on space etc
+        if (e && e.code) {
             e.preventDefault();
-
-            if (!this.completed) {
+            if (!this.completed && this.circle) {
                 this.circle.clicked = true;
             }
         }
@@ -85,9 +128,10 @@ export class IntroScene {
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
 
+        if (!this.circle) return;
         const dx = mouseX - this.circle.x;
         const dy = mouseY - this.circle.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
+        const dist = Math.hypot(dx, dy);
 
         if (dist <= this.circle.radius && this.circle.completed) {
             this.circle.clicked = true;
@@ -95,55 +139,65 @@ export class IntroScene {
     }
 
     update(dt) {
-        if (!this.blur_removed) return;
+        if (!this.blurRemoved) return;
 
-        this.diagonalRect.update(dt);
-        this.circle.update(dt);
-        this.circlePulse.update(dt);
+        if (this.diagonalRect) this.diagonalRect.update(dt);
+        if (this.circle) this.circle.update(dt);
+        if (this.circlePulse) this.circlePulse.update(dt);
 
-        if(this.diagonalRect.completed) {
-            this.completed = true; // signal to main scene that intro is done
+        if (this.diagonalRect && this.diagonalRect.completed) {
+            // mark complete and notify main
+            this.completed = true;
+            try { this.onComplete(true); } catch (err) { /* noop */ }
         }
     }
 
     draw(ctx) {
+        const canvas = this.canvas;
 
-        if (!this.diagonalRect.completed){
-            if (!this.diagonalRect.rotating){
-                ctx.fillStyle = "#000000";
-                ctx.fillRect(0,0,canvas.width,canvas.height/2);
-                ctx.fillRect(0,canvas.height/2,canvas.width,canvas.height/2);
+        if (this.diagonalRect && !this.diagonalRect.completed) {
+            ctx.fillStyle = "#000000";
+            if (!this.diagonalRect.rotating) {
+                ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
+                ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
             } else {
-                ctx.fillStyle = "#000000";
-                ctx.fillRect(0,-this.diagonalRect.splitOffset,canvas.width,canvas.height/2);
-                ctx.fillRect(0,canvas.height/2+this.diagonalRect.splitOffset,canvas.width,canvas.height/2);
+                ctx.fillRect(0, -this.diagonalRect.splitOffset, canvas.width, canvas.height / 2);
+                ctx.fillRect(0, canvas.height / 2 + this.diagonalRect.splitOffset, canvas.width, canvas.height / 2);
             }
         }
 
-        if (!this.blur_removed) return;
+        if (!this.blurRemoved) return;
 
-        this.diagonalRect.draw(ctx);
-        this.circle.draw(ctx);
-        this.circlePulse.draw(ctx);
+        if (this.diagonalRect) this.diagonalRect.draw(ctx);
+        if (this.circle) this.circle.draw(ctx);
+        if (this.circlePulse) this.circlePulse.draw(ctx);
     }
 
     destroy() {
         // remove event listeners
-        this.canvas.removeEventListener("mousemove", this.onMouseMove);
-        this.canvas.removeEventListener("click", this.onClick);
+        if (this.canvas) {
+            this.canvas.removeEventListener("mousemove", this.onMouseMove);
+            this.canvas.removeEventListener("click", this.onClick);
+        }
         window.removeEventListener("keydown", this.onKeyDown);
 
         this.canvas.style.cursor = "default";
-        if(this.button){
-            this.button.removeEventListener("click", this.onButtonClick);
-            this.button.remove();
+
+        // remove skip button safely
+        if (this.button && this.boundOnButtonClick) {
+            try {
+                this.button.removeEventListener("click", this.boundOnButtonClick);
+            } catch (err) { /* ignore */ }
+            if (this.button.parentElement) this.button.remove();
             this.button = null;
+            this.boundOnButtonClick = null;
         }
     }
 
     onResize() {
-        this.circle.x = canvas.width/2;
-        this.circle.y = canvas.height/2;
-        this.circlePulse.updatePosition(this.circle);
+        if (this.circle) {
+            this.circle.x = this.canvas.width / 2;
+            this.circle.y = this.canvas.height / 2;
+        }
     }
 }
