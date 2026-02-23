@@ -115,13 +115,17 @@ export class UIOverlay {
     drawSections(ctx) {
         ctx.font = "12px 'Courier New', monospace";
         ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
 
         const radius = 360;
+        let hoveringAny = false;
 
         this.sections.forEach(section => {
+            // base position relative to translated origin (center)
             const x = Math.cos(section.angle) * radius;
             const y = Math.sin(section.angle) * radius;
 
+            // angle between center -> mouse and center -> this section
             const mouseAngle = Math.atan2(
                 this.mouse.y - this.center.y,
                 this.mouse.x - this.center.x
@@ -131,13 +135,51 @@ export class UIOverlay {
             while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
             while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
 
+            // raw hover strength based on angular proximity (0..1)
             const hoverStrength = Math.max(0, 1 - Math.abs(angleDiff) / 0.6);
 
-            ctx.fillStyle = `rgba(255,255,255,${
-                (0.2 + hoverStrength * 0.5) * this.fade
-            })`;
+            // smooth the hover value for animation
+            section.hover = section.hover || 0;
+            section.hover += (hoverStrength - section.hover) * 0.12;
 
-            ctx.fillText(section.label, x, y);
+            // decide if we consider it hovered enough to show pointer / underline
+            const isEffectivelyHovered = section.hover > 0.22;
+            if (section.hover > 0.02) hoveringAny = true;
+
+            // outward shift (calm)
+            const shift = section.hover * 6;
+            const drawX = Math.cos(section.angle) * (radius + shift);
+            const drawY = Math.sin(section.angle) * (radius + shift);
+
+            // prepare glow when hovered
+            if (section.hover > 0.01) {
+                ctx.save();
+                ctx.shadowBlur = 20 * section.hover;
+                ctx.shadowColor = `rgba(255,255,255,${0.22 * section.hover})`;
+            }
+
+            ctx.fillStyle = `rgba(255,255,255,${(0.2 + section.hover * 0.6) * this.fade})`;
+            ctx.fillText(section.label, drawX, drawY);
+
+            if (section.hover > 0.01) ctx.restore();
+
+            // draw underline softly when hovered
+            if (isEffectivelyHovered) {
+                const textWidth = ctx.measureText(section.label).width;
+                ctx.beginPath();
+                ctx.moveTo(drawX - textWidth / 2, drawY + 12);
+                ctx.lineTo(drawX + textWidth / 2, drawY + 12);
+                ctx.strokeStyle = `rgba(255,255,255,${0.65 * section.hover * this.fade})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+
+            // expose active state for click handlers
+            // you can tune the threshold (0.5) if you want more/less strictness
+            section.isActive = section.hover > 0.5;
         });
+
+        // update cursor (pointer when any section has visible hover)
+        this.canvas.style.cursor = hoveringAny ? "pointer" : "default";
     }
 }
