@@ -1,6 +1,6 @@
 // HomeScene.js
 import { DotGrid } from "./DotGrid.js";
-
+import { UIOverlay } from "./UIOverlay.js"
 export class HomeScene {
     constructor(canvas, ctx, mouse) {
         this.canvas = canvas;
@@ -11,31 +11,32 @@ export class HomeScene {
 
         this.scroll = 0;
         this.scrollTarget = 0;
+
+        this.ui = new UIOverlay(canvas);
+
+        window.addEventListener("resize", () => {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.ui.resize();
+    });
     }
 
     init() {
         this.layers = [
             new DotGrid({
-                spacing: 20,
+                spacing: 25,
                 canvas: this.canvas,
                 depth: -250,
-                opacity: 0.15,
-                rotationStrength: 0.3
+                opacity: 0.1,
+                rotationStrength: 0.001
             }),
             new DotGrid({
-                spacing: 26,
+                spacing: 30,
                 canvas: this.canvas,
                 depth: 0,
-                opacity: 0.4,
-                rotationStrength: 0.6
+                opacity: 0.3,
+                rotationStrength: 0.01
             }),
-            new DotGrid({
-                spacing: 34,
-                canvas: this.canvas,
-                depth: 250,
-                opacity: 0.8,
-                rotationStrength: 1.0
-            })
         ];
 
         this.onMouseMove = this.onMouseMove.bind(this);
@@ -74,6 +75,10 @@ export class HomeScene {
     draw(ctx) {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.layers.forEach(layer => layer.draw(ctx, this.mouse));
+        
+        // update & draw UI overlay
+        this.ui.update(this.mouse);
+        this.ui.draw(ctx);
     }
 
     destroy() {

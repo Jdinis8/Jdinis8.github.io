@@ -5,7 +5,7 @@ export class DotGrid {
         canvas,
         depth = 0,
         opacity = 1,
-        rotationStrength = 1
+        rotationStrength = 0.1
     }) {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
