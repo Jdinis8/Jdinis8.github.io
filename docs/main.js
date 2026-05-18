@@ -1,9 +1,9 @@
-import { IntroScene } from './IntroScene.js';
 import { HomeScene } from './HomeScene.js';
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const blurOverlay = document.getElementById("blur-overlay");
+const skipButton = document.getElementById("skip-button");
 
 let behindScene = null;
 let currentScene = null;
@@ -32,13 +32,11 @@ function replayBlur() {
     console.log(blurOverlay);
 }
 
-// Initialize scene
-currentScene = new IntroScene(canvas, ctx);
-currentScene.init(blurOverlay);
-
 behindScene = new HomeScene(canvas, ctx, mouse, maincolor);
 behindScene.init();
 
+resize();
+window.addEventListener("resize", resize);
 let lastTime = 0;
 
 // Main loop
@@ -76,14 +74,6 @@ function animate(time) {
 
 behindScene?.draw(ctx);
     behindScene?.draw(ctx);
-    if(currentScene instanceof IntroScene && currentScene.completed){
-        currentScene.destroy();
-        currentScene = null;
-    }
-    if(currentScene instanceof IntroScene && !currentScene.completed){
-        currentScene?.update(dt);
-        currentScene?.draw(ctx);
-    }
     ctx.restore();
 
     requestAnimationFrame(animate);

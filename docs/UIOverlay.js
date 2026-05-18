@@ -11,12 +11,14 @@ export class UIOverlay {
         this.rotation = 0;
 
         this.sections = [
-            { label: "Research", angle: -Math.PI * 0.75 },
-            { label: "Design", angle: 0 },
-            { label: "History", angle: Math.PI * 0.75 }
+            { label: "Research", angle: -Math.PI * 0.75, url: "research.html" },
+            { label: "Design", angle: 0, url: "design.html" },
+            { label: "History", angle: Math.PI * 0.75, url: "history.html" }
         ];
 
         this.mouse = { x: this.center.x, y: this.center.y };
+
+        this.setupClickHandler();
     }
 
     resize() {
@@ -182,4 +184,16 @@ export class UIOverlay {
         // update cursor (pointer when any section has visible hover)
         this.canvas.style.cursor = hoveringAny ? "pointer" : "default";
     }
+
+    setupClickHandler() {
+    this.canvas.addEventListener('click', () => {
+        // Find if the user is currently hovering/interacting with a section
+        const activeSection = this.sections.find(section => section.isActive);
+        
+        if (activeSection && activeSection.url) {
+            // Smoothly redirect to the page
+            window.location.href = activeSection.url;
+        }
+    });
+}
 }
