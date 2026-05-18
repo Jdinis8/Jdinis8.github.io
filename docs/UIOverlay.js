@@ -115,7 +115,7 @@ export class UIOverlay {
     }
 
     drawSections(ctx) {
-        ctx.font = "12px 'Courier New', monospace";
+        ctx.font = "13px 'Courier New', monospace";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
@@ -138,7 +138,7 @@ export class UIOverlay {
             while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
 
             // raw hover strength based on angular proximity (0..1)
-            const hoverStrength = Math.max(0, 1 - Math.abs(angleDiff) / 0.6);
+            const hoverStrength = Math.max(0, 1 - Math.abs(angleDiff) / 0.2);
 
             // smooth the hover value for animation
             section.hover = section.hover || 0;
@@ -177,7 +177,7 @@ export class UIOverlay {
             }
 
             // expose active state for click handlers
-            // you can tune the threshold (0.5) if you want more/less strictness
+            // tune the threshold (0.5) if you want more/less strictness
             section.isActive = section.hover > 0.5;
         });
 

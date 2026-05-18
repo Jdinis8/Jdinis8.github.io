@@ -24,17 +24,17 @@ export class HomeScene {
     init() {
         this.layers = [
             new DotGrid({
-                spacing: 25,
+                spacing: 30,
                 canvas: this.canvas,
                 depth: -250,
                 opacity: 0.1,
                 rotationStrength: 0.001
             }),
             new DotGrid({
-                spacing: 30,
+                spacing: 35,
                 canvas: this.canvas,
                 depth: 0,
-                opacity: 0.3,
+                opacity: 0.5,
                 rotationStrength: 0.01
             }),
         ];
