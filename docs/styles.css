@@ -8,17 +8,44 @@
     box-sizing: border-box;
 }
 
+/* --------------------------------------------------
+   Screen-reader-only content
+-------------------------------------------------- */
+
+.sr-only {
+    position: absolute !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    padding: 0 !important;
+    margin: -1px !important;
+
+    overflow: hidden !important;
+
+    clip: rect(0, 0, 0, 0) !important;
+    clip-path: inset(50%) !important;
+
+    white-space: nowrap !important;
+
+    border: 0 !important;
+}
+
 html,
 body {
     width: 100%;
     min-height: 100%;
+
     margin: 0;
     padding: 0;
 
     overflow: hidden;
     overscroll-behavior: none;
 
-    background: #000000;
+    background: var(--page-background);
+
+    transition:
+        background-color 300ms ease;
 }
 
 body {
@@ -26,16 +53,15 @@ body {
     inset: 0;
 
     width: 100%;
+
     min-height: 100vh;
     min-height: 100dvh;
 
     font-family: monospace;
 
-    /* Prevent accidental text selection on the canvas page. */
     user-select: none;
     -webkit-user-select: none;
 
-    /* Prevent the blue tap highlight on mobile browsers. */
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -53,18 +79,17 @@ body {
     width: 100%;
     height: 100%;
 
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    background: transparent;
 
-    background: #000000;
-
-    /*
-       Allows pointer events from mice, touchscreens,
-       trackpads, and styluses without browser scrolling.
-    */
     touch-action: none;
 }
+
+/*
+   Do not invert the canvas with CSS.
+
+   UIOverlay.js and DotGrid.js should select the correct
+   drawing color according to the active theme.
+*/
 
 
 /* --------------------------------------------------
@@ -83,31 +108,36 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
-    background: rgba(0, 0, 0, 0.25);
+    background: var(--blur-background);
 
     opacity: 1;
 
-    animation: blurFadeOut 0.7s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation:
+        blurFadeOut
+        0.7s
+        cubic-bezier(.22, 1, .36, 1)
+        forwards;
+
     animation-delay: 0.7s;
 
     pointer-events: none;
 
-    /*
-       Helps some browsers render the blur animation
-       more smoothly.
-    */
-    will-change: opacity, backdrop-filter;
+    will-change:
+        opacity,
+        backdrop-filter;
 }
 
 @keyframes blurFadeOut {
     from {
         opacity: 1;
+
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
     }
 
     to {
         opacity: 0;
+
         backdrop-filter: blur(0);
         -webkit-backdrop-filter: blur(0);
     }
@@ -121,12 +151,17 @@ body {
 #skip-button {
     position: fixed;
 
-    /*
-       The env() values provide additional spacing on
-       phones with notches or rounded screen edges.
-    */
-    right: max(20px, env(safe-area-inset-right));
-    bottom: max(20px, env(safe-area-inset-bottom));
+    right:
+        max(
+            20px,
+            env(safe-area-inset-right)
+        );
+
+    bottom:
+        max(
+            20px,
+            env(safe-area-inset-bottom)
+        );
 
     z-index: 9999;
 
@@ -135,13 +170,22 @@ body {
 
     padding: 10px 16px;
 
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    border:
+        1px solid
+        var(--control-border);
+
     border-radius: 0;
 
-    background: rgba(0, 0, 0, 0.75);
-    color: #ffffff;
+    background:
+        var(--control-background);
 
-    font-family: monospace;
+    color:
+        var(--control-text);
+
+    font-family:
+        "Courier New",
+        monospace;
+
     font-size: 14px;
     line-height: 1;
     letter-spacing: 0.04em;
@@ -163,27 +207,159 @@ body {
         border-color 180ms ease;
 }
 
-
-/* Visible state */
-
 #skip-button.visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
 
-
-/* Mouse and keyboard interaction */
-
 #skip-button:hover {
-    background: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
+    background:
+        var(--control-hover-background);
+
+    color:
+        var(--control-hover-text);
+
+    border-color:
+        var(--control-hover-border);
 }
 
 #skip-button:focus-visible {
-    outline: 2px solid #ffffff;
+    outline:
+        2px solid
+        var(--page-foreground);
+
     outline-offset: 4px;
+}
+
+
+/* --------------------------------------------------
+   Theme toggle
+-------------------------------------------------- */
+
+#theme-toggle {
+    position: fixed;
+
+    top:
+        max(
+            20px,
+            env(safe-area-inset-top)
+        );
+
+    right:
+        max(
+            20px,
+            env(safe-area-inset-right)
+        );
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-height: 40px;
+    padding: 7px 11px;
+
+    border:
+        1px solid
+        var(--control-border);
+
+    border-radius: 999px;
+
+    background:
+        var(--control-background);
+
+    color:
+        var(--control-text);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transition:
+        color 200ms ease,
+        background-color 200ms ease,
+        border-color 200ms ease,
+        opacity 200ms ease;
+}
+
+#theme-toggle:hover {
+    color:
+        var(--page-foreground);
+
+    border-color:
+        var(--page-foreground);
+}
+
+#theme-toggle:focus-visible {
+    outline:
+        1px solid
+        var(--page-foreground);
+
+    outline-offset: 4px;
+}
+
+
+/* Theme-toggle track */
+
+.theme-toggle-track {
+    position: relative;
+
+    display: block;
+
+    flex: 0 0 auto;
+
+    width: 30px;
+    height: 16px;
+
+    border:
+        1px solid
+        var(--control-border);
+
+    border-radius: 999px;
+
+    transition:
+        border-color 200ms ease;
+}
+
+
+/* Theme-toggle movable knob */
+
+.theme-toggle-knob {
+    position: absolute;
+
+    top: 2px;
+    left: 2px;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background:
+        var(--page-foreground);
+
+    transition:
+        transform 250ms
+            cubic-bezier(.22, 1, .36, 1),
+        background-color 200ms ease;
+}
+
+html[data-theme="light"]
+.theme-toggle-knob {
+    transform:
+        translateX(14px);
 }
 
 
@@ -193,25 +369,82 @@ body {
 
 @media (max-width: 600px) {
     #skip-button {
-        right: max(14px, env(safe-area-inset-right));
-        bottom: max(14px, env(safe-area-inset-bottom));
+        right:
+            max(
+                14px,
+                env(safe-area-inset-right)
+            );
+
+        bottom:
+            max(
+                14px,
+                env(safe-area-inset-bottom)
+            );
 
         padding: 9px 13px;
         font-size: 12px;
     }
+
+    #theme-toggle {
+        top:
+            max(
+                14px,
+                env(safe-area-inset-top)
+            );
+
+        right:
+            max(
+                14px,
+                env(safe-area-inset-right)
+            );
+
+        padding: 7px 9px;
+        font-size: 10px;
+    }
 }
 
 
-/* Very short screens, including phone landscape */
+/* --------------------------------------------------
+   Very short screens / phone landscape
+-------------------------------------------------- */
 
 @media (max-height: 500px) {
     #skip-button {
-        right: max(12px, env(safe-area-inset-right));
-        bottom: max(12px, env(safe-area-inset-bottom));
+        right:
+            max(
+                12px,
+                env(safe-area-inset-right)
+            );
+
+        bottom:
+            max(
+                12px,
+                env(safe-area-inset-bottom)
+            );
 
         min-height: 38px;
+
         padding: 7px 12px;
         font-size: 12px;
+    }
+
+    #theme-toggle {
+        top:
+            max(
+                12px,
+                env(safe-area-inset-top)
+            );
+
+        right:
+            max(
+                12px,
+                env(safe-area-inset-right)
+            );
+
+        min-height: 36px;
+
+        padding: 6px 9px;
+        font-size: 10px;
     }
 }
 
@@ -221,12 +454,17 @@ body {
 -------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+    html,
+    body,
+    #skip-button,
+    #theme-toggle,
+    .theme-toggle-track,
+    .theme-toggle-knob {
+        transition: none;
+    }
+
     #blur-overlay {
         animation-duration: 0.01ms;
         animation-delay: 0ms;
-    }
-
-    #skip-button {
-        transition: none;
     }
 }

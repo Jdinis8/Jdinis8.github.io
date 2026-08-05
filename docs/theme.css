@@ -1,0 +1,103 @@
+/* --------------------------------------------------
+   Shared website theme
+-------------------------------------------------- */
+
+:root {
+    --page-background: #ffffff;
+    --page-text: #333333;
+
+    --heading-color: #111111;
+
+    --link-color: #242424;
+    --strong-link-color: #111111;
+    --hover-color: #795c5c;
+
+    --muted-text: #666666;
+    --subtle-text: #777777;
+    --faint-text: #888888;
+
+    --border-color: #dddddd;
+    --strong-border-color: #cccccc;
+    --blockquote-border: #aaaaaa;
+
+    color-scheme: light;
+
+    --page-foreground: #000000;
+
+    --blur-background: rgba(255, 255, 255, 0.25);
+
+    --control-background: rgba(255, 255, 255, 0.78);
+    --control-border: rgba(0, 0, 0, 0.35);
+    --control-text: rgba(0, 0, 0, 0.8);
+
+    --control-hover-background: #000000;
+    --control-hover-text: #ffffff;
+    --control-hover-border: #000000;
+}
+
+html[data-theme="dark"] {
+    --page-background: #0a0a0a;
+    --page-text: #ccc3c3;
+
+    --heading-color: #ffffff;
+
+    --link-color: #e0e0e0;
+    --strong-link-color: #ffffff;
+    --hover-color: #917373;
+
+    --muted-text: #888888;
+    --subtle-text: #555555;
+    --faint-text: #444444;
+
+    --border-color: #222222;
+    --strong-border-color: #333333;
+    --blockquote-border: #444444;
+
+    color-scheme: dark;
+
+    --page-foreground: #ffffff;
+
+    --blur-background: rgba(0, 0, 0, 0.25);
+
+    --control-background: rgba(0, 0, 0, 0.72);
+    --control-border: rgba(255, 255, 255, 0.45);
+    --control-text: rgba(255, 255, 255, 0.8);
+
+    --control-hover-background: #ffffff;
+    --control-hover-text: #000000;
+    --control-hover-border: #ffffff;
+}
+
+html {
+    background: var(--page-background);
+    color: var(--page-text);
+}
+
+body {
+    background: var(--page-background);
+    color: var(--page-text);
+
+    transition:
+        background-color 300ms ease,
+        color 300ms ease;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+    color: inherit;
+}
+
+::selection {
+    background: var(--heading-color);
+    color: var(--page-background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html,
+    body {
+        transition: none;
+    }
+}

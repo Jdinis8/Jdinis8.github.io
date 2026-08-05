@@ -1,0 +1,544 @@
+/* --------------------------------------------------
+   Global research-page layout
+-------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding:
+        clamp(30px, 6vw, 60px)
+        clamp(16px, 4vw, 20px);
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+section {
+    scroll-margin-top: 40px;
+}
+
+
+/* --------------------------------------------------
+   Header and navigation
+-------------------------------------------------- */
+
+header {
+    margin-bottom: 60px;
+    padding-bottom: 30px;
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+.back-link {
+    display: inline-block;
+
+    margin-bottom: 30px;
+
+    color: var(--subtle-text);
+
+    font-size: 0.85rem;
+    text-decoration: none;
+
+    transition: color 200ms ease;
+}
+
+.back-link:hover {
+    color: var(--heading-color);
+}
+
+.back-link:focus-visible {
+    color: var(--heading-color);
+
+    outline:
+        1px solid
+        var(--heading-color);
+
+    outline-offset: 5px;
+}
+
+h1 {
+    margin: 0 0 20px;
+
+    color: var(--heading-color);
+
+    font-size: clamp(1.35rem, 4vw, 1.6rem);
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.page-nav {
+    margin-bottom: 35px;
+
+    color: var(--faint-text);
+
+    font-size: 0.85rem;
+    line-height: 1.9;
+    letter-spacing: 0.5px;
+}
+
+.page-nav a {
+    padding: 3px 4px;
+
+    color: var(--strong-link-color);
+
+    text-decoration: none;
+
+    transition: color 200ms ease;
+}
+
+.page-nav a:hover {
+    color: var(--hover-color);
+}
+
+.page-nav a:focus-visible {
+    color: var(--hover-color);
+
+    outline:
+        1px solid
+        var(--hover-color);
+
+    outline-offset: 3px;
+}
+
+
+/* --------------------------------------------------
+   Biography and affiliation blocks
+-------------------------------------------------- */
+
+.bio-line {
+    margin: 8px 0;
+
+    color: var(--muted-text);
+
+    font-size: 0.95rem;
+}
+
+.bio-line a {
+    color: var(--strong-link-color);
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid
+        var(--strong-border-color);
+
+    transition:
+        color 200ms ease,
+        border-color 200ms ease;
+}
+
+.bio-line a:hover {
+    color: var(--hover-color);
+    border-bottom-color: var(--hover-color);
+}
+
+.bio-line a:focus-visible {
+    color: var(--hover-color);
+
+    outline:
+        1px solid
+        var(--hover-color);
+
+    outline-offset: 3px;
+}
+
+.thesis-box {
+    margin-top: 4px;
+    padding-left: 15px;
+
+    color: var(--subtle-text);
+
+    font-size: 0.9rem;
+
+    border-left:
+        1px solid
+        var(--border-color);
+}
+
+
+/* --------------------------------------------------
+   General content
+-------------------------------------------------- */
+
+h2 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+    color: var(--heading-color);
+
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    font-size: 0.95rem;
+    text-align: justify;
+}
+
+p a,
+.footer-link {
+    color: var(--link-color);
+
+    text-decoration: none;
+
+    transition: color 200ms ease;
+}
+
+p a:hover,
+.footer-link:hover {
+    color: var(--hover-color);
+}
+
+p a:focus-visible,
+.footer-link:focus-visible {
+    color: var(--hover-color);
+
+    outline:
+        1px solid
+        var(--hover-color);
+
+    outline-offset: 3px;
+}
+
+.meta {
+    margin-bottom: 15px;
+
+    color: var(--faint-text);
+
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+
+/* --------------------------------------------------
+   Publications
+-------------------------------------------------- */
+
+:root {
+    --paper-hover-background:
+        rgba(255, 255, 255, 0.025);
+}
+
+html[data-theme="light"] {
+    --paper-hover-background:
+        rgba(0, 0, 0, 0.028);
+}
+
+.publication-section {
+    margin-top: 0;
+}
+
+.section-heading-row {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 8px;
+}
+
+.section-heading-row h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.section-kicker {
+    margin: 0 0 7px;
+
+    color: var(--hover-color);
+
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.section-count {
+    color: var(--faint-text);
+
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+}
+
+.paper-list {
+    margin-top: 26px;
+
+    border-top:
+        1px solid
+        var(--border-color);
+}
+
+.paper-entry {
+    margin: 0;
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+.paper-link {
+    display: grid;
+
+    grid-template-columns:
+        34px
+        minmax(0, 1fr)
+        auto;
+
+    gap: 18px;
+    align-items: start;
+
+    padding:
+        22px 5px;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition:
+        padding-left 180ms ease,
+        padding-right 180ms ease,
+        background-color 180ms ease;
+}
+
+.paper-link:hover,
+.paper-link:focus-visible {
+    padding-left: 12px;
+    padding-right: 12px;
+
+    background:
+        var(--paper-hover-background);
+}
+
+.paper-link:focus-visible {
+    outline:
+        1px solid
+        var(--hover-color);
+
+    outline-offset: 3px;
+}
+
+.paper-index {
+    padding-top: 4px;
+
+    color: var(--faint-text);
+
+    font-size: 0.69rem;
+    letter-spacing: 0.08em;
+}
+
+.paper-content {
+    min-width: 0;
+}
+
+.paper-title {
+    margin: 0;
+
+    color: var(--heading-color);
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: -0.015em;
+
+    transition:
+        color 180ms ease;
+}
+
+.paper-link:hover .paper-title,
+.paper-link:focus-visible .paper-title {
+    color: var(--hover-color);
+}
+
+.paper-authors {
+    margin:
+        8px 0 0;
+
+    color: var(--muted-text);
+
+    font-size: 0.8rem;
+    line-height: 1.55;
+    text-align: left;
+}
+
+.paper-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap:
+        5px 16px;
+
+    margin-top: 11px;
+
+    color: var(--subtle-text);
+
+    font-size: 0.68rem;
+    letter-spacing: 0.065em;
+    text-transform: uppercase;
+}
+
+.paper-meta span {
+    position: relative;
+}
+
+.paper-meta span:not(:last-child)::after {
+    content: "·";
+
+    position: absolute;
+    right: -11px;
+
+    color: var(--faint-text);
+}
+
+.paper-arrow {
+    padding-top: 1px;
+
+    color: var(--faint-text);
+
+    font-size: 0.9rem;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -5px,
+            5px
+        );
+
+    transition:
+        color 180ms ease,
+        opacity 180ms ease,
+        transform 180ms ease;
+}
+
+.paper-link:hover .paper-arrow,
+.paper-link:focus-visible .paper-arrow {
+    color: var(--hover-color);
+
+    opacity: 1;
+
+    transform:
+        translate(0, 0);
+}
+
+@media (max-width: 600px) {
+    .section-heading-row {
+        align-items: start;
+    }
+
+    .paper-link {
+        grid-template-columns:
+            26px
+            minmax(0, 1fr);
+
+        gap: 12px;
+
+        padding:
+            19px 2px;
+    }
+
+    .paper-link:hover,
+    .paper-link:focus-visible {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .paper-arrow {
+        display: none;
+    }
+
+    .paper-title {
+        font-size: 0.94rem;
+    }
+
+    .paper-authors {
+        font-size: 0.76rem;
+    }
+
+    .paper-meta {
+        gap:
+            4px 13px;
+
+        font-size: 0.64rem;
+    }
+
+    .paper-meta span:not(:last-child)::after {
+        right: -9px;
+    }
+}
+
+/* --------------------------------------------------
+   Quotations
+-------------------------------------------------- */
+
+blockquote {
+    margin: 35px 0;
+    padding: 5px 0 5px 20px;
+
+    color: var(--muted-text);
+
+    font-style: italic;
+
+    border-left:
+        1px solid
+        var(--blockquote-border);
+}
+
+
+/* --------------------------------------------------
+   Responsive adjustments
+-------------------------------------------------- */
+
+@media (max-width: 600px) {
+    header {
+        margin-bottom: 45px;
+    }
+
+    p {
+        text-align: left;
+    }
+
+    .page-nav {
+        line-height: 2;
+    }
+
+    .thesis-box {
+        padding-left: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .paper-date {
+        display: block;
+
+        margin-top: 4px;
+        margin-left: 0;
+    }
+}

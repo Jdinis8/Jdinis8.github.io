@@ -1,253 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-  <!-- Primary page information -->
-  <title>João D. Álvares — Physicist & Graphic Designer</title>
+    <title>
+        João D. Álvares — Physicist & Graphic Designer
+    </title>
 
-  <meta
-    name="description"
-    content="Personal website of João D. Álvares, a physicist and graphic designer working on general relativity, gravitational waves, black holes, numerical relativity, post-Newtonian theory, and scientific design."
-  >
+    <meta
+        name="description"
+        content="Personal website of João D. Álvares, a physicist and graphic designer working on general relativity, gravitational waves, black holes, numerical relativity, post-Newtonian theory, and scientific design."
+    >
 
-  <meta name="author" content="João D. Álvares">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#000000">
+    <meta
+        name="author"
+        content="João D. Álvares"
+    >
 
-  <link rel="canonical" href="https://jdinis8.github.io/">
+    <meta
+        name="robots"
+        content="index, follow"
+    >
 
-  <!-- Favicon -->
-  <link
-    rel="icon"
-    type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='white'>☉</text></svg>"
-  >
+    <meta
+        name="theme-color"
+        content="#0a0a0a"
+    >
 
-  <!-- Social-media previews -->
-  <meta property="og:type" content="profile">
-  <meta property="og:site_name" content="João D. Álvares">
-  <meta property="og:title" content="João D. Álvares — Physicist & Graphic Designer">
+    <link
+        rel="canonical"
+        href="https://jdinis8.github.io/"
+    >
 
-  <meta
-    property="og:description"
-    content="Physics, black-hole research, graphic design, and historical preservation projects by João D. Álvares."
-  >
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='white'>☉</text></svg>"
+    >
 
-  <meta property="og:url" content="https://jdinis8.github.io/">
+    <!-- Social preview metadata -->
+    <meta
+        property="og:type"
+        content="profile"
+    >
 
-  <meta name="twitter:card" content="summary">
+    <meta
+        property="og:site_name"
+        content="João D. Álvares"
+    >
 
-  <meta
-    name="twitter:title"
-    content="João D. Álvares — Physicist & Graphic Designer"
-  >
+    <meta
+        property="og:title"
+        content="João D. Álvares — Physicist & Graphic Designer"
+    >
 
-  <meta
-    name="twitter:description"
-    content="Physics, black-hole research, graphic design, and historical preservation projects by João D. Álvares."
-  >
+    <meta
+        property="og:description"
+        content="Physics, black-hole research, graphic design, and historical preservation projects by João D. Álvares."
+    >
 
-  <!-- Fonts -->
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+    <meta
+        property="og:url"
+        content="https://jdinis8.github.io/"
+    >
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+    <!--
+        Apply the saved theme before loading the stylesheets.
+        This prevents a flash of the wrong background.
+    -->
+    <script>
+        (() => {
+            try {
+                const savedTheme =
+                    localStorage.getItem("theme");
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-    rel="stylesheet"
-  >
+                const preferredTheme =
+                    window.matchMedia(
+                        "(prefers-color-scheme: light)"
+                    ).matches
+                        ? "light"
+                        : "dark";
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
-    rel="stylesheet"
-  >
+                const theme =
+                    savedTheme ||
+                    preferredTheme;
 
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+                document.documentElement.dataset.theme =
+                    theme;
 
-  <!--
-    This class keeps semantic page content available to
-    search engines and assistive technology without changing
-    the visual canvas-based design.
-  -->
-  <style>
-    .sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
+                document
+                    .querySelector(
+                        'meta[name="theme-color"]'
+                    )
+                    ?.setAttribute(
+                        "content",
+                        theme === "light"
+                            ? "#ffffff"
+                            : "#0a0a0a"
+                    );
+            } catch {
+                document.documentElement.dataset.theme =
+                    "dark";
+            }
+        })();
+    </script>
+
+    <!-- Optional web fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!--
+        Shared theme variables must be loaded first.
+        styles.css then adds homepage-specific layout.
+    -->
+    <link
+        rel="stylesheet"
+        href="theme.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+    <!-- Structured information about the owner of the site -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "@id": "https://jdinis8.github.io/#profile-page",
+        "url": "https://jdinis8.github.io/",
+        "name": "João D. Álvares — Physicist & Graphic Designer",
+        "description": "Personal website of João D. Álvares, featuring physics research, graphic design, and historical preservation projects.",
+        "mainEntity": {
+            "@type": "Person",
+            "@id": "https://jdinis8.github.io/#person",
+            "name": "João D. Álvares",
+            "alternateName": [
+                "Joao D. Alvares",
+                "João Dinis Álvares"
+            ],
+            "url": "https://jdinis8.github.io/",
+            "jobTitle": "PhD Student in Physics",
+            "affiliation": {
+                "@type": "CollegeOrUniversity",
+                "name": "The University of Mississippi"
+            },
+            "sameAs": [
+                "https://github.com/Jdinis8",
+                "https://orcid.org/0000-0001-5501-9014",
+                "https://inspirehep.net/authors/1903473"
+            ],
+            "knowsAbout": [
+                "General relativity",
+                "Black holes",
+                "Gravitational waves",
+                "Post-Newtonian theory",
+                "Numerical relativity",
+                "Hyperboloidal evolution",
+                "Scientific visualization",
+                "Graphic design"
+            ]
+        }
     }
-
-    /*
-      When a keyboard user focuses one of the navigation
-      links, make the link visible and usable.
-    */
-    .sr-only a:focus {
-      position: fixed;
-      left: 50%;
-      top: 20px;
-      z-index: 10000;
-
-      width: auto;
-      height: auto;
-      padding: 10px 16px;
-      margin: 0;
-
-      overflow: visible;
-      clip: auto;
-      white-space: normal;
-
-      transform: translateX(-50%);
-
-      background: #000000;
-      color: #ffffff;
-      border: 1px solid #ffffff;
-
-      font-family: "Courier New", monospace;
-      font-size: 14px;
-    }
-  </style>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    "@id": "https://jdinis8.github.io/#profile-page",
-    "url": "https://jdinis8.github.io/",
-    "name": "João D. Álvares — Physicist & Graphic Designer",
-    "description": "Personal website of João D. Álvares, featuring physics research, graphic design, and historical preservation projects.",
-    "mainEntity": {
-      "@type": "Person",
-      "@id": "https://jdinis8.github.io/#person",
-      "name": "João D. Álvares",
-      "alternateName": [
-        "Joao D. Alvares",
-        "João Dinis Álvares"
-      ],
-      "url": "https://jdinis8.github.io/",
-      "jobTitle": "PhD Student in Physics",
-      "affiliation": {
-        "@type": "CollegeOrUniversity",
-        "name": "The University of Mississippi"
-      },
-      "sameAs": [
-        "https://github.com/Jdinis8",
-        "https://orcid.org/0000-0001-5501-9014",
-        "https://inspirehep.net/authors/1903473",
-        "https://arxiv.org/search/gr-qc?searchtype=author&query=%C3%81lvares%2C+J+D"
-      ],
-      "knowsAbout": [
-        "General relativity",
-        "Black holes",
-        "Gravitational waves",
-        "Post-Newtonian theory",
-        "Numerical relativity",
-        "Hyperboloidal evolution",
-        "Scientific visualization",
-        "Graphic design"
-      ]
-    }
-  }
-  </script>
+    </script>
 </head>
 
 <body>
-  <!--
-    The visual homepage is rendered here by JavaScript.
-    Semantic equivalents of its content appear below.
-  -->
-  <canvas
-    id="canvas"
-    aria-hidden="true"
-  >
-    João D. Álvares — physics research, graphic design,
-    and historical preservation.
-  </canvas>
+    <!-- Main animated background and interface -->
+    <canvas
+        id="canvas"
+        aria-hidden="true"
+    >
+        João D. Álvares — physics research, graphic design,
+        and historical preservation.
+    </canvas>
 
-  <!--
-    Real HTML content helps search engines and assistive
-    technologies understand the canvas-based homepage.
-  -->
-  <main class="sr-only">
-    <header>
-      <h1>João D. Álvares</h1>
+    <!-- Theme switch -->
+    <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch to light mode"
+        aria-pressed="false"
+    >
+        <span
+            class="theme-toggle-track"
+            aria-hidden="true"
+        >
+            <span class="theme-toggle-knob"></span>
+        </span>
 
-      <p>
-        João D. Álvares is a physicist and graphic designer
-        working on general relativity, black holes,
-        gravitational waves, post-Newtonian theory,
-        numerical relativity, and scientific visualization.
-      </p>
-    </header>
+        <span id="theme-toggle-label">
+            Light
+        </span>
+    </button>
 
-    <nav aria-label="Primary navigation">
-      <a href="research.html">
-        Physics and black-hole research by João D. Álvares
-      </a>
+    <!--
+        Crawlable HTML equivalents of the canvas content.
+        These also provide fallback navigation.
+    -->
+    <main class="sr-only">
+        <header>
+            <h1>João D. Álvares</h1>
 
-      <a href="design.html">
-        Graphic design portfolio of João D. Álvares
-      </a>
+            <p>
+                João D. Álvares is a physicist and graphic
+                designer working on general relativity,
+                black holes, gravitational waves,
+                post-Newtonian theory, numerical relativity,
+                and scientific visualization.
+            </p>
+        </header>
 
-      <a href="history.html">
-        History and preservation projects by João D. Álvares
-      </a>
-    </nav>
+        <nav aria-label="Primary navigation">
+            <a href="research.html">
+                Physics and black-hole research
+            </a>
 
-    <section>
-      <h2>Professional profiles</h2>
+            <a href="design.html">
+                Graphic design portfolio
+            </a>
 
-      <a
-        href="https://orcid.org/0000-0001-5501-9014"
-        rel="me"
-      >
-        ORCID
-      </a>
+            <a href="history.html">
+                History and preservation projects
+            </a>
+        </nav>
+    </main>
 
-      <a
-        href="https://github.com/Jdinis8"
-        rel="me"
-      >
-        GitHub
-      </a>
+    <!-- Opening blur animation -->
+    <div
+        id="blur-overlay"
+        aria-hidden="true"
+    ></div>
 
-      <a
-        href="https://inspirehep.net/authors/1903473"
-        rel="me"
-      >
-        INSPIRE-HEP
-      </a>
-    </section>
-  </main>
-
-  <!-- Opening blur animation -->
-  <div
-    id="blur-overlay"
-    aria-hidden="true"
-  ></div>
-
-  <!-- Main JavaScript application -->
-  <script
-    type="module"
-    src="main.js"
-  ></script>
+    <!-- Homepage JavaScript -->
+    <script
+        type="module"
+        src="main.js"
+    ></script>
 </body>
 </html>

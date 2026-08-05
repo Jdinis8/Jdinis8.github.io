@@ -4,6 +4,102 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const blurOverlay = document.getElementById("blur-overlay");
 const skipButton = document.getElementById("skip-button");
+const themeToggle =
+    document.getElementById(
+        "theme-toggle"
+    );
+
+const themeToggleLabel =
+    document.getElementById(
+        "theme-toggle-label"
+    );
+
+const themeColorMeta =
+    document.querySelector(
+        'meta[name="theme-color"]'
+    );
+
+function getCurrentTheme() {
+    return (
+        document
+            .documentElement
+            .dataset
+            .theme ||
+        "dark"
+    );
+}
+
+function updateThemeButton() {
+    if (
+        !themeToggle ||
+        !themeToggleLabel
+    ) {
+        return;
+    }
+
+    const isLight =
+        getCurrentTheme() ===
+        "light";
+
+    /*
+     * The label describes the mode that will be activated
+     * when the visitor presses the button.
+     */
+    themeToggleLabel.textContent =
+        isLight
+            ? "Dark"
+            : "Light";
+
+    themeToggle.setAttribute(
+        "aria-pressed",
+        String(isLight)
+    );
+
+    themeToggle.setAttribute(
+        "aria-label",
+        isLight
+            ? "Switch to dark mode"
+            : "Switch to light mode"
+    );
+
+    themeColorMeta?.setAttribute(
+        "content",
+        isLight
+            ? "#ffffff"
+            : "#000000"
+    );
+}
+
+function setTheme(theme) {
+    document
+        .documentElement
+        .dataset
+        .theme = theme;
+
+    localStorage.setItem(
+        "theme",
+        theme
+    );
+
+    updateThemeButton();
+}
+
+themeToggle?.addEventListener(
+    "click",
+    () => {
+        const nextTheme =
+            getCurrentTheme() ===
+            "dark"
+                ? "light"
+                : "dark";
+
+        setTheme(
+            nextTheme
+        );
+    }
+);
+
+updateThemeButton();
 
 let behindScene = null;
 let currentScene = null;

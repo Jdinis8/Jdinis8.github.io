@@ -1,0 +1,43 @@
+name: Update arXiv papers
+
+on:
+  push:
+    paths:
+      - "papers.txt"
+      - "scripts/update_papers.py"
+      - ".github/workflows/update-papers.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-papers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Retrieve arXiv metadata
+        run: python scripts/update_papers.py
+
+      - name: Commit updated research page
+        run: |
+          if git diff --quiet -- research.html; then
+            echo "No publication changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add research.html
+          git commit -m "Update arXiv publication metadata"
+          git push
