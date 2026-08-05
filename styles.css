@@ -100,7 +100,7 @@ body {
 
     animation:
         blurFadeOut
-        0.7s
+        0.4s
         cubic-bezier(.22, 1, .36, 1)
         forwards;
 
@@ -287,6 +287,16 @@ body {
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
+}
+
+.profile-link .arxiv-logo {
+    width: 16px;
+    height: 16px;
+
+    background-color: currentColor;
+
+    -webkit-mask: url("Images/ArxivLogo.svg") center / contain no-repeat;
+    mask: url("Images/ArxivLogo.svg") center / contain no-repeat;
 }
 
 .profile-link:hover {
