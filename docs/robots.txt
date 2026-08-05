@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jdinis8.github.io/sitemap.xml
