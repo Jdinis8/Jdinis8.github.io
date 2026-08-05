@@ -3,8 +3,8 @@ name: Update arXiv papers
 on:
   push:
     paths:
-      - "docs/papers.txt"
-      - "docs/scripts/update_papers.py"
+      - "papers.txt"
+      - "scripts/update_papers.py"
       - ".github/workflows/update-papers.yml"
 
   workflow_dispatch:
