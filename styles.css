@@ -100,11 +100,11 @@ body {
 
     animation:
         blurFadeOut
-        0.4s
+        0.2s
         cubic-bezier(.22, 1, .36, 1)
         forwards;
 
-    animation-delay: 0.5s;
+    animation-delay: 0.05s;
 
     pointer-events: none;
 
@@ -127,6 +127,41 @@ body {
         backdrop-filter: blur(0);
         -webkit-backdrop-filter: blur(0);
     }
+}
+
+
+/* --------------------------------------------------
+   Copyright
+-------------------------------------------------- */
+
+.homepage-copyright {
+    position: fixed;
+
+    left: 50%;
+    bottom:
+        max(
+            16px,
+            env(safe-area-inset-bottom)
+        );
+
+    z-index: 9999;
+
+    margin: 0;
+
+    color: var(--control-text);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    white-space: nowrap;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
 }
 
 
@@ -461,8 +496,8 @@ html[data-theme="light"]
 
         bottom:
             max(
-                14px,
-                env(safe-area-inset-bottom)
+                42px,
+                calc(env(safe-area-inset-bottom) + 28px)
             );
 
         left: 50%;
