@@ -3,86 +3,1060 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research — João D. Álvares</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='white'>☉</text></svg>">
+    <meta name="description" content="Selected graphic design work by João D. Álvares.">
+    <title>Design — João D. Álvares</title>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' fill='white'>◇</text></svg>">
+
     <style>
-        body {
-            background-color: #0a0a0a;
-            color: #b0b0b0; /* Slightly softer white for better reading stamina */
-            font-family: 'Courier New', Courier, monospace;
-            line-height: 1.6;
-            margin: 0;
-            padding: 60px 20px;
+        :root {
+            --background: #090909;
+            --surface: #101010;
+            --surface-hover: #151515;
+            --line: #242424;
+            --line-bright: #3a3a3a;
+            --text: #e6e2e2;
+            --muted: #777;
+            --accent: #a98686;
+            --accent-soft: rgba(169, 134, 134, 0.14);
+            --page-width: 1180px;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         html {
             scroll-behavior: smooth;
         }
 
-        section {
-            scroll-margin-top: 40px;
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 54px 24px 80px;
+            overflow-x: hidden;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                var(--background);
+            background-size: 42px 42px;
+            color: var(--text);
+            font-family: "Courier New", Courier, monospace;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 16% 8%, rgba(169, 134, 134, 0.09), transparent 27rem),
+                radial-gradient(circle at 85% 70%, rgba(90, 118, 132, 0.07), transparent 30rem);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        button,
+        input {
+            font: inherit;
         }
 
         .container {
-            max-width: 720px;
+            width: min(100%, var(--page-width));
             margin: 0 auto;
         }
 
         header {
-            margin-bottom: 60px;
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 30px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 32px;
+            align-items: end;
+            margin-bottom: 52px;
+            padding-bottom: 34px;
+            border-bottom: 1px solid var(--line);
         }
 
         .back-link {
-            color: #555;
-            text-decoration: none;
-            font-size: 0.85rem;
             display: inline-block;
-            margin-bottom: 30px;
-            transition: color 0.2s ease;
-        }
-        .back-link:hover { color: #fff; }
-
-        h1 { 
-            font-size: 1.6rem; 
-            font-weight: 400; 
-            color: #fff; 
-            margin: 0 0 20px 0;
-            letter-spacing: 1px;
+            margin-bottom: 34px;
+            color: #666;
+            font-size: 0.84rem;
+            text-decoration: none;
+            transition: color 160ms ease;
         }
 
-        h2 { 
-            font-size: 1.15rem; 
-            font-weight: 400; 
-            margin-top: 50px; 
-            margin-bottom: 20px;
-            color: #fff; 
+        .back-link:hover,
+        .back-link:focus-visible {
+            color: #fff;
+        }
+
+        .eyebrow {
+            margin: 0 0 10px;
+            color: var(--accent);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        
-        .meta { 
-            color: #444; 
-            font-size: 0.8rem; 
-            margin-bottom: 15px; 
-            font-style: italic;
+
+        h1 {
+            margin: 0;
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 4.4rem);
+            font-weight: 400;
+            letter-spacing: -0.055em;
+            line-height: 0.98;
+        }
+
+        .intro {
+            max-width: 690px;
+            margin: 22px 0 0;
+            color: #929292;
+            font-size: 0.96rem;
+        }
+
+        .header-index {
+            min-width: 150px;
+            color: #555;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            line-height: 1.9;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        .header-index strong {
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-button {
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: 0;
+            background: rgba(9, 9, 9, 0.76);
+            color: #777;
+            cursor: pointer;
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition:
+                color 160ms ease,
+                border-color 160ms ease,
+                background 160ms ease;
+        }
+
+        .filter-button:hover,
+        .filter-button:focus-visible,
+        .filter-button[aria-pressed="true"] {
+            border-color: var(--line-bright);
+            background: var(--accent-soft);
+            color: #fff;
+        }
+
+        .project-count {
+            color: #555;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .project-card {
+            grid-column: span 4;
+            position: relative;
+            min-width: 0;
+            border: 1px solid var(--line);
+            background: rgba(16, 16, 16, 0.92);
+            cursor: pointer;
+            text-align: left;
+            color: inherit;
+            overflow: hidden;
+            transition:
+                transform 180ms ease,
+                border-color 180ms ease,
+                background 180ms ease;
+        }
+
+        .project-card:nth-child(5n + 1),
+        .project-card:nth-child(5n + 4) {
+            grid-column: span 8;
+        }
+
+        .project-card:hover,
+        .project-card:focus-visible {
+            transform: translateY(-4px);
+            border-color: var(--line-bright);
+            background: var(--surface-hover);
+            outline: none;
+        }
+
+        .project-card::after {
+            content: "↗";
+            position: absolute;
+            top: 14px;
+            right: 15px;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+
+        .project-card:hover::after,
+        .project-card:focus-visible::after {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        .project-visual {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #141414;
+        }
+
+        .project-card:nth-child(5n + 1) .project-visual,
+        .project-card:nth-child(5n + 4) .project-visual {
+            aspect-ratio: 16 / 8;
+        }
+
+        .project-visual img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            filter: saturate(0.86) contrast(1.02);
+            transition: transform 500ms cubic-bezier(.2, .7, .2, 1), filter 180ms ease;
+        }
+
+        /* Per-project layouts. Use layout: "portrait" for vertical posters. */
+        .project-card.project-card--portrait {
+            grid-column: span 4;
+        }
+
+        .project-visual--portrait {
+            aspect-ratio: 4 / 5;
+            display: grid;
+            place-items: center;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        .project-card:nth-child(5n + 1) .project-visual--portrait,
+        .project-card:nth-child(5n + 4) .project-visual--portrait {
+            aspect-ratio: 4 / 5;
+        }
+
+        .project-visual--portrait img {
+            object-fit: contain;
+        }
+
+        .pdf-preview {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            background: #fff;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.32);
+        }
+
+        .project-card:hover .project-visual img,
+        .project-card:focus-visible .project-visual img {
+            transform: scale(1.025);
+            filter: saturate(1) contrast(1.04);
+        }
+
+        .project-fallback {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            position: relative;
+            background:
+                linear-gradient(135deg, var(--fallback-a), var(--fallback-b));
+        }
+
+        .project-fallback::before,
+        .project-fallback::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .project-fallback::before {
+            width: 43%;
+            aspect-ratio: 1;
+            transform: rotate(45deg);
+        }
+
+        .project-fallback::after {
+            width: 72%;
+            height: 1px;
+            border-width: 1px 0 0;
+            transform: rotate(-14deg);
+        }
+
+        .project-fallback span {
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.76);
+            font-size: clamp(1.2rem, 4vw, 3.5rem);
+            letter-spacing: -0.08em;
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 20px;
+            align-items: start;
+            padding: 17px 18px 19px;
+        }
+
+        .project-title {
+            margin: 0;
+            color: #eee;
+            font-size: 0.94rem;
+            font-weight: 400;
+            letter-spacing: -0.015em;
+        }
+
+        .project-type {
+            margin: 6px 0 0;
+            color: #666;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .project-year {
+            color: #5f5f5f;
+            font-size: 0.73rem;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 70px 24px;
+            border: 1px solid var(--line);
+            color: #666;
+            text-align: center;
+        }
+
+        footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 56px;
+            padding-top: 22px;
+            border-top: 1px solid var(--line);
+            color: #555;
+            font-size: 0.72rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        footer a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        footer a:hover,
+        footer a:focus-visible {
+            color: #fff;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: none;
+            place-items: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.84);
+            backdrop-filter: blur(14px);
+        }
+
+        .modal.is-open {
+            display: grid;
+        }
+
+        .modal-panel {
+            width: min(100%, 980px);
+            max-height: calc(100vh - 48px);
+            overflow: auto;
+            border: 1px solid #343434;
+            background: #0d0d0d;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-media {
+            min-height: 280px;
+            background: #111;
+        }
+
+        .modal-media img {
+            width: 100%;
+            max-height: 66vh;
+            display: block;
+            object-fit: contain;
+            background: #111;
+        }
+
+        .modal-copy {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(220px, 0.36fr);
+            gap: 40px;
+            padding: 27px 30px 32px;
+        }
+
+        .modal-copy h2 {
+            margin: 0 0 12px;
+            color: #fff;
+            font-size: clamp(1.35rem, 3vw, 2.2rem);
+            font-weight: 400;
+            letter-spacing: -0.04em;
+        }
+
+        .modal-description {
+            margin: 0;
+            color: #8e8e8e;
+            font-size: 0.9rem;
+        }
+
+        .modal-meta {
+            margin: 0;
+            color: #666;
+            font-size: 0.74rem;
+            line-height: 2;
+            text-transform: uppercase;
+        }
+
+        .modal-meta strong {
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        .modal-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #ddd;
+            text-decoration: none;
+            border-bottom: 1px solid #444;
+        }
+
+        .modal-link:hover,
+        .modal-link:focus-visible {
+            border-color: #fff;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 24px;
+            right: 27px;
+            width: 42px;
+            height: 42px;
+            border: 1px solid #3a3a3a;
+            background: #0d0d0d;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus-visible {
+            color: #fff;
+            border-color: #666;
+        }
+
+        @media (max-width: 850px) {
+            body {
+                padding-inline: 17px;
+            }
+
+            header {
+                grid-template-columns: 1fr;
+            }
+
+            .header-index {
+                display: none;
+            }
+
+            .project-card,
+            .project-card:nth-child(5n + 1),
+            .project-card:nth-child(5n + 4) {
+                grid-column: span 6;
+            }
+
+            .project-card.project-card--portrait {
+                grid-column: span 6;
+            }
+
+            .project-card:nth-child(5n + 1) .project-visual,
+            .project-card:nth-child(5n + 4) .project-visual {
+                aspect-ratio: 16 / 10;
+            }
+
+            .modal-copy {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+        }
+
+        @media (max-width: 570px) {
+            body {
+                padding-top: 32px;
+            }
+
+            header {
+                margin-bottom: 34px;
+            }
+
+            .toolbar {
+                align-items: flex-start;
+            }
+
+            .project-card,
+            .project-card:nth-child(5n + 1),
+            .project-card:nth-child(5n + 4) {
+                grid-column: 1 / -1;
+            }
+
+            .project-card.project-card--portrait {
+                grid-column: 1 / -1;
+            }
+
+            .project-info {
+                padding-inline: 14px;
+            }
+
+            .modal {
+                padding: 0;
+            }
+
+            .modal-panel {
+                max-height: 100vh;
+                border-inline: 0;
+            }
+
+            .modal-copy {
+                padding: 22px 18px 30px;
+            }
+
+            .modal-close {
+                top: 12px;
+                right: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
-            <a href="index.html" class="back-link">← Return to Main Page</a>
-            <h1>Page In Construction</h1>
+            <div>
+                <a href="index.html" class="back-link">← Return to Main Page</a>
+                <p class="eyebrow">Visual archive / selected work</p>
+                <h1>GRAPHIC<br>DESIGN</h1>
+                <p class="intro">
+                    Posters, visual identities, editorial experiments, scientific graphics,
+                    and other selected design work.
+                </p>
+            </div>
 
+            <div class="header-index" aria-hidden="true">
+                <strong>JDA / DESIGN</strong><br>
+                Independent archive<br>
+                Updated <span id="updated-year"></span>
+            </div>
         </header>
 
         <main>
-            
+            <div class="toolbar">
+                <div class="filters" id="filters" aria-label="Filter projects"></div>
+                <div class="project-count" id="project-count"></div>
+            </div>
+
+            <section class="project-grid" id="project-grid" aria-live="polite"></section>
         </main>
+
+        <footer>
+            <span>© <span id="copyright-year"></span> João D. Álvares</span>
+            <span>
+                <a href="mailto:jdlvares@go.olemiss.edu">Email</a> ·
+                <a href="https://github.com/Jdinis8" target="_blank" rel="noreferrer">GitHub</a>
+            </span>
+        </footer>
     </div>
 
+    <div class="modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="modal-close" type="button" aria-label="Close project">×</button>
+        <article class="modal-panel">
+            <div class="modal-media" id="modal-media"></div>
+            <div class="modal-copy">
+                <div>
+                    <h2 id="modal-title"></h2>
+                    <p class="modal-description" id="modal-description"></p>
+                </div>
+                <p class="modal-meta" id="modal-meta"></p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        /*
+         * ADD NEW PROJECTS HERE.
+         *
+         * image:  path to an image inside your GitHub repository.
+         * layout: "portrait" for vertical posters; omit it for the normal landscape card.
+         * link:   optional external page, PDF, Behance post, Instagram post, etc.
+         *
+         * Use either image or pdf. Leave both empty to use the generated placeholder.
+         */
+        const projects = [
+            {
+                title: "HellaFull - Sticker Sheet",
+                category: "Hella Full",
+                year: "2025",
+                image: "Images/design/Hella Full/hellafull_stickers.png",
+                description: "Mock-up of sticker designs for HellaFull.",
+                tools: "Photoshop / Blender",
+                link: ""
+            },
+            {
+                title: "Swiss School Series #2",
+                category: "Experimental",
+                year: "2025",
+                image: "Images/design/Swiss School/swiss_attempt2.png",
+                description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
+                tools: "Illustrator",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Ascending",
+                category: "Poster",
+                year: "2024",
+                image: "Images/design/Ascending.png",
+                description: "Experimental digital design exploring the concept of ascension.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Voynich Code - Poster Series",
+                category: "Music",
+                year: "2026",
+                image: "Images/design/voynich_code.png",
+                pdf: "",
+                page: 1,
+                layout: "portrait",
+                description: "A poster for the Portuguese heavy metal band Voynich Code.",
+                tools: "Photoshop",
+                link: ""
+            },
+            {
+                title: "Moonspell Tour Alternative Poster",
+                category: "Music",
+                year: "2026",
+                image: "Images/design/moonspell.png",
+                description: "A tour poster for Moonspell that I designed for fun, exploring a more experimental and abstract approach to the band's aesthetic.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Swiss School Series #3",
+                category: "Experimental",
+                year: "2026",
+                image: "Images/design/Swiss School/swiss_attempt3.png",
+                description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },{
+                title: "Swiss School Series #5",
+                category: "Experimental",
+                year: "2026",
+                image: "Images/design/Swiss School/swiss_attempt5.png",
+                description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },{
+                title: "Swiss School Series #4",
+                category: "Experimental",
+                year: "2026",
+                image: "Images/design/Swiss School/swiss_attempt4.png",
+                description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Grão de Areia",
+                category: "Single Cover",
+                year: "2026",
+                image: "Images/design/Grão de Areia/graodeareia6_changes.png",
+                pdf: "",
+                page: 1,
+                layout: "portrait",
+                description: "Poster for the first ever single of Grão de Areia, a Portuguese indie band.",
+                tools: "Photoshop",
+                link: ""
+            },
+            {
+                title: "Lamb of God — Poster Series",
+                category: "Music",
+                year: "2026",
+                image: "Images/design/lambofgod.png",
+                pdf: "",
+                page: 1,
+                layout: "portrait",
+                description: "A poster system exploring scientific typography, orbital geometry, and restrained monochromatic composition.",
+                tools: "Illustrator / InDesign",
+                link: ""
+            },
+            {
+                title: "Swiss School Series #1",
+                category: "Experimental",
+                year: "2026",
+                image: "Images/design/Swiss School/hellafull_swiss.png",
+                pdf: "",
+                page: 1,
+                layout: "portrait",
+                description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
+                tools: "Illustrator / InDesign",
+                link: ""
+            },
+            {
+                title: "Reissner-Nördstrom Black Hole Penrose Diagram",
+                category: "Scientific",
+                year: "2025",
+                image: "Images/design/Physics/RN.jpg",
+                description: "Penrose diagram for a Reissner-Nördstrom black hole.",
+                tools: "Python",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Extended Schwarzschild Black Hole Penrose Diagram",
+                category: "Scientific",
+                year: "2025",
+                image: "Images/design/Physics/SCMax.jpg",
+                description: "Extended Penrose diagram for a Schwarzschild black hole.",
+                tools: "Python",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Trumpet Hyperboloidal Slicing in Schwarzschild Spacetime",
+                category: "Scientific",
+                year: "2025",
+                image: "Images/design/Physics/ScTrumpet.jpg",
+                description: "Trumpet hyperboloidal slicing in Schwarzschild spacetime.",
+                tools: "Python",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "HellaFull - Business Card 01",
+                category: "Hella Full",
+                year: "2025",
+                image: "Images/design/Hella Full/hellafull_businesscard.png",
+                description: "Business card design for HellaFull, a Mississippi chef.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Vended - Album Cover Series",
+                category: "Music",
+                year: "2025",
+                image: "Images/design/vended.png",
+                description: "Cover design for the heavy metal band Vended, designed for fun.",
+                tools: "Photoshop",
+                layout: "portrait",
+                link: ""
+            },
+            {
+                title: "Grão de Areia — Alternative Cover",
+                category: "Single Cover",
+                year: "2026",
+                image: "Images/design/Grão de Areia/graodeareia4.png",
+                pdf: "",
+                page: 1,
+                layout: "portrait",
+                description: "Alternative cover for the first single of Grão de Areia.",
+                tools: "Photoshop",
+                link: ""
+            },
+        ];
+
+        const fallbackPalettes = [
+            ["#311f25", "#101419"],
+            ["#17252a", "#171319"],
+            ["#2c261b", "#111419"],
+            ["#201d31", "#121212"],
+            ["#282828", "#16100f"],
+            ["#14231d", "#171313"]
+        ];
+
+        const grid = document.getElementById("project-grid");
+        const filters = document.getElementById("filters");
+        const count = document.getElementById("project-count");
+        const modal = document.getElementById("project-modal");
+        const modalClose = document.getElementById("modal-close");
+        const modalMedia = document.getElementById("modal-media");
+        const modalTitle = document.getElementById("modal-title");
+        const modalDescription = document.getElementById("modal-description");
+        const modalMeta = document.getElementById("modal-meta");
+
+        let activeCategory = "All";
+        let lastFocusedCard = null;
+
+        const categories = ["All", ...new Set(projects.map(project => project.category))];
+
+        function initials(title) {
+            return title
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 3)
+                .map(word => word[0])
+                .join("")
+                .toUpperCase();
+        }
+
+        function createFallback(project, index) {
+            const [a, b] = fallbackPalettes[index % fallbackPalettes.length];
+            const fallback = document.createElement("div");
+            fallback.className = "project-fallback";
+            fallback.style.setProperty("--fallback-a", a);
+            fallback.style.setProperty("--fallback-b", b);
+            fallback.innerHTML = `<span>${initials(project.title)}</span>`;
+            return fallback;
+        }
+
+        let pdfJsPromise;
+
+        function loadPdfJs() {
+            if (!pdfJsPromise) {
+                pdfJsPromise = import("https://cdn.jsdelivr.net/npm/pdfjs-dist@6.2.108/build/pdf.min.mjs")
+                    .then(pdfjsLib => {
+                        pdfjsLib.GlobalWorkerOptions.workerSrc =
+                            "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.2.108/build/pdf.worker.min.mjs";
+                        return pdfjsLib;
+                    });
+            }
+            return pdfJsPromise;
+        }
+
+        async function renderPdfPreview(url, canvas, pageNumber = 1) {
+            const pdfjsLib = await loadPdfJs();
+            const pdf = await pdfjsLib.getDocument(url).promise;
+            const page = await pdf.getPage(pageNumber);
+
+            const baseViewport = page.getViewport({ scale: 1 });
+            const targetWidth = 1200;
+            const viewport = page.getViewport({ scale: targetWidth / baseViewport.width });
+            const outputScale = window.devicePixelRatio || 1;
+            const context = canvas.getContext("2d", { alpha: false });
+
+            canvas.width = Math.floor(viewport.width * outputScale);
+            canvas.height = Math.floor(viewport.height * outputScale);
+            canvas.style.aspectRatio = `${viewport.width} / ${viewport.height}`;
+
+            await page.render({
+                canvasContext: context,
+                viewport,
+                transform: outputScale === 1
+                    ? null
+                    : [outputScale, 0, 0, outputScale, 0, 0]
+            }).promise;
+        }
+
+        function createVisual(project, index) {
+            const visual = document.createElement("div");
+            visual.className = "project-visual";
+
+            if (project.layout === "portrait") {
+                visual.classList.add("project-visual--portrait");
+            }
+
+            if (project.pdf) {
+                const canvas = document.createElement("canvas");
+                canvas.className = "pdf-preview";
+                canvas.setAttribute("role", "img");
+                canvas.setAttribute("aria-label", `${project.title} PDF preview`);
+                visual.appendChild(canvas);
+
+                renderPdfPreview(project.pdf, canvas, project.page || 1).catch(error => {
+                    console.error(`Could not render ${project.pdf}:`, error);
+                    visual.replaceChildren(createFallback(project, index));
+                });
+
+                return visual;
+            }
+
+            if (!project.image) {
+                visual.appendChild(createFallback(project, index));
+                return visual;
+            }
+
+            const image = document.createElement("img");
+            image.src = project.image;
+            image.alt = `${project.title} preview`;
+            image.loading = "lazy";
+            image.addEventListener("error", () => {
+                visual.replaceChildren(createFallback(project, index));
+            }, { once: true });
+
+            visual.appendChild(image);
+            return visual;
+        }
+
+        function renderFilters() {
+            filters.replaceChildren();
+
+            categories.forEach(category => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "filter-button";
+                button.textContent = category;
+                button.setAttribute("aria-pressed", String(category === activeCategory));
+
+                button.addEventListener("click", () => {
+                    activeCategory = category;
+                    renderFilters();
+                    renderProjects();
+                });
+
+                filters.appendChild(button);
+            });
+        }
+
+        function renderProjects() {
+            const visibleProjects = activeCategory === "All"
+                ? projects
+                : projects.filter(project => project.category === activeCategory);
+
+            grid.replaceChildren();
+            count.textContent = `${visibleProjects.length.toString().padStart(2, "0")} project${visibleProjects.length === 1 ? "" : "s"}`;
+
+            if (visibleProjects.length === 0) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.textContent = "No projects in this category yet.";
+                grid.appendChild(empty);
+                return;
+            }
+
+            visibleProjects.forEach((project, index) => {
+                const card = document.createElement("button");
+                card.type = "button";
+                card.className = "project-card";
+                if (project.layout === "portrait") {
+                    card.classList.add("project-card--portrait");
+                }
+                card.setAttribute("aria-label", `Open ${project.title}`);
+
+                card.appendChild(createVisual(project, index));
+
+                const info = document.createElement("div");
+                info.className = "project-info";
+                info.innerHTML = `
+                    <div>
+                        <h2 class="project-title">${project.title}</h2>
+                        <p class="project-type">${project.category}</p>
+                    </div>
+                    <span class="project-year">${project.year}</span>
+                `;
+                card.appendChild(info);
+
+                card.addEventListener("click", () => {
+                    lastFocusedCard = card;
+                    openProject(project, index);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openProject(project, index) {
+            modalTitle.textContent = project.title;
+            modalDescription.textContent = project.description;
+            modalMedia.replaceChildren(createVisual(project, index));
+
+            modalMeta.innerHTML = `
+                <strong>Type</strong><br>${project.category}<br>
+                <strong>Year</strong><br>${project.year}<br>
+                <strong>Tools</strong><br>${project.tools || "—"}
+                ${project.link ? `<br><a class="modal-link" href="${project.link}" target="_blank" rel="noreferrer">View full project ↗</a>` : ""}
+            `;
+
+            modal.classList.add("is-open");
+            document.body.style.overflow = "hidden";
+            modalClose.focus();
+        }
+
+        function closeProject() {
+            modal.classList.remove("is-open");
+            document.body.style.overflow = "";
+            lastFocusedCard?.focus();
+        }
+
+        modalClose.addEventListener("click", closeProject);
+
+        modal.addEventListener("click", event => {
+            if (event.target === modal) closeProject();
+        });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape" && modal.classList.contains("is-open")) {
+                closeProject();
+            }
+        });
+
+        const currentYear = new Date().getFullYear();
+        document.getElementById("updated-year").textContent = currentYear;
+        document.getElementById("copyright-year").textContent = currentYear;
+
+        renderFilters();
+        renderProjects();
+    </script>
 </body>
 </html>
