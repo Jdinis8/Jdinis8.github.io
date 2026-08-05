@@ -1,10 +1,11 @@
 // HomeScene.js
 import { DotGrid } from "./DotGrid.js";
-import { UIOverlay } from "./UIOverlay.js"
+import { UIOverlay } from "./UIOverlay.js";
+
 export class HomeScene {
     constructor(canvas, ctx, mouse) {
         this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
+        this.ctx = ctx;
 
         this.width = window.innerWidth;
         this.height = window.innerHeight;
@@ -13,9 +14,6 @@ export class HomeScene {
         this.mouse = mouse;
 
         this.layers = [];
-
-        this.scroll = 0;
-        this.scrollTarget = 0;
 
         this.ui = new UIOverlay(canvas);
     }
@@ -39,10 +37,8 @@ export class HomeScene {
         ];
 
         this.onMouseMove = this.onMouseMove.bind(this);
-        this.onScroll = this.onScroll.bind(this);
 
         this.canvas.addEventListener("pointermove", this.onMouseMove, { passive: true });
-        window.addEventListener("scroll", this.onScroll);
     }
 
     onMouseMove(e) {
@@ -58,31 +54,24 @@ export class HomeScene {
         this.mouse.y = y;
     }
 
-    onScroll() {
-        this.scrollTarget = window.scrollY;
-    }
-
     update(dt) {
-        this.scroll += (this.scrollTarget - this.scroll) * 0.05;
-
-        this.layers.forEach((layer, i) => {
-            layer.scrollRotation = this.scroll * 0.00002 * (i + 1);
+        this.layers.forEach(layer => {
             layer.update(dt, this.mouse);
         });
     }
 
-    draw(ctx) {
-        ctx.clearRect(0, 0, this.width, this.height);
-        this.layers.forEach(layer => layer.draw(ctx, this.mouse));
+    draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.layers.forEach(layer => layer.draw(this.ctx, this.mouse));
         
         // update & draw UI overlay
         this.ui.update(this.mouse);
-        this.ui.draw(ctx);
+        this.ui.draw(this.ctx);
     }
 
     destroy() {
         this.canvas.removeEventListener("pointermove", this.onMouseMove);
-        window.removeEventListener("scroll", this.onScroll);
+        this.ui.destroy();
     }
 
     onResize() {
@@ -98,6 +87,24 @@ export class HomeScene {
             window.devicePixelRatio || 1,
             2
         );
+
+        const canvasWidth = Math.round(
+            width * pixelRatio
+        );
+
+        const canvasHeight = Math.round(
+            height * pixelRatio
+        );
+
+        if (
+            this.width === width &&
+            this.height === height &&
+            this.pixelRatio === pixelRatio &&
+            this.canvas.width === canvasWidth &&
+            this.canvas.height === canvasHeight
+        ) {
+            return;
+        }
 
         /*
         * Store the visible dimensions separately.
@@ -117,13 +124,8 @@ export class HomeScene {
         /*
         * Internal high-resolution canvas dimensions.
         */
-        this.canvas.width = Math.round(
-            width * pixelRatio
-        );
-
-        this.canvas.height = Math.round(
-            height * pixelRatio
-        );
+        this.canvas.width = canvasWidth;
+        this.canvas.height = canvasHeight;
 
         /*
         * Draw using normal screen coordinates even though

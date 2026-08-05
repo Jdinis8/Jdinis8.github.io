@@ -9,7 +9,6 @@ export class DotGrid {
         rotationStrength = 0.1
     }) {
         this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
 
         this.spacing = spacing;
         this.depth = depth;
@@ -30,8 +29,6 @@ export class DotGrid {
             x: 0,
             y: 0
         };
-
-        this.scrollRotation = 0;
 
         /*
         * Mouse spotlight settings.
@@ -194,8 +191,7 @@ export class DotGrid {
         this.rotationTarget.y =
             mx *
             0.6 *
-            this.rotationStrength +
-            this.scrollRotation;
+            this.rotationStrength;
 
         this.rotationTarget.x =
             my *

@@ -2,8 +2,6 @@ import { HomeScene } from './HomeScene.js';
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const blurOverlay = document.getElementById("blur-overlay");
-const skipButton = document.getElementById("skip-button");
 const themeToggle =
     document.getElementById(
         "theme-toggle"
@@ -101,33 +99,6 @@ themeToggle?.addEventListener(
 
 updateThemeButton();
 
-let behindScene = null;
-let currentScene = null;
-const maincolor = "#6291bd";
-
-function resize() {
-    const viewport = window.visualViewport;
-
-    const width = Math.round(
-        viewport?.width ?? document.documentElement.clientWidth
-    );
-
-    const height = Math.round(
-        viewport?.height ?? window.innerHeight
-    );
-
-    if (
-        canvas.width !== width ||
-        canvas.height !== height
-    ) {
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    behindScene?.onResize();
-    currentScene?.onResize?.();
-}
-
 const mouse = {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
@@ -135,18 +106,12 @@ const mouse = {
     vy: 0
 };
 
-function replayBlur() {
-    const blurOverlay = document.createElement("div");
-    blurOverlay.id = "blur-overlay";
-    document.body.appendChild(blurOverlay);
-    console.log(blurOverlay);
+const scene = new HomeScene(canvas, ctx, mouse);
+scene.init();
+
+function resize() {
+    scene.onResize();
 }
-
-behindScene = new HomeScene(canvas, ctx, mouse, maincolor);
-behindScene.init();
-
-behindScene = new HomeScene(canvas, ctx, mouse);
-behindScene.init();
 
 resize();
 
@@ -169,41 +134,8 @@ function animate(time) {
 
     ctx.save();
 
-    behindScene?.update(dt);
-
-    // --- Gravity attraction logic
-    const gravitySection = document.getElementById('gravity');
-    if (gravitySection) {
-        const rect = gravitySection.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        behindScene.layers.forEach(layer => {
-            layer.dots.forEach(dot => {
-                const dx = centerX - (dot.x + canvas.width/2);
-                const dy = centerY - (dot.y + canvas.height/2);
-                const dist = Math.hypot(dx, dy);
-
-                const minimumDimension = Math.min(
-                    canvas.width,
-                    canvas.height
-                );
-
-                const influenceRadius = Math.min(
-                    300,
-                    Math.max(120, minimumDimension * 0.35)
-                );
-                
-                if (dist > 0 && dist < influenceRadius) {
-                    const force = (1 - dist / influenceRadius) * 0.05;
-                    dot.vx += dx / dist * force;
-                    dot.vy += dy / dist * force;
-                }
-            });
-        });
-    }
-
-    behindScene?.draw(ctx);
+    scene.update(dt);
+    scene.draw();
 
     ctx.restore();
 

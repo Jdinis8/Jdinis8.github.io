@@ -1,14 +1,4 @@
 /* --------------------------------------------------
-   Global layout
--------------------------------------------------- */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-/* --------------------------------------------------
    Screen-reader-only content
 -------------------------------------------------- */
 
@@ -42,10 +32,6 @@ body {
     overflow: hidden;
     overscroll-behavior: none;
 
-    background: var(--page-background);
-
-    transition:
-        background-color 300ms ease;
 }
 
 body {
@@ -141,95 +127,6 @@ body {
         backdrop-filter: blur(0);
         -webkit-backdrop-filter: blur(0);
     }
-}
-
-
-/* --------------------------------------------------
-   Skip button
--------------------------------------------------- */
-
-#skip-button {
-    position: fixed;
-
-    right:
-        max(
-            20px,
-            env(safe-area-inset-right)
-        );
-
-    bottom:
-        max(
-            20px,
-            env(safe-area-inset-bottom)
-        );
-
-    z-index: 9999;
-
-    min-width: 44px;
-    min-height: 44px;
-
-    padding: 10px 16px;
-
-    border:
-        1px solid
-        var(--control-border);
-
-    border-radius: 0;
-
-    background:
-        var(--control-background);
-
-    color:
-        var(--control-text);
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 14px;
-    line-height: 1;
-    letter-spacing: 0.04em;
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    cursor: pointer;
-
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
-    transition:
-        opacity 240ms ease,
-        visibility 240ms ease,
-        background-color 180ms ease,
-        color 180ms ease,
-        border-color 180ms ease;
-}
-
-#skip-button.visible {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-#skip-button:hover {
-    background:
-        var(--control-hover-background);
-
-    color:
-        var(--control-hover-text);
-
-    border-color:
-        var(--control-hover-border);
-}
-
-#skip-button:focus-visible {
-    outline:
-        2px solid
-        var(--page-foreground);
-
-    outline-offset: 4px;
 }
 
 
@@ -368,23 +265,6 @@ html[data-theme="light"]
 -------------------------------------------------- */
 
 @media (max-width: 600px) {
-    #skip-button {
-        right:
-            max(
-                14px,
-                env(safe-area-inset-right)
-            );
-
-        bottom:
-            max(
-                14px,
-                env(safe-area-inset-bottom)
-            );
-
-        padding: 9px 13px;
-        font-size: 12px;
-    }
-
     #theme-toggle {
         top:
             max(
@@ -409,25 +289,6 @@ html[data-theme="light"]
 -------------------------------------------------- */
 
 @media (max-height: 500px) {
-    #skip-button {
-        right:
-            max(
-                12px,
-                env(safe-area-inset-right)
-            );
-
-        bottom:
-            max(
-                12px,
-                env(safe-area-inset-bottom)
-            );
-
-        min-height: 38px;
-
-        padding: 7px 12px;
-        font-size: 12px;
-    }
-
     #theme-toggle {
         top:
             max(
@@ -454,17 +315,7 @@ html[data-theme="light"]
 -------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-    html,
-    body,
-    #skip-button,
-    #theme-toggle,
-    .theme-toggle-track,
-    .theme-toggle-knob {
-        transition: none;
-    }
-
     #blur-overlay {
-        animation-duration: 0.01ms;
         animation-delay: 0ms;
     }
 }

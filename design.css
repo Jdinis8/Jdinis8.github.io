@@ -11,7 +11,6 @@
     --design-subtle: var(--subtle-text);
     --design-accent: var(--hover-color);
 
-    --surface: #101010;
     --surface-hover: #151515;
     --visual-background: #141414;
 
@@ -38,7 +37,6 @@
 }
 
 html[data-theme="light"] {
-    --surface: #ffffff;
     --surface-hover: #f3f1f1;
     --visual-background: #eeeeec;
 
@@ -66,16 +64,6 @@ html[data-theme="light"] {
 /* --------------------------------------------------
    Global layout
 -------------------------------------------------- */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
 
 body {
     margin: 0;
@@ -105,19 +93,12 @@ body {
     background-size:
         42px 42px;
 
-    color:
-        var(--design-text);
-
     font-family:
         "Courier New",
         Courier,
         monospace;
 
     line-height: 1.6;
-
-    transition:
-        color 300ms ease,
-        background-color 300ms ease;
 }
 
 body::before {
@@ -141,10 +122,6 @@ body::before {
             var(--glow-two),
             transparent 30rem
         );
-}
-
-a {
-    color: inherit;
 }
 
 button,
@@ -1087,28 +1064,5 @@ footer a:focus-visible {
                 12px,
                 env(safe-area-inset-right)
             );
-    }
-}
-
-
-/* --------------------------------------------------
-   Reduced motion
--------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior:
-            auto !important;
-
-        transition-duration:
-            0.01ms !important;
-
-        animation-duration:
-            0.01ms !important;
-
-        animation-iteration-count:
-            1 !important;
     }
 }

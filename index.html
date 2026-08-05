@@ -69,39 +69,8 @@
         content="https://jdinis8.github.io/"
     >
 
-    <!--
-        Apply the saved theme before loading the stylesheets.
-        This prevents a flash of the wrong background.
-    -->
-    <script>
-        (() => {
-            try {
-                const savedTheme =
-                    localStorage.getItem("theme");
-
-                const theme =
-                    savedTheme ||
-                    "light";
-
-                document.documentElement.dataset.theme =
-                    theme;
-
-                document
-                    .querySelector(
-                        'meta[name="theme-color"]'
-                    )
-                    ?.setAttribute(
-                        "content",
-                        theme === "light"
-                            ? "#ffffff"
-                            : "#0a0a0a"
-                    );
-            } catch {
-                document.documentElement.dataset.theme =
-                    "light";
-            }
-        })();
-    </script>
+    <!-- Apply the saved theme before loading the stylesheets. -->
+    <script src="theme-init.js"></script>
 
     <!-- Optional web fonts -->
     <link

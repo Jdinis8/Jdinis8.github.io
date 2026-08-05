@@ -2,16 +2,6 @@
    Global layout
 -------------------------------------------------- */
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
 
@@ -22,12 +12,6 @@ body {
         clamp(32px, 6vw, 60px)
         clamp(16px, 4vw, 24px)
         60px;
-
-    background:
-        var(--page-background);
-
-    color:
-        var(--page-text);
 
     font-family:
         "Courier New",
@@ -284,28 +268,5 @@ footer a:focus-visible {
 
     footer {
         flex-direction: column;
-    }
-}
-
-
-/* --------------------------------------------------
-   Reduced motion
--------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior:
-            auto !important;
-
-        transition-duration:
-            0.01ms !important;
-
-        animation-duration:
-            0.01ms !important;
-
-        animation-iteration-count:
-            1 !important;
     }
 }

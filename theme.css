@@ -2,6 +2,12 @@
    Shared website theme
 -------------------------------------------------- */
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 :root {
     --page-background: #ffffff;
     --page-text: #333333;
@@ -29,10 +35,6 @@
     --control-background: rgba(255, 255, 255, 0.78);
     --control-border: rgba(0, 0, 0, 0.35);
     --control-text: rgba(0, 0, 0, 0.8);
-
-    --control-hover-background: #000000;
-    --control-hover-text: #ffffff;
-    --control-hover-border: #000000;
 }
 
 html[data-theme="dark"] {
@@ -62,15 +64,12 @@ html[data-theme="dark"] {
     --control-background: rgba(0, 0, 0, 0.72);
     --control-border: rgba(255, 255, 255, 0.45);
     --control-text: rgba(255, 255, 255, 0.8);
-
-    --control-hover-background: #ffffff;
-    --control-hover-text: #000000;
-    --control-hover-border: #ffffff;
 }
 
 html {
     background: var(--page-background);
     color: var(--page-text);
+    scroll-behavior: smooth;
 }
 
 body {
@@ -96,8 +95,12 @@ select {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html,
-    body {
-        transition: none;
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }

@@ -33,39 +33,8 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' fill='white'>◇</text></svg>"
     >
 
-    <!--
-        Apply the saved site theme before loading CSS.
-        This prevents a flash of the wrong background.
-    -->
-    <script>
-        (() => {
-            try {
-                const savedTheme =
-                    localStorage.getItem("theme");
-
-                const theme =
-                    savedTheme ||
-                    "light";
-
-                document.documentElement.dataset.theme =
-                    theme;
-
-                document
-                    .querySelector(
-                        'meta[name="theme-color"]'
-                    )
-                    ?.setAttribute(
-                        "content",
-                        theme === "light"
-                            ? "#ffffff"
-                            : "#0a0a0a"
-                    );
-            } catch {
-                document.documentElement.dataset.theme =
-                    "light";
-            }
-        })();
-    </script>
+    <!-- Apply the saved theme before loading the stylesheets. -->
+    <script src="theme-init.js"></script>
 
     <!-- Shared website colors -->
     <link
@@ -149,8 +118,7 @@
                 year: "2025",
                 image: "Images/design/Hella Full/hellafull_stickers.png",
                 description: "Mock-up of sticker designs for HellaFull.",
-                tools: "Photoshop / Blender",
-                link: ""
+                tools: "Photoshop / Blender"
             },
             {
                 title: "Swiss School Series #2",
@@ -159,8 +127,7 @@
                 image: "Images/design/Swiss School/swiss_attempt2.png",
                 description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
                 tools: "Illustrator",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Ascending",
@@ -169,20 +136,16 @@
                 image: "Images/design/Ascending.png",
                 description: "Experimental digital design exploring the concept of ascension.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Voynich Code - Poster Series",
                 category: "Music",
                 year: "2026",
                 image: "Images/design/voynich_code.png",
-                pdf: "",
-                page: 1,
                 layout: "portrait",
                 description: "A poster for the Portuguese heavy metal band Voynich Code.",
-                tools: "Photoshop",
-                link: ""
+                tools: "Photoshop"
             },
             {
                 title: "Moonspell Tour Alternative Poster",
@@ -191,8 +154,7 @@
                 image: "Images/design/moonspell.png",
                 description: "A tour poster for Moonspell that I designed for fun, exploring a more experimental and abstract approach to the band's aesthetic.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Swiss School Series #3",
@@ -201,8 +163,7 @@
                 image: "Images/design/Swiss School/swiss_attempt3.png",
                 description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },{
                 title: "Swiss School Series #5",
                 category: "Experimental",
@@ -210,8 +171,7 @@
                 image: "Images/design/Swiss School/swiss_attempt5.png",
                 description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },{
                 title: "Swiss School Series #4",
                 category: "Experimental",
@@ -219,44 +179,34 @@
                 image: "Images/design/Swiss School/swiss_attempt4.png",
                 description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Grão de Areia",
                 category: "Single Cover",
                 year: "2026",
                 image: "Images/design/Grão de Areia/graodeareia6_changes.png",
-                pdf: "",
-                page: 1,
                 layout: "portrait",
                 description: "Poster for the first ever single of Grão de Areia, a Portuguese indie band.",
-                tools: "Photoshop",
-                link: ""
+                tools: "Photoshop"
             },
             {
                 title: "Lamb of God — Poster Series",
                 category: "Music",
                 year: "2026",
                 image: "Images/design/lambofgod.png",
-                pdf: "",
-                page: 1,
                 layout: "portrait",
                 description: "A poster system exploring scientific typography, orbital geometry, and restrained monochromatic composition.",
-                tools: "Illustrator / InDesign",
-                link: ""
+                tools: "Illustrator / InDesign"
             },
             {
                 title: "Swiss School Series #1",
                 category: "Experimental",
                 year: "2026",
                 image: "Images/design/Swiss School/hellafull_swiss.png",
-                pdf: "",
-                page: 1,
                 layout: "portrait",
                 description: "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
-                tools: "Illustrator / InDesign",
-                link: ""
+                tools: "Illustrator / InDesign"
             },
             {
                 title: "Reissner-Nördstrom Black Hole Penrose Diagram",
@@ -265,8 +215,7 @@
                 image: "Images/design/Physics/RN.jpg",
                 description: "Penrose diagram for a Reissner-Nördstrom black hole.",
                 tools: "Python",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Extended Schwarzschild Black Hole Penrose Diagram",
@@ -275,8 +224,7 @@
                 image: "Images/design/Physics/SCMax.jpg",
                 description: "Extended Penrose diagram for a Schwarzschild black hole.",
                 tools: "Python",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Trumpet Hyperboloidal Slicing in Schwarzschild Spacetime",
@@ -285,8 +233,7 @@
                 image: "Images/design/Physics/ScTrumpet.jpg",
                 description: "Trumpet hyperboloidal slicing in Schwarzschild spacetime.",
                 tools: "Python",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "HellaFull - Business Card 01",
@@ -295,8 +242,7 @@
                 image: "Images/design/Hella Full/hellafull_businesscard.png",
                 description: "Business card design for HellaFull, a Mississippi chef.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Vended - Album Cover Series",
@@ -305,20 +251,16 @@
                 image: "Images/design/vended.png",
                 description: "Cover design for the heavy metal band Vended, designed for fun.",
                 tools: "Photoshop",
-                layout: "portrait",
-                link: ""
+                layout: "portrait"
             },
             {
                 title: "Grão de Areia — Alternative Cover",
                 category: "Single Cover",
                 year: "2026",
                 image: "Images/design/Grão de Areia/graodeareia4.png",
-                pdf: "",
-                page: 1,
                 layout: "portrait",
                 description: "Alternative cover for the first single of Grão de Areia.",
-                tools: "Photoshop",
-                link: ""
+                tools: "Photoshop"
             },
         ];
 
