@@ -3,8 +3,8 @@ export class UIOverlay {
         this.canvas = canvas;
 
         this.center = {
-            x: canvas.width / 2,
-            y: canvas.height / 2
+            x: canvas.clientWidth / 2,
+            y: canvas.clientHeight / 2
         };
 
         this.fade = 0;
@@ -87,12 +87,12 @@ export class UIOverlay {
     resize() {
         const width = Math.max(
             1,
-            this.canvas.width
+            this.canvas.clientWidth
         );
 
         const height = Math.max(
             1,
-            this.canvas.height
+            this.canvas.clientHeight
         );
 
         const minimumDimension =
@@ -711,7 +711,7 @@ export class UIOverlay {
                     rect.left
                 ) *
                 (
-                    this.canvas.width /
+                    this.canvas.clientWidth /
                     rect.width
                 ),
 
@@ -721,7 +721,7 @@ export class UIOverlay {
                     rect.top
                 ) *
                 (
-                    this.canvas.height /
+                    this.canvas.clientHeight /
                     rect.height
                 )
         };

@@ -102,13 +102,13 @@ export class DotGrid {
     initDots() {
         const cols =
             Math.ceil(
-                this.canvas.width /
+                this.canvas.clientWidth /
                 this.spacing
             ) + 2;
 
         const rows =
             Math.ceil(
-                this.canvas.height /
+                this.canvas.clientHeight /
                 this.spacing
             ) + 2;
 
@@ -126,11 +126,11 @@ export class DotGrid {
             ) {
                 const x =
                     i * this.spacing -
-                    this.canvas.width / 2;
+                    this.canvas.clientWidth / 2;
 
                 const y =
                     j * this.spacing -
-                    this.canvas.height / 2;
+                    this.canvas.clientHeight / 2;
 
                 const z =
                     this.depth;
@@ -165,13 +165,13 @@ export class DotGrid {
         const cx =
             Math.max(
                 1,
-                this.canvas.width / 2
+                this.canvas.clientWidth / 2
             );
 
         const cy =
             Math.max(
                 1,
-                this.canvas.height / 2
+                this.canvas.clientHeight / 2
             );
 
         /*
@@ -224,8 +224,8 @@ export class DotGrid {
          */
         const minimumDimension =
             Math.min(
-                this.canvas.width,
-                this.canvas.height
+                this.canvas.clientWidth,
+                this.canvas.clientHeight
             );
 
         /*
@@ -514,11 +514,11 @@ export class DotGrid {
         return {
             x:
                 x1 * scale +
-                this.canvas.width / 2,
+                this.canvas.clientWidth / 2,
 
             y:
                 y1 * scale +
-                this.canvas.height / 2,
+                this.canvas.clientHeight / 2,
 
             scale
         };
@@ -612,8 +612,8 @@ export class DotGrid {
                     Math.max(
                         150,
                         Math.min(
-                            this.canvas.width,
-                            this.canvas.height
+                            this.canvas.clientWidth,
+                            this.canvas.clientHeight
                         ) * 0.4
                     )
                 );

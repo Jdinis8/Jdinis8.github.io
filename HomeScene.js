@@ -4,7 +4,12 @@ import { UIOverlay } from "./UIOverlay.js"
 export class HomeScene {
     constructor(canvas, ctx, mouse) {
         this.canvas = canvas;
-        this.ctx = ctx;
+        this.ctx = canvas.getContext("2d");
+
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.pixelRatio = 1;
+        
         this.mouse = mouse;
 
         this.layers = [];
@@ -67,7 +72,7 @@ export class HomeScene {
     }
 
     draw(ctx) {
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.clearRect(0, 0, this.width, this.height);
         this.layers.forEach(layer => layer.draw(ctx, this.mouse));
         
         // update & draw UI overlay
@@ -81,10 +86,66 @@ export class HomeScene {
     }
 
     onResize() {
-    this.ui.resize();
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-    this.layers.forEach(layer => {
-        layer.onResize?.();
-    });
-}
+        /*
+        * High-resolution phones commonly have a pixel ratio
+        * of 2 or 3. Limiting it to 2 keeps the text sharp
+        * without making the animation excessively expensive.
+        */
+        const pixelRatio = Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+        /*
+        * Store the visible dimensions separately.
+        * canvas.width and canvas.height will contain the
+        * enlarged internal bitmap dimensions.
+        */
+        this.width = width;
+        this.height = height;
+        this.pixelRatio = pixelRatio;
+
+        /*
+        * Visible CSS dimensions.
+        */
+        this.canvas.style.width = `${width}px`;
+        this.canvas.style.height = `${height}px`;
+
+        /*
+        * Internal high-resolution canvas dimensions.
+        */
+        this.canvas.width = Math.round(
+            width * pixelRatio
+        );
+
+        this.canvas.height = Math.round(
+            height * pixelRatio
+        );
+
+        /*
+        * Draw using normal screen coordinates even though
+        * the internal canvas is higher resolution.
+        */
+        this.ctx.setTransform(
+            pixelRatio,
+            0,
+            0,
+            pixelRatio,
+            0,
+            0
+        );
+
+        /*
+        * Resize the interface and dot layers only after
+        * the canvas dimensions have been configured.
+        */
+        this.ui.resize();
+
+        this.layers.forEach(layer => {
+            layer.onResize?.();
+        });
+    }
 }
