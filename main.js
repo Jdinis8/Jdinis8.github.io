@@ -25,7 +25,7 @@ function getCurrentTheme() {
             .documentElement
             .dataset
             .theme ||
-        "dark"
+        "light"
     );
 }
 

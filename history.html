@@ -2,87 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research — João D. Álvares</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='white'>☉</text></svg>">
-    <style>
-        body {
-            background-color: #0a0a0a;
-            color: #b0b0b0; /* Slightly softer white for better reading stamina */
-            font-family: 'Courier New', Courier, monospace;
-            line-height: 1.6;
-            margin: 0;
-            padding: 60px 20px;
-        }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-        section {
-            scroll-margin-top: 40px;
-        }
+    <title>
+        History — João D. Álvares
+    </title>
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-        }
+    <meta
+        name="description"
+        content="Historical research, archival work, and preservation projects by João D. Álvares."
+    >
 
-        header {
-            margin-bottom: 60px;
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 30px;
-        }
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
 
-        .back-link {
-            color: #555;
-            text-decoration: none;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-bottom: 30px;
-            transition: color 0.2s ease;
-        }
-        .back-link:hover { color: #fff; }
+    <link
+        rel="canonical"
+        href="https://jdinis8.github.io/history.html"
+    >
 
-        h1 { 
-            font-size: 1.6rem; 
-            font-weight: 400; 
-            color: #fff; 
-            margin: 0 0 20px 0;
-            letter-spacing: 1px;
-        }
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='black'>☉</text></svg>"
+    >
 
-        h2 { 
-            font-size: 1.15rem; 
-            font-weight: 400; 
-            margin-top: 50px; 
-            margin-bottom: 20px;
-            color: #fff; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .meta { 
-            color: #444; 
-            font-size: 0.8rem; 
-            margin-bottom: 15px; 
-            font-style: italic;
-        }
-    </style>
+    <!--
+        Apply the saved theme before loading CSS.
+        Light mode is used when no preference has been saved.
+    -->
+    <script>
+        (() => {
+            try {
+                const savedTheme =
+                    localStorage.getItem("theme");
+
+                const theme =
+                    savedTheme ||
+                    "light";
+
+                document.documentElement.dataset.theme =
+                    theme;
+
+                document
+                    .querySelector(
+                        'meta[name="theme-color"]'
+                    )
+                    ?.setAttribute(
+                        "content",
+                        theme === "light"
+                            ? "#ffffff"
+                            : "#0a0a0a"
+                    );
+            } catch {
+                document.documentElement.dataset.theme =
+                    "light";
+            }
+        })();
+    </script>
+
+    <!-- Shared theme variables -->
+    <link
+        rel="stylesheet"
+        href="theme.css"
+    >
+
+    <!-- History-page layout -->
+    <link
+        rel="stylesheet"
+        href="history.css"
+    >
 </head>
-<body>
 
+<body>
     <div class="container">
         <header>
-            <a href="index.html" class="back-link">← Return to Main Page</a>
-            <h1>Page In Construction</h1>
+            <a
+                href="index.html"
+                class="back-link"
+            >
+                ← Return to Main Page
+            </a>
 
+            <p class="eyebrow">
+                Archive / memory / preservation
+            </p>
+
+            <h1>
+                HISTORY &amp; PRESERVATION
+            </h1>
+
+            <p class="intro">
+                Historical research, archival material, and
+                projects concerned with preserving personal,
+                scientific, and cultural memory.
+            </p>
         </header>
 
         <main>
-            
+            <section
+                class="construction"
+                aria-labelledby="construction-title"
+            >
+                <span
+                    class="construction-index"
+                    aria-hidden="true"
+                >
+                    01
+                </span>
+
+                <div class="construction-content">
+                    <p class="section-kicker">
+                        Current status
+                    </p>
+
+                    <h2 id="construction-title">
+                        Page in construction
+                    </h2>
+
+                    <p>
+                        This archive is currently being assembled.
+                        Historical documents, research notes, visual
+                        material, and preservation projects will be
+                        added here progressively.
+                    </p>
+                </div>
+            </section>
         </main>
+
+        <footer>
+            <span>
+                © <span id="copyright-year"></span>
+                João D. Álvares
+            </span>
+
+            <span>
+                <a href="mailto:jdlvares@go.olemiss.edu">
+                    Email
+                </a>
+
+                &middot;
+
+                <a
+                    href="https://github.com/Jdinis8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </span>
+        </footer>
     </div>
 
+    <script>
+        document
+            .getElementById("copyright-year")
+            .textContent =
+                new Date().getFullYear();
+    </script>
 </body>
 </html>

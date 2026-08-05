@@ -19,7 +19,7 @@
 
     <meta
         name="theme-color"
-        content="#0a0a0a"
+        content="#ffffff"
     >
 
     <link
@@ -43,16 +43,9 @@
                 const savedTheme =
                     localStorage.getItem("theme");
 
-                const preferredTheme =
-                    window.matchMedia(
-                        "(prefers-color-scheme: light)"
-                    ).matches
-                        ? "light"
-                        : "dark";
-
                 const theme =
                     savedTheme ||
-                    preferredTheme;
+                    "light";
 
                 document.documentElement.dataset.theme =
                     theme;
@@ -69,7 +62,7 @@
                     );
             } catch {
                 document.documentElement.dataset.theme =
-                    "dark";
+                    "light";
             }
         })();
     </script>
