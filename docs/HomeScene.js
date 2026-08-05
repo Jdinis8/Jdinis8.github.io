@@ -13,12 +13,6 @@ export class HomeScene {
         this.scrollTarget = 0;
 
         this.ui = new UIOverlay(canvas);
-
-        window.addEventListener("resize", () => {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.ui.resize();
-    });
     }
 
     init() {
@@ -42,7 +36,7 @@ export class HomeScene {
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onScroll = this.onScroll.bind(this);
 
-        this.canvas.addEventListener("mousemove", this.onMouseMove);
+        this.canvas.addEventListener("pointermove", this.onMouseMove, { passive: true });
         window.addEventListener("scroll", this.onScroll);
     }
 
@@ -82,11 +76,15 @@ export class HomeScene {
     }
 
     destroy() {
-        this.canvas.removeEventListener("mousemove", this.onMouseMove);
+        this.canvas.removeEventListener("pointermove", this.onMouseMove);
         window.removeEventListener("scroll", this.onScroll);
     }
 
     onResize() {
-        this.layers.forEach(layer => layer.onResize());
-    }
+    this.ui.resize();
+
+    this.layers.forEach(layer => {
+        layer.onResize?.();
+    });
+}
 }

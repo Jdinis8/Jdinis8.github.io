@@ -10,20 +10,34 @@ let currentScene = null;
 const maincolor = "#6291bd";
 
 function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    behindScene?.onResize(maincolor);
-    currentScene?.onResize();
+    const viewport = window.visualViewport;
+
+    const width = Math.round(
+        viewport?.width ?? document.documentElement.clientWidth
+    );
+
+    const height = Math.round(
+        viewport?.height ?? window.innerHeight
+    );
+
+    if (
+        canvas.width !== width ||
+        canvas.height !== height
+    ) {
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    behindScene?.onResize();
+    currentScene?.onResize?.();
 }
 
-resize();
-window.addEventListener("resize", resize);
-
-const mouse = { x: canvas.width/2, y: canvas.height/2 };
-window.addEventListener("mousemove", e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
+const mouse = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+    vx: 0,
+    vy: 0
+};
 
 function replayBlur() {
     const blurOverlay = document.createElement("div");
@@ -35,18 +49,30 @@ function replayBlur() {
 behindScene = new HomeScene(canvas, ctx, mouse, maincolor);
 behindScene.init();
 
+behindScene = new HomeScene(canvas, ctx, mouse);
+behindScene.init();
+
 resize();
-window.addEventListener("resize", resize);
+
+window.addEventListener("resize", resize, {
+    passive: true
+});
+
+window.visualViewport?.addEventListener("resize", resize, {
+    passive: true
+});
+
 let lastTime = 0;
 
-// Main loop
 function animate(time) {
-    const dt = time - lastTime;
+    const dt = lastTime
+        ? Math.min(time - lastTime, 50)
+        : 0;
+
     lastTime = time;
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
     ctx.save();
+
     behindScene?.update(dt);
 
     // --- Gravity attraction logic
@@ -62,8 +88,17 @@ function animate(time) {
                 const dy = centerY - (dot.y + canvas.height/2);
                 const dist = Math.hypot(dx, dy);
 
-                const influenceRadius = 300;
-                if (dist < influenceRadius) {
+                const minimumDimension = Math.min(
+                    canvas.width,
+                    canvas.height
+                );
+
+                const influenceRadius = Math.min(
+                    300,
+                    Math.max(120, minimumDimension * 0.35)
+                );
+                
+                if (dist > 0 && dist < influenceRadius) {
                     const force = (1 - dist / influenceRadius) * 0.05;
                     dot.vx += dx / dist * force;
                     dot.vy += dy / dist * force;
@@ -72,13 +107,11 @@ function animate(time) {
         });
     }
 
-behindScene?.draw(ctx);
     behindScene?.draw(ctx);
+
     ctx.restore();
 
     requestAnimationFrame(animate);
 }
 
 requestAnimationFrame(animate);
-
-animate();
