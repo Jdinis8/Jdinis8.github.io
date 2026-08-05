@@ -130,6 +130,10 @@ h1 {
     border: 1px solid var(--border-color);
 }
 
+.article-body .image-series img + img {
+    margin-top: 14px;
+}
+
 .article-body figcaption {
     margin-top: 10px;
     color: var(--faint-text);
