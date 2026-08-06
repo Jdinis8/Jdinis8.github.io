@@ -45,6 +45,20 @@ styles:
         {% include site-footer.html %}
     </div>
 
+    <div class="modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="modal-close" type="button" aria-label="Close project">×</button>
+        <article class="modal-panel">
+            <div class="modal-media" id="modal-media"></div>
+            <div class="modal-copy">
+                <div>
+                    <h2 id="modal-title"></h2>
+                    <p class="modal-description" id="modal-description"></p>
+                </div>
+                <p class="modal-meta" id="modal-meta"></p>
+            </div>
+        </article>
+    </div>
+
     <script src="/assets/js/design.js" defer></script>
     <script src="/assets/js/site.js" defer></script>
 </body>

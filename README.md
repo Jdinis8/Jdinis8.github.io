@@ -10,10 +10,7 @@ live in one place.
 - `_layouts/` contains the shared history article shell.
 - `_includes/` contains shared document-head, history-list, and paper-list markup.
 - `_data/papers.json` is the generated publication metadata used by `research.html`.
-- `_design_projects/` contains the design archive's project metadata and optional
-  case-study content. Every file is published at a permanent project URL.
-- `assets/data/design-projects.json` is generated from that collection for the
-  filterable design grid; do not edit it directly.
+- `assets/data/design-projects.json` is the design archive's project catalogue.
 - `assets/css/`, `assets/js/`, `assets/images/`, and `assets/documents/` contain
   files published with the site.
 - `source-assets/` contains working files and unreferenced archive material. It
@@ -65,30 +62,24 @@ Keep `permalink` stable after publication. Article images belong in
 
 ## Updating the design archive
 
-Add or edit a Markdown file in `_design_projects/`. Its front matter is the
-single source of truth for the project grid and its permanent detail page. Each
-`image` or `pdf` path must point to a published file under `assets/`.
+Edit `assets/data/design-projects.json`. Each `image` or `pdf` path must point to
+a published file under `assets/`. The design page reads this file at runtime;
+no HTML changes are required for a new project.
 
-The filename becomes the permanent URL. For example,
-`_design_projects/example-project.md` is published at
-`/design/example-project/`. Keep filenames stable after publishing so shared
-links do not break. Use the `order` field to control the grid order.
+Every project must have a unique lowercase `slug`. Opening a project adds that
+slug to the design-page URL, for example `/design.html?project=example-project`.
+That URL can be copied or shared and will reopen the same project modal. Keep
+slugs stable after publishing so shared links do not break.
 
 Each project can belong to any number of filter categories. Add them through
 the `categories` array:
 
-```yaml
----
-title: Example project
-order: 18
-categories: [Poster, Music, Experimental]
-cardSize: standard
-year: 2026
-image: /assets/images/design/example-project.png
-description: A concise description of the project.
-tools: Photoshop / Illustrator
-image_layout: portrait
----
+```json
+{
+  "slug": "example-project",
+  "title": "Example project",
+  "categories": ["Poster", "Music", "Experimental"]
+}
 ```
 
 The project will appear when any one of those category filters is selected.
@@ -106,12 +97,14 @@ the `cardSize` field:
 
 For example:
 
-```yaml
-cardSize: wide
+```json
+{
+  "slug": "example-project",
+  "title": "Example project",
+  "categories": ["Poster", "Music"],
+  "cardSize": "wide"
+}
 ```
-
-Optional Markdown below the closing front-matter delimiter appears as extended
-case-study content on the permanent project page.
 
 Arrange projects so each desktop row ideally totals 12 columns, such as
 `4 + 4 + 4`, `6 + 6`, or `8 + 4`. On tablets, standard and half cards use half

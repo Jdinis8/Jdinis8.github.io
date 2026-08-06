@@ -28,6 +28,11 @@
 
     --card-arrow: rgba(255, 255, 255, 0.72);
 
+    --modal-backdrop: rgba(0, 0, 0, 0.84);
+    --modal-panel: #0d0d0d;
+    --modal-media: #111111;
+    --modal-shadow: rgba(0, 0, 0, 0.6);
+
     --page-width: 1180px;
 }
 
@@ -49,6 +54,10 @@ html[data-theme="light"] {
 
     --card-arrow: rgba(0, 0, 0, 0.7);
 
+    --modal-backdrop: rgba(20, 20, 20, 0.74);
+    --modal-panel: #ffffff;
+    --modal-media: #eeeeec;
+    --modal-shadow: rgba(0, 0, 0, 0.22);
 }
 
 
@@ -350,7 +359,6 @@ h1 {
 
     cursor: pointer;
     text-align: left;
-    text-decoration: none;
 
     transition:
         transform 180ms ease,
@@ -394,7 +402,7 @@ h1 {
 }
 
 .project-card::after {
-    content: "→";
+    content: "↗";
 
     position: absolute;
 
@@ -662,6 +670,225 @@ h1 {
 
 
 /* --------------------------------------------------
+   Project modal
+-------------------------------------------------- */
+
+.modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 10;
+
+    display: none;
+
+    place-items: center;
+
+    padding: 24px;
+
+    background:
+        var(--modal-backdrop);
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+}
+
+.modal.is-open {
+    display: grid;
+}
+
+.modal-panel {
+    width:
+        min(
+            100%,
+            980px
+        );
+
+    max-height:
+        calc(
+            100vh - 48px
+        );
+
+    max-height:
+        calc(
+            100dvh - 48px
+        );
+
+    overflow: auto;
+
+    border:
+        1px solid
+        var(--line-bright);
+
+    background:
+        var(--modal-panel);
+
+    color:
+        var(--design-text);
+
+    box-shadow:
+        0 30px 100px
+        var(--modal-shadow);
+}
+
+.modal-media {
+    min-height: 280px;
+
+    background:
+        var(--modal-media);
+}
+
+.modal-media img {
+    display: block;
+
+    width: 100%;
+    max-height: 66vh;
+    max-height: 66dvh;
+
+    object-fit: contain;
+
+    background:
+        var(--modal-media);
+}
+
+.modal-copy {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(220px, 0.36fr);
+
+    gap: 40px;
+
+    padding:
+        27px 30px 32px;
+}
+
+.modal-copy h2 {
+    margin:
+        0 0 12px;
+
+    color:
+        var(--design-heading);
+
+    font-size:
+        clamp(
+            1.35rem,
+            3vw,
+            2.2rem
+        );
+
+    font-weight: 400;
+    letter-spacing: -0.04em;
+}
+
+.modal-description {
+    margin: 0;
+
+    color:
+        var(--design-muted);
+
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.modal-meta {
+    margin: 0;
+
+    color:
+        var(--design-muted);
+
+    font-size: 0.78rem;
+    line-height: 2;
+    text-transform: uppercase;
+}
+
+.modal-meta strong {
+    color:
+        var(--design-text);
+
+    font-weight: 400;
+}
+
+.modal-link {
+    display: inline-block;
+
+    margin-top: 12px;
+
+    color:
+        var(--design-link);
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid
+        var(--line-bright);
+}
+
+.modal-link:hover,
+.modal-link:focus-visible {
+    color:
+        var(--design-heading);
+
+    border-color:
+        var(--design-heading);
+}
+
+.modal-close {
+    position: fixed;
+
+    top:
+        max(
+            24px,
+            env(safe-area-inset-top)
+        );
+
+    right:
+        max(
+            27px,
+            env(safe-area-inset-right)
+        );
+
+    width: 42px;
+    height: 42px;
+
+    border:
+        1px solid
+        var(--line-bright);
+
+    background:
+        var(--modal-panel);
+
+    color:
+        var(--design-muted);
+
+    cursor: pointer;
+
+    font-size: 1.2rem;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+    color:
+        var(--design-heading);
+
+    border-color:
+        var(--design-muted);
+}
+
+.modal-close:focus-visible {
+    outline:
+        1px solid
+        var(--design-heading);
+
+    outline-offset: 3px;
+}
+
+
+/* --------------------------------------------------
    Responsive layout
 -------------------------------------------------- */
 
@@ -698,6 +925,11 @@ h1 {
             16 / 10;
     }
 
+    .modal-copy {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
 }
 
 @media (max-width: 570px) {
@@ -722,4 +954,33 @@ h1 {
         padding-inline: 14px;
     }
 
+    .modal {
+        padding: 0;
+    }
+
+    .modal-panel {
+        max-height: 100vh;
+        max-height: 100dvh;
+
+        border-inline: 0;
+    }
+
+    .modal-copy {
+        padding:
+            22px 18px 30px;
+    }
+
+    .modal-close {
+        top:
+            max(
+                12px,
+                env(safe-area-inset-top)
+            );
+
+        right:
+            max(
+                12px,
+                env(safe-area-inset-right)
+            );
+    }
 }

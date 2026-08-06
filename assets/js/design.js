@@ -17,10 +17,19 @@ const projectCardSizes = new Set([
 const grid = document.getElementById("project-grid");
 const filters = document.getElementById("filters");
 const count = document.getElementById("project-count");
+const modal = document.getElementById("project-modal");
+const modalClose = document.getElementById("modal-close");
+const modalMedia = document.getElementById("modal-media");
+const modalTitle = document.getElementById("modal-title");
+const modalDescription = document.getElementById("modal-description");
+const modalMeta = document.getElementById("modal-meta");
 
 let projects = [];
 let activeCategory = "All";
+let lastFocusedCard = null;
 let pdfJsPromise;
+
+const designPageTitle = document.title;
 
 function initials(title) {
     return title
@@ -223,9 +232,9 @@ function renderProjects() {
     }
 
     visibleProjects.forEach((project, index) => {
-        const card = document.createElement("a");
+        const card = document.createElement("button");
+        card.type = "button";
         card.className = "project-card";
-        card.href = project.url || "/design.html";
         card.classList.add(
             `project-card--${getProjectCardSize(project)}`,
         );
@@ -234,10 +243,122 @@ function renderProjects() {
             card.classList.add("project-card--portrait");
         }
 
-        card.setAttribute("aria-label", `View ${project.title}`);
+        card.setAttribute("aria-label", `Open ${project.title}`);
         card.append(createVisual(project, index), createProjectInfo(project));
+        card.addEventListener("click", () => {
+            lastFocusedCard = card;
+            openProject(project, index, true);
+        });
         grid.appendChild(card);
     });
+}
+
+function appendMetadata(label, value) {
+    const heading = document.createElement("strong");
+    heading.textContent = label;
+    modalMeta.append(heading, document.createElement("br"));
+    modalMeta.append(value, document.createElement("br"));
+}
+
+function getProjectUrl(slug = null) {
+    const url = new URL(window.location.href);
+
+    if (slug) {
+        url.searchParams.set("project", slug);
+    } else {
+        url.searchParams.delete("project");
+    }
+
+    return `${url.pathname}${url.search}${url.hash}`;
+}
+
+function openProject(project, index, updateUrl = false) {
+    modalTitle.textContent = project.title;
+    modalDescription.textContent = project.description;
+    modalMedia.replaceChildren(createVisual(project, index));
+    modalMeta.replaceChildren();
+    appendMetadata(
+        "Categories",
+        getProjectCategories(project).join(" · "),
+    );
+    appendMetadata("Year", project.year);
+    appendMetadata("Tools", project.tools || "—");
+
+    if (project.link) {
+        const link = document.createElement("a");
+        link.className = "modal-link";
+        link.href = project.link;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        link.textContent = "View full project ↗";
+        modalMeta.appendChild(link);
+    }
+
+    modal.dataset.projectSlug = project.slug;
+    modal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    document.title = `${project.title} — ${designPageTitle}`;
+
+    if (updateUrl) {
+        window.history.pushState(
+            {
+                designProjectModal: true,
+                project: project.slug,
+            },
+            "",
+            getProjectUrl(project.slug),
+        );
+    }
+
+    modalClose.focus();
+}
+
+function closeProject(restoreFocus = true) {
+    modal.classList.remove("is-open");
+    delete modal.dataset.projectSlug;
+    document.body.style.overflow = "";
+    document.title = designPageTitle;
+
+    if (restoreFocus && lastFocusedCard) {
+        lastFocusedCard.focus();
+    }
+}
+
+function requestProjectClose() {
+    if (
+        window.history.state &&
+        window.history.state.designProjectModal
+    ) {
+        window.history.back();
+        return;
+    }
+
+    closeProject();
+    window.history.replaceState(
+        window.history.state,
+        "",
+        getProjectUrl(),
+    );
+}
+
+function syncProjectFromUrl() {
+    const slug = new URL(window.location.href).searchParams.get("project");
+    const index = projects.findIndex((project) => project.slug === slug);
+
+    if (index >= 0) {
+        openProject(projects[index], index, false);
+        return;
+    }
+
+    closeProject();
+
+    if (slug) {
+        window.history.replaceState(
+            window.history.state,
+            "",
+            getProjectUrl(),
+        );
+    }
 }
 
 async function initializeDesignArchive() {
@@ -251,6 +372,7 @@ async function initializeDesignArchive() {
         projects = await response.json();
         renderFilters();
         renderProjects();
+        syncProjectFromUrl();
     } catch (error) {
         console.error("Could not load the design archive:", error);
         count.textContent = "Projects unavailable";
@@ -260,5 +382,22 @@ async function initializeDesignArchive() {
         grid.replaceChildren(message);
     }
 }
+
+modalClose.addEventListener("click", requestProjectClose);
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        requestProjectClose();
+    }
+});
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+        requestProjectClose();
+    }
+});
+window.addEventListener("popstate", () => {
+    if (projects.length > 0) {
+        syncProjectFromUrl();
+    }
+});
 
 initializeDesignArchive();
