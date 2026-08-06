@@ -7,6 +7,13 @@ const fallbackPalettes = [
     ["#14231d", "#171313"],
 ];
 
+const projectCardSizes = new Set([
+    "standard",
+    "half",
+    "wide",
+    "full",
+]);
+
 const grid = document.getElementById("project-grid");
 const filters = document.getElementById("filters");
 const count = document.getElementById("project-count");
@@ -30,6 +37,27 @@ function initials(title) {
         .map((word) => word[0])
         .join("")
         .toUpperCase();
+}
+
+function getProjectCategories(project) {
+    const configuredCategories = Array.isArray(project.categories)
+        ? project.categories
+        : [project.category];
+
+    const categories = configuredCategories
+        .filter((category) => typeof category === "string")
+        .map((category) => category.trim())
+        .filter(Boolean);
+
+    return categories.length > 0
+        ? [...new Set(categories)]
+        : ["Uncategorized"];
+}
+
+function getProjectCardSize(project) {
+    return projectCardSizes.has(project.cardSize)
+        ? project.cardSize
+        : "standard";
 }
 
 function createFallback(project, index) {
@@ -134,7 +162,7 @@ function createVisual(project, index) {
 function renderFilters() {
     const categories = [
         "All",
-        ...new Set(projects.map((project) => project.category)),
+        ...new Set(projects.flatMap(getProjectCategories)),
     ];
 
     filters.replaceChildren();
@@ -171,7 +199,7 @@ function createProjectInfo(project) {
     category.className = "project-type";
     year.className = "project-year";
     title.textContent = project.title;
-    category.textContent = project.category;
+    category.textContent = getProjectCategories(project).join(" · ");
     year.textContent = project.year;
 
     headingGroup.append(title, category);
@@ -184,7 +212,8 @@ function renderProjects() {
         activeCategory === "All"
             ? projects
             : projects.filter(
-                  (project) => project.category === activeCategory,
+                  (project) =>
+                      getProjectCategories(project).includes(activeCategory),
               );
 
     grid.replaceChildren();
@@ -204,6 +233,9 @@ function renderProjects() {
         const card = document.createElement("button");
         card.type = "button";
         card.className = "project-card";
+        card.classList.add(
+            `project-card--${getProjectCardSize(project)}`,
+        );
 
         if (project.layout === "portrait") {
             card.classList.add("project-card--portrait");
@@ -231,7 +263,10 @@ function openProject(project, index) {
     modalDescription.textContent = project.description;
     modalMedia.replaceChildren(createVisual(project, index));
     modalMeta.replaceChildren();
-    appendMetadata("Type", project.category);
+    appendMetadata(
+        "Categories",
+        getProjectCategories(project).join(" · "),
+    );
     appendMetadata("Year", project.year);
     appendMetadata("Tools", project.tools || "—");
 

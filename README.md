@@ -66,6 +66,45 @@ Edit `assets/data/design-projects.json`. Each `image` or `pdf` path must point t
 a published file under `assets/`. The design page reads this file at runtime;
 no HTML changes are required for a new project.
 
+Each project can belong to any number of filter categories. Add them through
+the `categories` array:
+
+```json
+{
+  "title": "Example project",
+  "categories": ["Poster", "Music", "Experimental"]
+}
+```
+
+The project will appear when any one of those category filters is selected.
+Category names are created automatically from the values used in the catalogue.
+
+The desktop portfolio uses a 12-column grid. Control each project's width with
+the `cardSize` field:
+
+| `cardSize` | Column span | Typical arrangement |
+| --- | ---: | --- |
+| `"standard"` | 4 | Three standard cards |
+| `"half"` | 6 | Two half-width cards |
+| `"wide"` | 8 | One wide and one standard card |
+| `"full"` | 12 | One full-width card |
+
+For example:
+
+```json
+{
+  "title": "Example project",
+  "categories": ["Poster", "Music"],
+  "cardSize": "wide"
+}
+```
+
+Arrange projects so each desktop row ideally totals 12 columns, such as
+`4 + 4 + 4`, `6 + 6`, or `8 + 4`. On tablets, standard and half cards use half
+the row while wide and full cards use the full row. All cards use the full row
+on phones. The optional `layout` field continues to control image orientation
+independently; use `"layout": "portrait"` for portrait artwork.
+
 ## Updating publications
 
 Add or reorder arXiv identifiers in `papers.txt`, then run:

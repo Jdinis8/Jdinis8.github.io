@@ -1,7 +1,8 @@
 [
   {
     "title": "HellaFull - Sticker Sheet",
-    "category": "Hella Full",
+    "categories": ["Hella Full"],
+    "cardSize": "wide",
     "year": "2025",
     "image": "/assets/images/design/hella-full/hellafull-stickers.png",
     "description": "Mock-up of sticker designs for HellaFull.",
@@ -9,7 +10,8 @@
   },
   {
     "title": "Swiss School Series #2",
-    "category": "Experimental",
+    "categories": ["Experimental"],
+    "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/swiss-school/swiss-attempt-2.png",
     "description": "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
@@ -18,7 +20,8 @@
   },
   {
     "title": "Ascending",
-    "category": "Poster",
+    "categories": ["Poster"],
+    "cardSize": "standard",
     "year": "2024",
     "image": "/assets/images/design/ascending.png",
     "description": "Experimental digital design exploring the concept of ascension.",
@@ -27,7 +30,8 @@
   },
   {
     "title": "Voynich Code - Poster Series",
-    "category": "Music",
+    "categories": ["Music"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/voynich-code.png",
     "description": "A poster for the Portuguese heavy metal band Voynich Code.",
@@ -36,7 +40,8 @@
   },
   {
     "title": "Moonspell Tour Alternative Poster",
-    "category": "Music",
+    "categories": ["Music"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/moonspell.png",
     "description": "A tour poster for Moonspell that I designed for fun, exploring a more experimental and abstract approach to the band's aesthetic.",
@@ -45,7 +50,8 @@
   },
   {
     "title": "Swiss School Series #3",
-    "category": "Experimental",
+    "categories": ["Experimental"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/swiss-school/swiss-attempt-3.png",
     "description": "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
@@ -54,7 +60,8 @@
   },
   {
     "title": "Swiss School Series #5",
-    "category": "Experimental",
+    "categories": ["Experimental"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/swiss-school/swiss-attempt-5.png",
     "description": "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
@@ -63,7 +70,8 @@
   },
   {
     "title": "Swiss School Series #4",
-    "category": "Experimental",
+    "categories": ["Experimental"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/swiss-school/swiss-attempt-4.png",
     "description": "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
@@ -72,7 +80,8 @@
   },
   {
     "title": "Grão de Areia",
-    "category": "Single Cover",
+    "categories": ["Single Cover"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/grao-de-areia/grao-de-areia-6-changes.png",
     "description": "Poster for the first ever single of Grão de Areia, a Portuguese indie band.",
@@ -81,7 +90,8 @@
   },
   {
     "title": "Lamb of God — Poster Series",
-    "category": "Music",
+    "categories": ["Music"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/lamb-of-god.png",
     "description": "A poster system exploring scientific typography, orbital geometry, and restrained monochromatic composition.",
@@ -90,7 +100,8 @@
   },
   {
     "title": "Swiss School Series #1",
-    "category": "Experimental",
+    "categories": ["Experimental"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/swiss-school/hellafull-swiss.png",
     "description": "A series of designs exploring the Swiss School aesthetic, with a focus on typography, layout, and color.",
@@ -99,7 +110,8 @@
   },
   {
     "title": "Reissner-Nördstrom Black Hole Penrose Diagram",
-    "category": "Scientific",
+    "categories": ["Scientific"],
+    "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/physics/reissner-nordstrom.jpg",
     "description": "Penrose diagram for a Reissner-Nördstrom black hole.",
@@ -108,7 +120,8 @@
   },
   {
     "title": "Extended Schwarzschild Black Hole Penrose Diagram",
-    "category": "Scientific",
+    "categories": ["Scientific"],
+    "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/physics/schwarzschild-max-extension.jpg",
     "description": "Extended Penrose diagram for a Schwarzschild black hole.",
@@ -117,7 +130,8 @@
   },
   {
     "title": "Trumpet Hyperboloidal Slicing in Schwarzschild Spacetime",
-    "category": "Scientific",
+    "categories": ["Scientific"],
+    "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/physics/schwarzschild-trumpet.jpg",
     "description": "Trumpet hyperboloidal slicing in Schwarzschild spacetime.",
@@ -126,7 +140,8 @@
   },
   {
     "title": "HellaFull - Business Card 01",
-    "category": "Hella Full",
+    "categories": ["Hella Full"],
+    "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/hella-full/hellafull-business-card.png",
     "description": "Business card design for HellaFull, a Mississippi chef.",
@@ -135,7 +150,8 @@
   },
   {
     "title": "Vended - Album Cover Series",
-    "category": "Music",
+    "categories": ["Music"],
+    "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/vended.png",
     "description": "Cover design for the heavy metal band Vended, designed for fun.",
@@ -144,7 +160,8 @@
   },
   {
     "title": "Grão de Areia — Alternative Cover",
-    "category": "Single Cover",
+    "categories": ["Single Cover"],
+    "cardSize": "standard",
     "year": "2026",
     "image": "/assets/images/design/grao-de-areia/grao-de-areia-4.png",
     "description": "Alternative cover for the first single of Grão de Areia.",

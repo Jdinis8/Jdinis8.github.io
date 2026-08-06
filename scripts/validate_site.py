@@ -152,6 +152,50 @@ def validate_json_assets(site_root: Path, data_file: Path) -> list[str]:
     except json.JSONDecodeError as error:
         return [f"{data_file}: invalid JSON: {error}"]
 
+    if data_file.name == "design-projects.json":
+        if not isinstance(data, list):
+            errors.append(f"{data_file}: project catalogue must be a list")
+        else:
+            valid_card_sizes = {"standard", "half", "wide", "full"}
+
+            for index, project in enumerate(data, start=1):
+                if not isinstance(project, dict):
+                    errors.append(
+                        f"{data_file}: project {index} must be an object"
+                    )
+                    continue
+
+                categories = project.get("categories")
+
+                if categories is None:
+                    # Continue accepting the original singular field so older
+                    # catalogue entries remain compatible.
+                    categories = [project.get("category")]
+
+                if (
+                    not isinstance(categories, list)
+                    or not categories
+                    or any(
+                        not isinstance(category, str) or not category.strip()
+                        for category in categories
+                    )
+                ):
+                    errors.append(
+                        f"{data_file}: project {index} must have one or more "
+                        "non-empty categories"
+                    )
+
+                card_size = project.get("cardSize", "standard")
+
+                if (
+                    not isinstance(card_size, str)
+                    or card_size not in valid_card_sizes
+                ):
+                    errors.append(
+                        f"{data_file}: project {index} has invalid cardSize "
+                        f"{card_size!r}"
+                    )
+
     def visit(value: object) -> None:
         if isinstance(value, list):
             for item in value:

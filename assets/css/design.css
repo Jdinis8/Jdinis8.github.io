@@ -361,10 +361,19 @@ h1 {
         background-color 180ms ease;
 }
 
-.project-card:nth-child(5n + 1),
-.project-card:nth-child(5n + 4) {
+.project-card--half {
+    grid-column:
+        span 6;
+}
+
+.project-card--wide {
     grid-column:
         span 8;
+}
+
+.project-card--full {
+    grid-column:
+        span 12;
 }
 
 .project-card:hover,
@@ -440,12 +449,16 @@ h1 {
         var(--visual-background);
 }
 
-.project-card:nth-child(5n + 1)
-.project-visual,
-.project-card:nth-child(5n + 4)
+.project-card--wide:not(.project-card--portrait)
 .project-visual {
     aspect-ratio:
         16 / 8;
+}
+
+.project-card--full:not(.project-card--portrait)
+.project-visual {
+    aspect-ratio:
+        16 / 7;
 }
 
 .project-visual img {
@@ -469,11 +482,6 @@ h1 {
 
 /* Portrait projects */
 
-.project-card.project-card--portrait {
-    grid-column:
-        span 4;
-}
-
 .project-visual--portrait {
     display: grid;
 
@@ -483,14 +491,6 @@ h1 {
         4 / 5;
 
     padding: 12px;
-}
-
-.project-card:nth-child(5n + 1)
-.project-visual--portrait,
-.project-card:nth-child(5n + 4)
-.project-visual--portrait {
-    aspect-ratio:
-        4 / 5;
 }
 
 .project-visual--portrait img {
@@ -949,32 +949,24 @@ footer a:focus-visible {
         display: none;
     }
 
-    .project-card,
-    .project-card:nth-child(5n + 1),
-    .project-card:nth-child(5n + 4) {
+    .project-card--standard,
+    .project-card--half {
         grid-column:
             span 6;
     }
 
-    .project-card.project-card--portrait {
+    .project-card--wide,
+    .project-card--full {
         grid-column:
-            span 6;
+            span 12;
     }
 
-    .project-card:nth-child(5n + 1)
+    .project-card--wide:not(.project-card--portrait)
     .project-visual,
-    .project-card:nth-child(5n + 4)
+    .project-card--full:not(.project-card--portrait)
     .project-visual {
         aspect-ratio:
             16 / 10;
-    }
-
-    .project-card:nth-child(5n + 1)
-    .project-visual--portrait,
-    .project-card:nth-child(5n + 4)
-    .project-visual--portrait {
-        aspect-ratio:
-            4 / 5;
     }
 
     .modal-copy {
@@ -997,10 +989,7 @@ footer a:focus-visible {
         align-items: flex-start;
     }
 
-    .project-card,
-    .project-card:nth-child(5n + 1),
-    .project-card:nth-child(5n + 4),
-    .project-card.project-card--portrait {
+    .project-card {
         grid-column:
             1 / -1;
     }
