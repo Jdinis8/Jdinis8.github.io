@@ -124,3 +124,11 @@ The script retrieves arXiv metadata and rewrites only `_data/papers.json`. The
 research page renders that data through `_includes/paper-list.html`. The
 `Update arXiv papers` workflow performs the same update automatically when its
 inputs change.
+
+## License
+
+The website's source code is available under the MIT License. Written content,
+research materials, historical articles, images, photographs, graphic-design
+work, PDFs, and other creative assets are copyright © João D. Álvares and are
+all rights reserved. Third-party materials remain the property of their
+respective owners. See [`LICENSE`](LICENSE) for the complete terms.
