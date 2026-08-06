@@ -1,0 +1,19 @@
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+<title>{% if page.full_title %}{{ page.full_title }}{% else %}{{ page.title }} — {{ site.title }}{% endif %}</title>
+<meta name="description" content="{{ page.description | escape }}">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='{{ page.icon_size | default: 110 }}' fill='white'>{{ page.icon | default: '☉' }}</text></svg>"
+>
+<script src="{{ '/assets/js/theme-init.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+{% for stylesheet in page.styles %}
+<link rel="stylesheet" href="{{ stylesheet | relative_url }}">
+{% endfor %}

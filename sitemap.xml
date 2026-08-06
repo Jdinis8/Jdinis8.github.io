@@ -1,30 +1,24 @@
+---
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jdinis8.github.io/</loc>
+    <loc>{{ '/' | absolute_url }}</loc>
   </url>
-
   <url>
-    <loc>https://jdinis8.github.io/research.html</loc>
+    <loc>{{ '/research.html' | absolute_url }}</loc>
   </url>
-
   <url>
-    <loc>https://jdinis8.github.io/design.html</loc>
+    <loc>{{ '/design.html' | absolute_url }}</loc>
   </url>
-
   <url>
-    <loc>https://jdinis8.github.io/history.html</loc>
+    <loc>{{ '/history.html' | absolute_url }}</loc>
   </url>
-
+  {% assign history_articles = site.history | sort: "date" | reverse %}
+  {% for history_article in history_articles %}
   <url>
-    <loc>https://jdinis8.github.io/history-article-01.html</loc>
+    <loc>{{ history_article.url | absolute_url }}</loc>
+    <lastmod>{{ history_article.date | date_to_xmlschema }}</lastmod>
   </url>
-
-  <url>
-    <loc>https://jdinis8.github.io/history-article-02.html</loc>
-  </url>
-
-  <url>
-    <loc>https://jdinis8.github.io/history-article-03.html</loc>
-  </url>
+  {% endfor %}
 </urlset>

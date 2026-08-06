@@ -5,6 +5,7 @@ on:
     paths:
       - "papers.txt"
       - "scripts/update_papers.py"
+      - "_data/papers.json"
       - ".github/workflows/update-papers.yml"
 
   workflow_dispatch:
@@ -28,9 +29,9 @@ jobs:
       - name: Retrieve arXiv metadata
         run: python scripts/update_papers.py
 
-      - name: Commit updated research page
+      - name: Commit updated publication data
         run: |
-          if git diff --quiet -- research.html; then
+          if git diff --quiet -- _data/papers.json; then
             echo "No publication changes."
             exit 0
           fi
@@ -38,6 +39,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add research.html
+          git add _data/papers.json
           git commit -m "Update arXiv publication metadata"
           git push

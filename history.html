@@ -1,52 +1,14 @@
+---
+title: History
+description: Historical research, archival work, and preservation projects by João D. Álvares.
+permalink: /history.html
+styles:
+  - /assets/css/history.css
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
-
-    <title>
-        History — João D. Álvares
-    </title>
-
-    <meta
-        name="description"
-        content="Historical research, archival work, and preservation projects by João D. Álvares."
-    >
-
-    <meta
-        name="theme-color"
-        content="#ffffff"
-    >
-
-    <link
-        rel="canonical"
-        href="https://jdinis8.github.io/history.html"
-    >
-
-    <link
-        rel="icon"
-        type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='white'>☉</text></svg>"
-    >
-
-    <!-- Apply the saved theme before loading the stylesheets. -->
-    <script src="theme-init.js"></script>
-
-    <!-- Shared theme variables -->
-    <link
-        rel="stylesheet"
-        href="theme.css"
-    >
-
-    <!-- History-page layout -->
-    <link
-        rel="stylesheet"
-        href="history.css"
-    >
+    {% include document-head.html %}
 </head>
 
 <body>
@@ -90,289 +52,21 @@
 
                     <span
                         class="section-count"
-                        aria-label="6 articles"
+                        aria-label="{{ site.history.size }} articles"
                     >
-                        06
+                        {% if site.history.size < 10 %}0{% endif %}{{ site.history.size }}
                     </span>
                 </div>
 
-                <!-- Add future articles to this list by hand. -->
-                <div class="article-list">
-                    <article class="article-entry">
-                        <a
-                            class="article-link article-link--with-image"
-                            href="o-tecnico-como-palco-do-estado-novo-exposicao-quinze-anos-de-obras-publicas.html"
-                        >
-                            <span class="article-index">06</span>
-
-                            <div class="article-content">
-                                <h3 class="article-title">
-                                    O Técnico como Palco do Estado Novo: Exposição
-                                    Quinze Anos de Obras Públicas
-                                </h3>
-
-                                <p class="article-summary">
-                                    O Instituto Superior Técnico como palco de
-                                    exposições e propaganda durante o Estado Novo.
-                                </p>
-
-                                <div class="article-meta">
-                                    <span>Article</span>
-                                    <span>Diferencial IST</span>
-                                    <span>16 Oct 2024</span>
-                                </div>
-                            </div>
-
-                            <figure class="article-image">
-                                <img
-                                    src="Images/history/salazar-visits-public-works-exhibition.png"
-                                    alt="Salazar visiting the Fifteen Years of Public Works exhibition at Instituto Superior Técnico"
-                                    width="733"
-                                    height="499"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </figure>
-
-                            <span
-                                class="article-arrow"
-                                aria-hidden="true"
-                            >
-                                →
-                            </span>
-                        </a>
-                    </article>
-
-                    <article class="article-entry">
-                        <a
-                            class="article-link article-link--with-image"
-                            href="o-arquiteto-que-desenhou-a-alameda-e-muito-mais-porfirio-pardal-monteiro.html"
-                        >
-                            <span class="article-index">05</span>
-
-                            <div class="article-content">
-                                <h3 class="article-title">
-                                    O Arquiteto que desenhou a Alameda (e muito mais):
-                                    Porfírio Pardal Monteiro
-                                </h3>
-
-                                <p class="article-summary">
-                                    A história de Porfírio Pardal Monteiro e do
-                                    projeto das novas instalações do Instituto
-                                    Superior Técnico na Alameda.
-                                </p>
-
-                                <div class="article-meta">
-                                    <span>Article</span>
-                                    <span>Diferencial IST</span>
-                                    <span>11 May 2024</span>
-                                </div>
-                            </div>
-
-                            <figure class="article-image article-image--portrait">
-                                <img
-                                    src="Images/history/porfirio-pardal-monteiro-portrait.jpg"
-                                    alt="Portrait of architect Porfírio Pardal Monteiro"
-                                    width="566"
-                                    height="719"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </figure>
-
-                            <span
-                                class="article-arrow"
-                                aria-hidden="true"
-                            >
-                                →
-                            </span>
-                        </a>
-                    </article>
-
-                    <article class="article-entry">
-                        <a
-                            class="article-link article-link--with-image"
-                            href="foco-crise-e-guerra-foi-assim-que-o-tecnico-nasceu.html"
-                        >
-                            <span class="article-index">04</span>
-
-                            <div class="article-content">
-                                <h3 class="article-title">
-                                    Foco, Crise e Guerra: Foi Assim Que o Técnico Nasceu
-                                </h3>
-
-                                <p class="article-summary">
-                                    Os primeiros anos do Instituto Superior Técnico,
-                                    entre a Primeira República, a guerra e as greves
-                                    estudantis.
-                                </p>
-
-                                <div class="article-meta">
-                                    <span>Article</span>
-                                    <span>Diferencial IST</span>
-                                    <span>17 Jun 2023</span>
-                                </div>
-                            </div>
-
-                            <figure class="article-image">
-                                <img
-                                    src="Images/history/ist-drawing-class.jpg"
-                                    alt="Drawing classroom at the Instituto Industrial e Comercial de Lisboa"
-                                    width="1024"
-                                    height="742"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </figure>
-
-                            <span
-                                class="article-arrow"
-                                aria-hidden="true"
-                            >
-                                →
-                            </span>
-                        </a>
-                    </article>
-
-                    <article class="article-entry">
-                        <a
-                            class="article-link article-link--with-image"
-                            href="de-marrocos-a-lisboa-o-fundador-do-tecnico.html"
-                        >
-                            <span class="article-index">03</span>
-
-                            <div class="article-content">
-                                <h3 class="article-title">
-                                    De Marrocos a Lisboa: o Fundador do Técnico
-                                </h3>
-
-                                <p class="article-summary">
-                                    A história de Alfredo Bensaúde, da sua família
-                                    açoriana e da fundação do Instituto Superior
-                                    Técnico.
-                                </p>
-
-                                <div class="article-meta">
-                                    <span>Article</span>
-                                    <span>Diferencial IST</span>
-                                    <span> 13 Jan 2023 </span>
-                                </div>
-                            </div>
-
-                            <figure class="article-image">
-                                <img
-                                    src="Images/history/alfredo-bensaude-violin-studio.jpg"
-                                    alt="Alfredo Bensaúde holding a violin in his studio"
-                                    width="778"
-                                    height="605"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </figure>
-
-                            <span
-                                class="article-arrow"
-                                aria-hidden="true"
-                            >
-                                →
-                            </span>
-                        </a>
-                    </article>
-
-                    <article class="article-entry">
-                        <a
-                            class="article-link article-link--with-image"
-                            href="1852-o-inicio.html"
-                        >
-                            <span class="article-index">02</span>
-
-                            <div class="article-content">
-                                <h3 class="article-title">
-                                    1852: O Início
-                                </h3>
-
-                                <p class="article-summary">
-                                    Das origens do Instituto Industrial de
-                                    Lisboa à criação do Instituto Superior
-                                    Técnico.
-                                </p>
-
-                                <div class="article-meta">
-                                    <span>Article</span>
-                                    <span>Diferencial IST</span>
-                                    <span> 24 Nov 2022</span>
-                                </div>
-                            </div>
-
-                            <figure class="article-image">
-                                <img
-                                    src="Images/history/1852-instituto-industrial-lisboa.jpg"
-                                    alt="Aerial view of the Instituto Industrial de Lisboa"
-                                    width="504"
-                                    height="331"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </figure>
-
-                            <span
-                                class="article-arrow"
-                                aria-hidden="true"
-                            >
-                                →
-                            </span>
-                        </a>
-                    </article>
-                    <article class="article-entry">
-                        <a
-                            class="article-link article-link--with-image"
-                            href="o-ano-em-que-o-ensino-superior-morreu.html"
-                        >
-                            <span class="article-index">01</span>
-
-                            <div class="article-content">
-                                <h3 class="article-title">
-                                    O Ano em que o Ensino Superior Morreu
-                                </h3>
-
-                                <p class="article-summary">
-                                    Aqui vem à luz uma das discussões mais insólitas do Ensino Superior em Portugal. O ano era 1960 e o Infante D. Henrique fazia 500 anos da sua morte. Por trás das comemorações, as Universidades de Lisboa e Coimbra discutiam e através dessa discussão conta-se a história do Ensino Superior em Portugal. Incluindo o ano em que o Ensino Superior morreu – 1537.
-                                </p>
-
-                                <div class="article-meta">
-                                    <span>Article</span>
-                                    <span>Diferencial IST</span>
-                                    <span>10 Oct 2022</span>
-                                </div>
-                            </div>
-
-                            <figure class="article-image">
-                                <img
-                                    src="Images/history/IST 1930.jpg"
-                                    alt="Aerial view of Instituto Superior Técnico in 1930"
-                                    width="640"
-                                    height="454"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </figure>
-
-                            <span
-                                class="article-arrow"
-                                aria-hidden="true"
-                            >
-                                →
-                            </span>
-                        </a>
-                    </article>
-                </div>
+                <!-- Generated from the _history collection. -->
+                {% include history-list.html %}
             </section>
 
         </main>
 
         <footer>
             <span>
-                © <span id="copyright-year"></span>
+                © <span data-current-year></span>
                 João D. Álvares
             </span>
 
@@ -394,11 +88,6 @@
         </footer>
     </div>
 
-    <script>
-        document
-            .getElementById("copyright-year")
-            .textContent =
-                new Date().getFullYear();
-    </script>
+    <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

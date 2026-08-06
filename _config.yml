@@ -1,0 +1,26 @@
+title: João D. Álvares
+description: Physics, graphic design, and historical research by João D. Álvares.
+url: https://jdinis8.github.io
+baseurl: ""
+
+collections:
+  history:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: history
+    values:
+      layout: history-article
+      lang: pt
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - papers.txt
+  - scripts
+  - source-assets
+
+strict_front_matter: true

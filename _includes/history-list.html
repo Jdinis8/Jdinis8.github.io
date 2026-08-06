@@ -1,0 +1,37 @@
+{% assign history_articles = site.history | sort: "date" | reverse %}
+<div class="article-list">
+    {% for history_article in history_articles %}
+    <article class="article-entry">
+        <a
+            class="article-link article-link--with-image"
+            href="{{ history_article.url | relative_url }}"
+        >
+            <span class="article-index">{{ history_article.article_number }}</span>
+
+            <div class="article-content">
+                <h3 class="article-title">{{ history_article.title }}</h3>
+                <p class="article-summary">{{ history_article.description }}</p>
+
+                <div class="article-meta">
+                    <span>Article</span>
+                    <span>Diferencial IST</span>
+                    <span>{{ history_article.list_date }}</span>
+                </div>
+            </div>
+
+            <figure class="article-image{% if history_article.list_image_class %} {{ history_article.list_image_class }}{% endif %}">
+                <img
+                    src="{{ history_article.list_image | relative_url }}"
+                    alt="{{ history_article.list_image_alt }}"
+                    width="{{ history_article.list_image_width }}"
+                    height="{{ history_article.list_image_height }}"
+                    loading="lazy"
+                    decoding="async"
+                >
+            </figure>
+
+            <span class="article-arrow" aria-hidden="true">→</span>
+        </a>
+    </article>
+    {% endfor %}
+</div>

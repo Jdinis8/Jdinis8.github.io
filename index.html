@@ -1,154 +1,16 @@
+---
+title: João D. Álvares
+full_title: João D. Álvares — Physicist & Graphic Designer
+description: Personal website of João D. Álvares, a physicist and graphic designer working on general relativity, gravitational waves, black holes, numerical relativity, post-Newtonian theory, and scientific design.
+permalink: /
+styles:
+  - /assets/css/styles.css
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
-
-    <title>
-        João D. Álvares — Physicist & Graphic Designer
-    </title>
-
-    <meta
-        name="description"
-        content="Personal website of João D. Álvares, a physicist and graphic designer working on general relativity, gravitational waves, black holes, numerical relativity, post-Newtonian theory, and scientific design."
-    >
-
-    <meta
-        name="author"
-        content="João D. Álvares"
-    >
-
-    <meta
-        name="robots"
-        content="index, follow"
-    >
-
-    <meta
-        name="theme-color"
-        content="#ffffff"
-    >
-
-    <link
-        rel="canonical"
-        href="https://jdinis8.github.io/"
-    >
-
-    <link
-        rel="icon"
-        type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='110' fill='white'>☉</text></svg>"
-    >
-
-    <!-- Social preview metadata -->
-    <meta
-        property="og:type"
-        content="profile"
-    >
-
-    <meta
-        property="og:site_name"
-        content="João D. Álvares"
-    >
-
-    <meta
-        property="og:title"
-        content="João D. Álvares — Physicist & Graphic Designer"
-    >
-
-    <meta
-        property="og:description"
-        content="Physics, black-hole research, graphic design, and historical preservation projects by João D. Álvares."
-    >
-
-    <meta
-        property="og:url"
-        content="https://jdinis8.github.io/"
-    >
-
-    <!-- Apply the saved theme before loading the stylesheets. -->
-    <script src="theme-init.js"></script>
-
-    <!-- Optional web fonts -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <!--
-        Shared theme variables must be loaded first.
-        styles.css then adds homepage-specific layout.
-    -->
-    <link
-        rel="stylesheet"
-        href="theme.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="styles.css"
-    >
-
-    <!-- Structured information about the owner of the site -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        "@id": "https://jdinis8.github.io/#profile-page",
-        "url": "https://jdinis8.github.io/",
-        "name": "João D. Álvares — Physicist & Graphic Designer",
-        "description": "Personal website of João D. Álvares, featuring physics research, graphic design, and historical preservation projects.",
-        "mainEntity": {
-            "@type": "Person",
-            "@id": "https://jdinis8.github.io/#person",
-            "name": "João D. Álvares",
-            "alternateName": [
-                "Joao D. Alvares",
-                "João Dinis Álvares"
-            ],
-            "url": "https://jdinis8.github.io/",
-            "jobTitle": "PhD Student in Physics",
-            "affiliation": {
-                "@type": "CollegeOrUniversity",
-                "name": "The University of Mississippi"
-            },
-            "sameAs": [
-                "https://github.com/Jdinis8",
-                "https://orcid.org/0000-0001-5501-9014",
-                "https://inspirehep.net/authors/1903473"
-            ],
-            "knowsAbout": [
-                "General relativity",
-                "Black holes",
-                "Gravitational waves",
-                "Post-Newtonian theory",
-                "Numerical relativity",
-                "Hyperboloidal evolution",
-                "Scientific visualization",
-                "Graphic design"
-            ]
-        }
-    }
-    </script>
+    {% include document-head.html %}
+    {% include home-head-extra.html %}
 </head>
 
 <body>
@@ -165,7 +27,7 @@
     <div class="profile-controls">
         <div class="profile-photo">
             <img
-                src="Images/photo.jpg"
+                src="/assets/images/photo.jpg"
                 alt="Portrait of João D. Álvares"
                 width="739"
                 height="1600"
@@ -324,7 +186,7 @@
     </main>
 
     <p class="homepage-copyright">
-        © 2026 João D. Álvares
+        © <span data-current-year></span> João D. Álvares
     </p>
 
     <!-- Opening blur animation -->
@@ -336,7 +198,8 @@
     <!-- Homepage JavaScript -->
     <script
         type="module"
-        src="main.js"
+        src="/assets/js/main.js"
     ></script>
+    <script src="/assets/js/site.js" defer></script>
 </body>
 </html>
