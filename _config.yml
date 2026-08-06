@@ -23,5 +23,6 @@ exclude:
   - papers.txt
   - scripts
   - source-assets
+  - vendor
 
 strict_front_matter: true
