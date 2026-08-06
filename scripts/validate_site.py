@@ -202,7 +202,12 @@ def validate_json_assets(site_root: Path, data_file: Path) -> list[str]:
                 visit(item)
         elif isinstance(value, dict):
             for key, item in value.items():
-                if key in {"image", "pdf"} and isinstance(item, str):
+                asset_keys = {"image", "pdf"}
+
+                if data_file.name == "site.webmanifest":
+                    asset_keys.add("src")
+
+                if key in asset_keys and isinstance(item, str):
                     target = local_target(site_root, data_file, item)
 
                     if target is not None and not target.exists():

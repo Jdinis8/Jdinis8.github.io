@@ -294,6 +294,11 @@ h1 {
         var(--design-heading);
 }
 
+.filter-button[aria-pressed="true"] {
+    border-color:
+        var(--design-accent);
+}
+
 .filter-button:focus-visible {
     outline:
         1px solid
@@ -661,55 +666,6 @@ h1 {
         var(--design-muted);
 
     text-align: center;
-}
-
-
-/* --------------------------------------------------
-   Footer
--------------------------------------------------- */
-
-footer {
-    display: flex;
-    flex-wrap: wrap;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-top: 56px;
-    padding-top: 22px;
-
-    border-top:
-        1px solid
-        var(--line);
-
-    color:
-        var(--design-subtle);
-
-    font-size: 0.76rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-}
-
-footer a {
-    color:
-        var(--design-muted);
-
-    text-decoration: none;
-}
-
-footer a:hover,
-footer a:focus-visible {
-    color:
-        var(--design-heading);
-}
-
-footer a:focus-visible {
-    outline:
-        1px solid
-        var(--design-heading);
-
-    outline-offset: 3px;
 }
 
 

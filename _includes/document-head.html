@@ -6,12 +6,30 @@
 <title>{% if page.full_title %}{{ page.full_title }}{% else %}{{ page.title }} — {{ site.title }}{% endif %}</title>
 <meta name="description" content="{{ page.description | escape }}">
 <meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="JDA">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 <link
     rel="icon"
-    type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='{{ page.icon_size | default: 110 }}' fill='white'>{{ page.icon | default: '☉' }}</text></svg>"
+    type="image/x-icon"
+    href="{{ '/assets/images/brand/favicon.ico' | relative_url }}"
+    sizes="16x16 32x32 48x48"
 >
+<link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="{{ '/assets/images/brand/logo-192.png' | relative_url }}"
+>
+<link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="{{ '/assets/images/brand/apple-touch-icon.png' | relative_url }}"
+>
+<link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
 <script src="{{ '/assets/js/theme-init.js' | relative_url }}"></script>
 <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
 {% for stylesheet in page.styles %}

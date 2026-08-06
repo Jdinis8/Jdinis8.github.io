@@ -29,7 +29,8 @@
 
     --link-color: #242424;
     --strong-link-color: #111111;
-    --hover-color: #795c5c;
+    --brand-accent: #795c5c;
+    --hover-color: var(--brand-accent);
 
     --muted-text: #666666;
     --subtle-text: #777777;
@@ -58,7 +59,8 @@ html[data-theme="dark"] {
 
     --link-color: #e0e0e0;
     --strong-link-color: #ffffff;
-    --hover-color: #917373;
+    --brand-accent: #917373;
+    --hover-color: var(--brand-accent);
 
     --muted-text: #888888;
     --subtle-text: #555555;
@@ -217,6 +219,46 @@ body {
     background: var(--page-foreground);
 }
 
+/* --------------------------------------------------
+   Shared section-page footer
+-------------------------------------------------- */
+
+.site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 18px;
+
+    margin-top: 58px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border-color);
+
+    color: var(--subtle-text);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.site-footer a {
+    color: var(--muted-text);
+    text-decoration: none;
+
+    transition: color 180ms ease;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+    color: var(--brand-accent);
+}
+
+.site-footer a:focus-visible {
+    outline: 1px solid var(--brand-accent);
+    outline-offset: 3px;
+}
+
 @media (max-width: 640px) {
     .site-shell {
         grid-template-areas:
@@ -239,6 +281,10 @@ body {
     .site-theme-toggle {
         grid-area: theme;
     }
+
+    .site-footer {
+        flex-direction: column;
+    }
 }
 
 a,
@@ -250,8 +296,8 @@ select {
 }
 
 ::selection {
-    background: var(--heading-color);
-    color: var(--page-background);
+    background: var(--brand-accent);
+    color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {

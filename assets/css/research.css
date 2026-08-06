@@ -574,26 +574,6 @@ blockquote {
 
 
 /* --------------------------------------------------
-   Footer
--------------------------------------------------- */
-
-.research-footer {
-    margin-top: 58px;
-    padding-top: 20px;
-
-    border-top:
-        1px solid
-        var(--border-color);
-
-    color: var(--subtle-text);
-
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
-
-
-/* --------------------------------------------------
    Responsive adjustments
 -------------------------------------------------- */
 
