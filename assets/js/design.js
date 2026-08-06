@@ -17,16 +17,9 @@ const projectCardSizes = new Set([
 const grid = document.getElementById("project-grid");
 const filters = document.getElementById("filters");
 const count = document.getElementById("project-count");
-const modal = document.getElementById("project-modal");
-const modalClose = document.getElementById("modal-close");
-const modalMedia = document.getElementById("modal-media");
-const modalTitle = document.getElementById("modal-title");
-const modalDescription = document.getElementById("modal-description");
-const modalMeta = document.getElementById("modal-meta");
 
 let projects = [];
 let activeCategory = "All";
-let lastFocusedCard = null;
 let pdfJsPromise;
 
 function initials(title) {
@@ -230,9 +223,9 @@ function renderProjects() {
     }
 
     visibleProjects.forEach((project, index) => {
-        const card = document.createElement("button");
-        card.type = "button";
+        const card = document.createElement("a");
         card.className = "project-card";
+        card.href = project.url || "/design.html";
         card.classList.add(
             `project-card--${getProjectCardSize(project)}`,
         );
@@ -241,54 +234,10 @@ function renderProjects() {
             card.classList.add("project-card--portrait");
         }
 
-        card.setAttribute("aria-label", `Open ${project.title}`);
+        card.setAttribute("aria-label", `View ${project.title}`);
         card.append(createVisual(project, index), createProjectInfo(project));
-        card.addEventListener("click", () => {
-            lastFocusedCard = card;
-            openProject(project, index);
-        });
         grid.appendChild(card);
     });
-}
-
-function appendMetadata(label, value) {
-    const heading = document.createElement("strong");
-    heading.textContent = label;
-    modalMeta.append(heading, document.createElement("br"));
-    modalMeta.append(value, document.createElement("br"));
-}
-
-function openProject(project, index) {
-    modalTitle.textContent = project.title;
-    modalDescription.textContent = project.description;
-    modalMedia.replaceChildren(createVisual(project, index));
-    modalMeta.replaceChildren();
-    appendMetadata(
-        "Categories",
-        getProjectCategories(project).join(" · "),
-    );
-    appendMetadata("Year", project.year);
-    appendMetadata("Tools", project.tools || "—");
-
-    if (project.link) {
-        const link = document.createElement("a");
-        link.className = "modal-link";
-        link.href = project.link;
-        link.target = "_blank";
-        link.rel = "noreferrer";
-        link.textContent = "View full project ↗";
-        modalMeta.appendChild(link);
-    }
-
-    modal.classList.add("is-open");
-    document.body.style.overflow = "hidden";
-    modalClose.focus();
-}
-
-function closeProject() {
-    modal.classList.remove("is-open");
-    document.body.style.overflow = "";
-    lastFocusedCard?.focus();
 }
 
 async function initializeDesignArchive() {
@@ -311,17 +260,5 @@ async function initializeDesignArchive() {
         grid.replaceChildren(message);
     }
 }
-
-modalClose.addEventListener("click", closeProject);
-modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        closeProject();
-    }
-});
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.classList.contains("is-open")) {
-        closeProject();
-    }
-});
 
 initializeDesignArchive();

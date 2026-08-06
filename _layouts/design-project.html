@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}">
+<head>
+    {% include document-head.html %}
+</head>
+
+<body class="design-project-page">
+    <div class="container">
+        {% include site-shell.html %}
+
+        <main>
+            <article class="design-project-detail">
+                <a class="project-back-link" href="{{ '/design.html' | relative_url }}">
+                    ← All design projects
+                </a>
+
+                <header class="project-detail-header">
+                    <div>
+                        <p class="eyebrow">Design archive / project</p>
+                        <h1>{{ page.title }}</h1>
+                        <p class="project-detail-description">{{ page.description }}</p>
+                    </div>
+
+                    <dl class="project-detail-meta">
+                        <div>
+                            <dt>Categories</dt>
+                            <dd>{{ page.categories | join: " · " }}</dd>
+                        </div>
+                        <div>
+                            <dt>Year</dt>
+                            <dd>{{ page.year }}</dd>
+                        </div>
+                        <div>
+                            <dt>Tools</dt>
+                            <dd>{{ page.tools | default: "—" }}</dd>
+                        </div>
+                    </dl>
+                </header>
+
+                <figure class="project-detail-media{% if page.image_layout == 'portrait' %} project-detail-media--portrait{% endif %}">
+                    {% if page.pdf %}
+                    <object
+                        class="project-detail-pdf"
+                        data="{{ page.pdf | relative_url }}"
+                        type="application/pdf"
+                    >
+                        <p>
+                            This browser cannot display the PDF preview.
+                            <a href="{{ page.pdf | relative_url }}">Open the project PDF</a>.
+                        </p>
+                    </object>
+                    {% else %}
+                    <img
+                        src="{{ page.image | relative_url }}"
+                        alt="{{ page.title }}"
+                        decoding="async"
+                    >
+                    {% endif %}
+                </figure>
+
+                {% if content != empty %}
+                <div class="project-detail-body">
+                    {{ content }}
+                </div>
+                {% endif %}
+            </article>
+        </main>
+
+        {% include site-footer.html %}
+    </div>
+
+    <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
+</html>

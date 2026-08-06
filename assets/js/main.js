@@ -124,6 +124,7 @@ window.visualViewport?.addEventListener("resize", resize, {
 });
 
 let lastTime = 0;
+let hasDrawnFirstFrame = false;
 
 function animate(time) {
     const dt = lastTime
@@ -138,6 +139,11 @@ function animate(time) {
     scene.draw();
 
     ctx.restore();
+
+    if (!hasDrawnFirstFrame) {
+        hasDrawnFirstFrame = true;
+        document.documentElement.classList.add("home-canvas-ready");
+    }
 
     requestAnimationFrame(animate);
 }

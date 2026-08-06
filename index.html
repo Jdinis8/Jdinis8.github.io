@@ -154,10 +154,10 @@ styles:
     </button>
 
     <!--
-        Crawlable HTML equivalents of the canvas content.
-        These also provide fallback navigation.
+        Visible until the canvas completes its first frame. It remains available
+        to assistive technology and reappears when its links receive focus.
     -->
-    <main class="sr-only">
+    <main class="home-fallback">
         <header>
             <h1>João D. Álvares</h1>
 
@@ -170,7 +170,7 @@ styles:
             </p>
         </header>
 
-        <nav aria-label="Primary navigation">
+        <nav class="home-fallback-navigation" aria-label="Primary navigation">
             <a href="research.html">
                 Physics and black-hole research
             </a>

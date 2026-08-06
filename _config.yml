@@ -6,6 +6,9 @@ baseurl: ""
 collections:
   history:
     output: true
+  design_projects:
+    output: true
+    permalink: /design/:name/
 
 defaults:
   - scope:
@@ -15,6 +18,16 @@ defaults:
       layout: history-article
       lang: pt
       section: history
+  - scope:
+      path: ""
+      type: design_projects
+    values:
+      layout: design-project
+      lang: en
+      section: design
+      styles:
+        - /assets/css/design.css
+        - /assets/css/design-project.css
 
 exclude:
   - Gemfile

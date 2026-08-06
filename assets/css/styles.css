@@ -1,24 +1,110 @@
 /* --------------------------------------------------
-   Screen-reader-only content
+   Progressive-enhancement fallback
 -------------------------------------------------- */
 
-.sr-only {
-    position: absolute !important;
+.home-fallback {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
 
-    width: 1px !important;
-    height: 1px !important;
+    display: grid;
+    place-content: center;
+    gap: 28px;
 
-    padding: 0 !important;
-    margin: -1px !important;
+    padding: clamp(28px, 7vw, 80px);
 
-    overflow: hidden !important;
+    background: var(--page-background);
+    color: var(--page-text);
 
-    clip: rect(0, 0, 0, 0) !important;
-    clip-path: inset(50%) !important;
+    text-align: center;
+}
 
-    white-space: nowrap !important;
+.home-fallback header {
+    max-width: 720px;
+}
 
-    border: 0 !important;
+.home-fallback h1 {
+    margin: 0;
+    color: var(--heading-color);
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 0.9;
+}
+
+.home-fallback p {
+    max-width: 650px;
+    margin: 20px auto 0;
+    color: var(--muted-text);
+    font-family: "Raleway", sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    line-height: 1.65;
+}
+
+.home-fallback-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 28px;
+}
+
+.home-fallback-navigation a {
+    color: var(--link-color);
+    font-family: "Courier New", monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.home-fallback-navigation a:hover,
+.home-fallback-navigation a:focus-visible {
+    color: var(--hover-color);
+}
+
+.home-fallback-navigation a:focus-visible {
+    outline: 1px solid var(--hover-color);
+    outline-offset: 5px;
+}
+
+/* The canvas becomes the visual interface only after it has drawn successfully. */
+.home-canvas-ready .home-fallback:not(:focus-within) {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+.home-canvas-ready .home-fallback:focus-within {
+    inset: auto 50% max(68px, calc(env(safe-area-inset-bottom) + 58px));
+
+    width: min(90vw, 720px);
+    padding: 18px 22px;
+
+    border: 1px solid var(--control-border);
+    background: var(--control-background);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    transform: translateX(-50%);
+}
+
+.home-canvas-ready .home-fallback:focus-within header {
+    display: none;
 }
 
 html,

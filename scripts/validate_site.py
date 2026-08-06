@@ -157,6 +157,7 @@ def validate_json_assets(site_root: Path, data_file: Path) -> list[str]:
             errors.append(f"{data_file}: project catalogue must be a list")
         else:
             valid_card_sizes = {"standard", "half", "wide", "full"}
+            project_urls: list[str] = []
 
             for index, project in enumerate(data, start=1):
                 if not isinstance(project, dict):
@@ -194,6 +195,32 @@ def validate_json_assets(site_root: Path, data_file: Path) -> list[str]:
                     errors.append(
                         f"{data_file}: project {index} has invalid cardSize "
                         f"{card_size!r}"
+                    )
+
+                project_url = project.get("url")
+
+                if not isinstance(project_url, str) or not project_url.strip():
+                    errors.append(
+                        f"{data_file}: project {index} must have a permanent url"
+                    )
+                else:
+                    project_urls.append(project_url)
+                    target = local_target(site_root, data_file, project_url)
+
+                    if target is not None:
+                        if target.is_dir():
+                            target /= "index.html"
+
+                        if not target.exists():
+                            errors.append(
+                                f"{data_file}: project {index} url=\"{project_url}\" "
+                                f"points to missing {target}"
+                            )
+
+            for project_url, count in Counter(project_urls).items():
+                if count > 1:
+                    errors.append(
+                        f"{data_file}: duplicate project url {project_url!r}"
                     )
 
     def visit(value: object) -> None:

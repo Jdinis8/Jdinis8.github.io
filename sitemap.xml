@@ -11,6 +11,12 @@
   <url>
     <loc>{{ '/design.html' | absolute_url }}</loc>
   </url>
+  {% assign design_projects = site.design_projects | sort: "order" %}
+  {% for design_project in design_projects %}
+  <url>
+    <loc>{{ design_project.url | absolute_url }}</loc>
+  </url>
+  {% endfor %}
   <url>
     <loc>{{ '/history.html' | absolute_url }}</loc>
   </url>
