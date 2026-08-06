@@ -2,7 +2,7 @@ body {
     margin: 0;
     min-height: 100vh;
     padding: clamp(32px, 6vw, 60px) clamp(16px, 4vw, 24px) 60px;
-    font-family: "Courier New", Courier, monospace;
+    font-family: var(--font-mono);
     line-height: 1.7;
 }
 
@@ -10,24 +10,6 @@ body {
     width: 100%;
     max-width: 720px;
     margin: 0 auto;
-}
-
-.back-link {
-    display: inline-block;
-    margin-bottom: 46px;
-    color: var(--subtle-text);
-    font-size: 0.85rem;
-    text-decoration: none;
-}
-
-.back-link:hover,
-.back-link:focus-visible {
-    color: var(--heading-color);
-}
-
-.back-link:focus-visible {
-    outline: 1px solid var(--heading-color);
-    outline-offset: 4px;
 }
 
 .article-header {
@@ -39,7 +21,7 @@ body {
 .article-kicker,
 .article-meta {
     color: var(--faint-text);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
@@ -56,17 +38,22 @@ h1 {
     max-width: 620px;
     margin: 0;
     color: var(--muted-text);
-    font-size: 0.95rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
 }
 
 .article-body {
     color: var(--muted-text);
-    font-size: 0.96rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.76;
 }
 
 .article-body h2 {
     margin: 42px 0 14px;
     color: var(--heading-color);
+    font-family: var(--font-mono);
     font-size: 1.08rem;
     font-weight: 400;
     letter-spacing: 0.04em;
@@ -75,7 +62,7 @@ h1 {
 
 .article-body p {
     margin: 0 0 22px;
-    text-align: justify;
+    text-align: left;
 }
 
 .article-body a {
@@ -106,7 +93,7 @@ h1 {
 
 .article-body cite {
     color: var(--faint-text);
-    font-size: 0.76rem;
+    font-size: 0.8rem;
     font-style: normal;
 }
 
@@ -137,7 +124,7 @@ h1 {
 .article-body figcaption {
     margin-top: 10px;
     color: var(--faint-text);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     line-height: 1.5;
 }
 
@@ -185,7 +172,8 @@ h1 {
     padding-top: 18px;
     border-top: 1px solid var(--border-color);
     color: var(--faint-text);
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
     text-align: left !important;
 }
 
@@ -194,7 +182,7 @@ footer {
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
     color: var(--subtle-text);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }

@@ -1,0 +1,35 @@
+<div class="site-shell">
+    <a
+        class="site-brand"
+        href="{{ '/' | relative_url }}"
+        aria-label="João D. Álvares — home"
+    >
+        João D. Álvares
+    </a>
+
+    <nav class="site-navigation" aria-label="Primary navigation">
+        <a
+            href="{{ '/research.html' | relative_url }}"
+            {% if page.section == "research" %}aria-current="page"{% endif %}
+        >Research</a>
+        <a
+            href="{{ '/design.html' | relative_url }}"
+            {% if page.section == "design" %}aria-current="page"{% endif %}
+        >Design</a>
+        <a
+            href="{{ '/history.html' | relative_url }}"
+            {% if page.section == "history" %}aria-current="page"{% endif %}
+        >History</a>
+    </nav>
+
+    <button
+        class="site-theme-toggle"
+        type="button"
+        data-theme-toggle
+        aria-label="Switch to dark mode"
+        aria-pressed="false"
+    >
+        <span class="site-theme-indicator" aria-hidden="true"></span>
+        <span data-theme-label>Dark</span>
+    </button>
+</div>

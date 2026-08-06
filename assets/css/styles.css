@@ -154,7 +154,7 @@ body {
         "Courier New",
         monospace;
 
-    font-size: 10px;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     line-height: 1;
     white-space: nowrap;
@@ -400,7 +400,7 @@ body {
         "Courier New",
         monospace;
 
-    font-size: 11px;
+    font-size: 0.75rem;
     line-height: 1;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -522,7 +522,7 @@ html[data-theme="light"]
             );
 
         padding: 7px 9px;
-        font-size: 10px;
+        font-size: 0.75rem;
     }
 }
 
@@ -556,7 +556,7 @@ html[data-theme="light"]
         min-height: 36px;
 
         padding: 6px 9px;
-        font-size: 10px;
+        font-size: 0.75rem;
     }
 }
 

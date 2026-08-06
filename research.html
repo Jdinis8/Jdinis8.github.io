@@ -1,5 +1,6 @@
 ---
 title: Research
+section: research
 description: Research by João D. Álvares on general relativity, black holes, gravitational waves, post-Newtonian theory, numerical relativity, and hyperboloidal evolution.
 permalink: /research.html
 styles:
@@ -13,17 +14,17 @@ styles:
 
 <body>
     <div class="container">
-        <header>
-            <a
-                href="index.html"
-                class="back-link"
-            >
-                ← Return to Main Page
-            </a>
+        {% include site-shell.html %}
 
+        <header>
             <h1>
                 RESEARCH ARCHIVE
             </h1>
+
+            <p class="research-intro">
+                General relativity, gravitational waves,
+                black holes, and numerical relativity.
+            </p>
 
             <nav
                 class="page-nav"
@@ -66,11 +67,16 @@ styles:
                 </a>
             </nav>
 
+            <div class="research-facts">
+
             <!-- PhD information -->
 
             <div class="bio-line">
-                PhD Candidate at the University of Mississippi,
-                USA
+                <p class="fact-label">Current position</p>
+                <p class="fact-value">
+                    PhD Candidate at the University of Mississippi,
+                    USA
+                </p>
 
                 <div class="thesis-box">
                     Supervisor:
@@ -92,7 +98,7 @@ styles:
             <!-- Collaboration memberships -->
 
             <div class="bio-line">
-                Member of:
+                <p class="fact-label">Memberships</p>
 
                 <div class="thesis-box">
                     <a
@@ -118,15 +124,18 @@ styles:
             <!-- Master's information -->
 
             <div class="bio-line">
-                Master's degree from
+                <p class="fact-label">Education</p>
+                <p class="fact-value">
+                    Master's degree from
 
-                <a
-                    href="https://centra.tecnico.ulisboa.pt/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >CENTRA</a>,
+                    <a
+                        href="https://centra.tecnico.ulisboa.pt/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >CENTRA</a>,
 
-                Instituto Superior Técnico, Portugal
+                    Instituto Superior Técnico, Portugal
+                </p>
 
                 <div class="thesis-box">
                     Thesis:
@@ -164,7 +173,7 @@ styles:
             <!-- Current collaborations -->
 
             <div class="bio-line">
-                Current Collaborations:
+                <p class="fact-label">Current collaborations</p>
 
                 <div class="thesis-box">
                     Prague Institute of Physics:
@@ -214,10 +223,12 @@ styles:
                 </div>
             </div>
 
+            </div>
+
             <!-- Previous collaborations -->
 
-            <div class="bio-line">
-                Previous Collaborations:
+            <details class="previous-collaborations">
+                <summary>Previous collaborations</summary>
 
                 <div class="thesis-box">
                     CENTRA, IST:
@@ -296,7 +307,7 @@ styles:
                     >
                         Solange Nunes</a>
                 </div>
-            </div>
+            </details>
         </header>
 
         <main>
@@ -428,5 +439,7 @@ styles:
             </section>
         </main>
     </div>
+
+    <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

@@ -94,9 +94,7 @@ body {
         42px 42px;
 
     font-family:
-        "Courier New",
-        Courier,
-        monospace;
+        var(--font-mono);
 
     line-height: 1.6;
 }
@@ -167,35 +165,6 @@ header {
         var(--line);
 }
 
-.back-link {
-    display: inline-block;
-
-    margin-bottom: 34px;
-
-    color:
-        var(--design-subtle);
-
-    font-size: 0.84rem;
-    text-decoration: none;
-
-    transition:
-        color 160ms ease;
-}
-
-.back-link:hover,
-.back-link:focus-visible {
-    color:
-        var(--design-heading);
-}
-
-.back-link:focus-visible {
-    outline:
-        1px solid
-        var(--design-heading);
-
-    outline-offset: 4px;
-}
-
 .eyebrow {
     margin:
         0 0 10px;
@@ -203,7 +172,7 @@ header {
     color:
         var(--design-accent);
 
-    font-size: 0.72rem;
+    font-size: 0.76rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
@@ -235,7 +204,9 @@ h1 {
     color:
         var(--design-muted);
 
-    font-size: 0.96rem;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.72;
 }
 
 .header-index {
@@ -244,7 +215,7 @@ h1 {
     color:
         var(--design-subtle);
 
-    font-size: 0.72rem;
+    font-size: 0.76rem;
     letter-spacing: 0.12em;
     line-height: 1.9;
     text-align: right;
@@ -300,7 +271,7 @@ h1 {
 
     cursor: pointer;
 
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 
@@ -335,7 +306,7 @@ h1 {
     color:
         var(--design-subtle);
 
-    font-size: 0.72rem;
+    font-size: 0.76rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -663,7 +634,7 @@ h1 {
     color:
         var(--design-muted);
 
-    font-size: 0.72rem;
+    font-size: 0.76rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
@@ -672,7 +643,7 @@ h1 {
     color:
         var(--design-subtle);
 
-    font-size: 0.73rem;
+    font-size: 0.76rem;
 }
 
 .empty-state {
@@ -715,7 +686,7 @@ footer {
     color:
         var(--design-subtle);
 
-    font-size: 0.72rem;
+    font-size: 0.76rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
 }
@@ -863,7 +834,9 @@ footer a:focus-visible {
     color:
         var(--design-muted);
 
-    font-size: 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.65;
 }
 
 .modal-meta {
@@ -872,7 +845,7 @@ footer a:focus-visible {
     color:
         var(--design-muted);
 
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     line-height: 2;
     text-transform: uppercase;
 }
