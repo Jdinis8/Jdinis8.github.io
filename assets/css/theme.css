@@ -33,8 +33,8 @@
     --hover-color: var(--brand-accent);
 
     --muted-text: #666666;
-    --subtle-text: #777777;
-    --faint-text: #888888;
+    --subtle-text: #707070;
+    --faint-text: #767676;
 
     --border-color: #dddddd;
     --strong-border-color: #cccccc;
@@ -63,8 +63,8 @@ html[data-theme="dark"] {
     --hover-color: var(--brand-accent);
 
     --muted-text: #888888;
-    --subtle-text: #555555;
-    --faint-text: #444444;
+    --subtle-text: #808080;
+    --faint-text: #7a7a7a;
 
     --border-color: #222222;
     --strong-border-color: #333333;
