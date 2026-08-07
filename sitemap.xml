@@ -21,4 +21,11 @@
     <lastmod>{{ history_article.date | date_to_xmlschema }}</lastmod>
   </url>
   {% endfor %}
+  {% assign physics_notes = site.notes | sort: "date" | reverse %}
+  {% for note in physics_notes %}
+  <url>
+    <loc>{{ note.url | absolute_url }}</loc>
+    <lastmod>{{ note.date | date_to_xmlschema }}</lastmod>
+  </url>
+  {% endfor %}
 </urlset>

@@ -6,6 +6,9 @@ baseurl: ""
 collections:
   history:
     output: true
+  notes:
+    output: true
+    permalink: /notes/:name.html
 
 defaults:
   - scope:
@@ -15,6 +18,15 @@ defaults:
       layout: history-article
       lang: pt
       section: history
+  - scope:
+      path: ""
+      type: notes
+    values:
+      layout: physics-note
+      lang: en
+      section: research
+      styles:
+        - /assets/css/physics-note.css
 exclude:
   - Gemfile
   - Gemfile.lock

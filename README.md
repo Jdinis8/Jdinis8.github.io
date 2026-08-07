@@ -7,8 +7,10 @@ live in one place.
 ## Repository structure
 
 - `_history/` contains the six history article bodies and their front matter.
-- `_layouts/` contains the shared history article shell.
-- `_includes/` contains shared document-head, history-list, and paper-list markup.
+- `_notes/` contains physics notes and essays; its entries appear automatically
+  on `research.html`.
+- `_layouts/` contains the shared history-article and physics-note shells.
+- `_includes/` contains shared document-head and archive-list markup.
 - `_data/papers.json` is the generated publication metadata used by `research.html`.
 - `assets/data/design-projects.json` is the design archive's project catalogue.
 - `assets/css/`, `assets/js/`, `assets/images/`, and `assets/documents/` contain
@@ -124,6 +126,37 @@ The script retrieves arXiv metadata and rewrites only `_data/papers.json`. The
 research page renders that data through `_includes/paper-list.html`. The
 `Update arXiv papers` workflow performs the same update automatically when its
 inputs change.
+
+## Adding a physics note or essay
+
+Copy `source-assets/templates/physics-note.html` into `_notes/` and give the copy
+a lowercase, hyphenated filename, for example:
+
+```sh
+cp source-assets/templates/physics-note.html _notes/why-null-infinity-matters.html
+```
+
+Edit the front matter at the top and replace the example body with the note. The
+research archive, note URL, and sitemap entry are generated automatically. Notes
+are sorted newest first by `date`; `kind` can be `Note`, `Essay`, `Derivation`, or
+another short label. Keep a published filename stable because it determines the
+URL, such as `/notes/why-null-infinity-matters.html`.
+
+The source may contain ordinary HTML. MathJax renders TeX on every note page:
+
+```html
+<p>Inline mathematics: \(E = mc^2\).</p>
+
+\[
+    G_{\mu\nu} = 8\pi T_{\mu\nu}.
+\]
+```
+
+`$...$` and `$$...$$` delimiters are also enabled. Use `\(...\)` and `\[...\]`
+when possible because their intent is unambiguous in prose. The note files are
+local, but the lightweight setup downloads MathJax from its pinned CDN URL when
+a reader opens a note, so a local preview needs an internet connection to render
+the equations.
 
 ## License
 

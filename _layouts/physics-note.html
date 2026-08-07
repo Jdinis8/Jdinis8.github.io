@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}">
+<head>
+    {% include document-head.html %}
+    <script src="{{ '/assets/js/mathjax-config.js' | relative_url }}"></script>
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-chtml.js"
+    ></script>
+</head>
+<body>
+    <div class="note-container">
+        {% include site-shell.html %}
+
+        <main>
+            <article>
+                <header class="note-header">
+                    <p class="note-kicker">
+                        Physics / {{ page.kind | default: "Note" }}
+                    </p>
+
+                    <h1>{{ page.title }}</h1>
+                    <p class="note-deck">{{ page.description }}</p>
+
+                    <div class="note-byline">
+                        <span>{{ page.byline | default: "João D. Álvares" }}</span>
+                        <span>{{ page.display_date | default: page.date | date: "%d %b %Y" }}</span>
+                    </div>
+
+                    {% if page.topics and page.topics.size > 0 %}
+                    <ul class="note-topics" aria-label="Topics">
+                        {% for topic in page.topics %}
+                        <li>{{ topic }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </header>
+
+                <div class="note-body">
+                    {{ content }}
+                </div>
+            </article>
+
+            <nav class="note-return" aria-label="Return to research archive">
+                <a href="{{ '/research.html#notes' | relative_url }}">
+                    ← All physics notes &amp; essays
+                </a>
+            </nav>
+        </main>
+
+        {% include site-footer.html %}
+    </div>
+
+    <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
+</html>

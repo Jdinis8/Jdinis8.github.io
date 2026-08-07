@@ -1,0 +1,52 @@
+{% assign physics_notes = site.notes | sort: "date" | reverse %}
+<div class="section-heading-row">
+    <div>
+        <p class="section-kicker">Informal writing</p>
+        <h2>Physics Notes &amp; Essays</h2>
+    </div>
+
+    <span
+        class="section-count"
+        aria-label="{{ physics_notes.size }} physics notes and essays"
+    >
+        {% if physics_notes.size < 10 %}0{% endif %}{{ physics_notes.size }}
+    </span>
+</div>
+
+<p class="notes-intro">
+    Short explanations, calculations, and essays related to physics.
+</p>
+
+{% if physics_notes.size > 0 %}
+<div class="note-list">
+    {% for note in physics_notes %}
+    <article class="note-entry">
+        <a
+            class="note-link"
+            href="{{ note.url | relative_url }}"
+        >
+            <span class="note-index">
+                {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}
+            </span>
+
+            <div class="note-content">
+                <h3 class="note-title">{{ note.title }}</h3>
+                <p class="note-summary">{{ note.description }}</p>
+
+                <div class="note-meta">
+                    <span>{{ note.kind | default: "Note" }}</span>
+                    <span>{{ note.display_date | default: note.date | date: "%d %b %Y" }}</span>
+                    {% if note.topics and note.topics.size > 0 %}
+                    <span>{{ note.topics | join: " / " }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <span class="note-arrow" aria-hidden="true">→</span>
+        </a>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<p class="notes-empty">Notes will appear here as they are published.</p>
+{% endif %}
