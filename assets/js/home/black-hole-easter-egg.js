@@ -10,6 +10,9 @@ export class BlackHoleEasterEgg {
         this.returnButton = document.getElementById(
             "black-hole-return"
         );
+        this.copy = document.querySelector(
+            ".black-hole-copy"
+        );
 
         this.inertElements = [
             document.querySelector(".profile-controls"),
@@ -18,7 +21,8 @@ export class BlackHoleEasterEgg {
         ].filter(Boolean);
 
         this.isActive = false;
-        this.revealTimer = null;
+        this.quantumTimer = null;
+        this.copyTimer = null;
         this.closeTimer = null;
 
         this.prefersReducedMotion =
@@ -35,7 +39,8 @@ export class BlackHoleEasterEgg {
         if (
             !this.trigger ||
             !this.overlay ||
-            !this.returnButton
+            !this.returnButton ||
+            !this.copy
         ) {
             return;
         }
@@ -112,22 +117,43 @@ export class BlackHoleEasterEgg {
             );
         });
 
-        const revealDelay =
+        const quantumDelay =
             this.prefersReducedMotion.matches
                 ? 80
                 : 1450;
 
-        this.revealTimer = window.setTimeout(
+        const copyDelay =
+            this.prefersReducedMotion.matches
+                ? 160
+                : 2350;
+
+        this.quantumTimer = window.setTimeout(
             () => {
                 this.overlay.classList.add(
-                    "is-revealed"
+                    "is-quantum-visible"
+                );
+            },
+            quantumDelay
+        );
+
+        this.copyTimer = window.setTimeout(
+            () => {
+                this.copy.inert = false;
+
+                this.copy.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+                this.overlay.classList.add(
+                    "is-copy-visible"
                 );
 
                 this.returnButton.focus({
                     preventScroll: true
                 });
             },
-            revealDelay
+            copyDelay
         );
     }
 
@@ -138,10 +164,19 @@ export class BlackHoleEasterEgg {
 
         this.isActive = false;
 
-        window.clearTimeout(this.revealTimer);
+        window.clearTimeout(this.quantumTimer);
+        window.clearTimeout(this.copyTimer);
 
         this.overlay.classList.remove(
-            "is-revealed"
+            "is-quantum-visible",
+            "is-copy-visible"
+        );
+
+        this.copy.inert = true;
+
+        this.copy.setAttribute(
+            "aria-hidden",
+            "true"
         );
 
         this.overlay.classList.add(

@@ -16,12 +16,6 @@ function updateSectionThemeControls() {
     const isDark = getCurrentTheme() === "dark";
 
     sectionThemeToggles.forEach((toggle) => {
-        const label = toggle.querySelector("[data-theme-label]");
-
-        if (label) {
-            label.textContent = isDark ? "Light" : "Dark";
-        }
-
         toggle.setAttribute("aria-pressed", String(isDark));
         toggle.setAttribute(
             "aria-label",

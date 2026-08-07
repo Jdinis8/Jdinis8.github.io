@@ -11,6 +11,11 @@ styles:
 <head>
     {% include document-head.html %}
     {% include home-head-extra.html %}
+    <script src="{{ '/assets/js/mathjax-config.js' | relative_url }}"></script>
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-chtml.js"
+    ></script>
 </head>
 
 <body>
@@ -146,19 +151,10 @@ styles:
     <button
         id="theme-toggle"
         type="button"
-        aria-label="Switch to light mode"
+        aria-label="Switch to dark mode"
         aria-pressed="false"
     >
-        <span
-            class="theme-toggle-track"
-            aria-hidden="true"
-        >
-            <span class="theme-toggle-knob"></span>
-        </span>
-
-        <span id="theme-toggle-label">
-            Light
-        </span>
+        {% include theme-icons.html %}
     </button>
 
     <!--
@@ -213,28 +209,37 @@ styles:
         >
             <span class="hawking-quantum" aria-hidden="true"></span>
 
-            <p class="black-hole-kicker">A quantum escaped.</p>
-
-            <h2 id="black-hole-title">
-                Even black holes are not entirely black.
-            </h2>
-
-            <p
-                id="black-hole-description"
-                class="hawking-equation"
+            <div
+                class="black-hole-copy"
+                aria-hidden="true"
+                inert
             >
-                T<sub>H</sub> = ℏc<sup>3</sup> / (8πGMk<sub>B</sub>)
-            </p>
+                <p class="black-hole-kicker">A quantum escaped.</p>
 
-            <button
-                id="black-hole-return"
-                class="black-hole-return"
-                type="button"
-            >
-                Return with it
-            </button>
+                <h2 id="black-hole-title">
+                    Even black holes are not entirely black.
+                </h2>
 
-            <p class="black-hole-hint">or press Esc</p>
+                <p
+                    id="black-hole-description"
+                    class="hawking-equation"
+                >
+                    \(\displaystyle
+                        T_{\mathrm H}
+                        = \frac{\hbar c^3}{8\pi G M k_{\mathrm B}}
+                    \)
+                </p>
+
+                <button
+                    id="black-hole-return"
+                    class="black-hole-return"
+                    type="button"
+                >
+                    Return with it
+                </button>
+
+                <p class="black-hole-hint">or press Esc</p>
+            </div>
         </div>
     </div>
 

@@ -8,11 +8,6 @@ const themeToggle =
         "theme-toggle"
     );
 
-const themeToggleLabel =
-    document.getElementById(
-        "theme-toggle-label"
-    );
-
 const themeColorMeta =
     document.querySelector(
         'meta[name="theme-color"]'
@@ -29,10 +24,7 @@ function getCurrentTheme() {
 }
 
 function updateThemeButton() {
-    if (
-        !themeToggle ||
-        !themeToggleLabel
-    ) {
+    if (!themeToggle) {
         return;
     }
 
@@ -40,18 +32,9 @@ function updateThemeButton() {
         getCurrentTheme() ===
         "light";
 
-    /*
-     * The label describes the mode that will be activated
-     * when the visitor presses the button.
-     */
-    themeToggleLabel.textContent =
-        isLight
-            ? "Dark"
-            : "Light";
-
     themeToggle.setAttribute(
         "aria-pressed",
-        String(isLight)
+        String(!isLight)
     );
 
     themeToggle.setAttribute(
