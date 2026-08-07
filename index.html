@@ -204,36 +204,45 @@ styles:
         >
             <span class="hawking-quantum" aria-hidden="true"></span>
 
-            <div
-                class="black-hole-copy"
-                aria-hidden="true"
-                inert
-            >
-                <p class="black-hole-kicker">A quantum escaped.</p>
-
-                <h2 id="black-hole-title">
-                    Even black holes are not entirely black.
-                </h2>
-
+            <div class="black-hole-copy">
                 <p
-                    id="black-hole-description"
-                    class="hawking-equation"
+                    class="black-hole-announcement"
+                    role="status"
+                    aria-live="polite"
+                    aria-hidden="true"
                 >
-                    \(\displaystyle
-                        T_{\mathrm H}
-                        = \frac{\hbar c^3}{8\pi G M k_{\mathrm B}}
-                    \)
+                    A quantum escaped.
                 </p>
 
-                <button
-                    id="black-hole-return"
-                    class="black-hole-return"
-                    type="button"
+                <div
+                    class="black-hole-details"
+                    aria-hidden="true"
+                    inert
                 >
-                    Return with it
-                </button>
+                    <h2 id="black-hole-title">
+                        Even black holes are not really black.
+                    </h2>
 
-                <p class="black-hole-hint">or press Esc</p>
+                    <p
+                        id="black-hole-description"
+                        class="hawking-equation"
+                    >
+                        \(\displaystyle
+                            T_{\mathrm H}
+                            = \frac{\hbar c^3}{8\pi G M k_{\mathrm B}}
+                        \)
+                    </p>
+
+                    <button
+                        id="black-hole-return"
+                        class="black-hole-return"
+                        type="button"
+                    >
+                        Return with it
+                    </button>
+
+                    <p class="black-hole-hint">or press Esc</p>
+                </div>
             </div>
         </div>
     </div>

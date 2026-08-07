@@ -13,6 +13,12 @@ export class BlackHoleEasterEgg {
         this.copy = document.querySelector(
             ".black-hole-copy"
         );
+        this.announcement = document.querySelector(
+            ".black-hole-announcement"
+        );
+        this.details = document.querySelector(
+            ".black-hole-details"
+        );
         this.equation = document.querySelector(
             ".hawking-equation"
         );
@@ -26,7 +32,9 @@ export class BlackHoleEasterEgg {
         this.isActive = false;
         this.activationId = 0;
         this.quantumTimer = null;
-        this.copyTimer = null;
+        this.announcementTimer = null;
+        this.replacementTimer = null;
+        this.detailsTimer = null;
         this.closeTimer = null;
         this.mathJaxPromise = null;
 
@@ -46,6 +54,8 @@ export class BlackHoleEasterEgg {
             !this.overlay ||
             !this.returnButton ||
             !this.copy ||
+            !this.announcement ||
+            !this.details ||
             !this.equation
         ) {
             return;
@@ -144,7 +154,25 @@ export class BlackHoleEasterEgg {
         return this.mathJaxPromise;
     }
 
-    revealCopy(
+    showAnnouncement(activationId) {
+        if (
+            !this.isActive ||
+            activationId !== this.activationId
+        ) {
+            return;
+        }
+
+        this.announcement.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        this.overlay.classList.add(
+            "is-announcement-visible"
+        );
+    }
+
+    beginReplacement(
         mathRendered,
         activationId
     ) {
@@ -160,20 +188,46 @@ export class BlackHoleEasterEgg {
                 "T_H = ℏc³ / (8πGMk_B)";
         }
 
-        this.copy.inert = false;
-
-        this.copy.setAttribute(
+        this.announcement.setAttribute(
             "aria-hidden",
-            "false"
+            "true"
         );
 
-        this.overlay.classList.add(
-            "is-copy-visible"
+        this.overlay.classList.remove(
+            "is-announcement-visible"
         );
 
-        this.returnButton.focus({
-            preventScroll: true
-        });
+        const fadeDelay =
+            this.prefersReducedMotion.matches
+                ? 80
+                : 550;
+
+        this.detailsTimer = window.setTimeout(
+            () => {
+                if (
+                    !this.isActive ||
+                    activationId !== this.activationId
+                ) {
+                    return;
+                }
+
+                this.details.inert = false;
+
+                this.details.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+                this.overlay.classList.add(
+                    "is-details-visible"
+                );
+
+                this.returnButton.focus({
+                    preventScroll: true
+                });
+            },
+            fadeDelay
+        );
     }
 
     activate() {
@@ -238,10 +292,15 @@ export class BlackHoleEasterEgg {
                 ? 80
                 : 1450;
 
-        const copyDelay =
+        const announcementDelay =
             this.prefersReducedMotion.matches
                 ? 160
                 : 2350;
+
+        const replacementDelay =
+            this.prefersReducedMotion.matches
+                ? 300
+                : 3850;
 
         this.quantumTimer = window.setTimeout(
             () => {
@@ -252,18 +311,27 @@ export class BlackHoleEasterEgg {
             quantumDelay
         );
 
-        this.copyTimer = window.setTimeout(
+        this.announcementTimer = window.setTimeout(
+            () => {
+                this.showAnnouncement(
+                    activationId
+                );
+            },
+            announcementDelay
+        );
+
+        this.replacementTimer = window.setTimeout(
             () => {
                 mathJaxReady.then(
                     mathRendered => {
-                        this.revealCopy(
+                        this.beginReplacement(
                             mathRendered,
                             activationId
                         );
                     }
                 );
             },
-            copyDelay
+            replacementDelay
         );
     }
 
@@ -275,16 +343,24 @@ export class BlackHoleEasterEgg {
         this.isActive = false;
 
         window.clearTimeout(this.quantumTimer);
-        window.clearTimeout(this.copyTimer);
+        window.clearTimeout(this.announcementTimer);
+        window.clearTimeout(this.replacementTimer);
+        window.clearTimeout(this.detailsTimer);
 
         this.overlay.classList.remove(
             "is-quantum-visible",
-            "is-copy-visible"
+            "is-announcement-visible",
+            "is-details-visible"
         );
 
-        this.copy.inert = true;
+        this.announcement.setAttribute(
+            "aria-hidden",
+            "true"
+        );
 
-        this.copy.setAttribute(
+        this.details.inert = true;
+
+        this.details.setAttribute(
             "aria-hidden",
             "true"
         );

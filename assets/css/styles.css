@@ -744,18 +744,40 @@ html.black-hole-active .homepage-copyright {
 }
 
 .black-hole-copy {
+    display: grid;
+    place-items: center;
+
+    width: 100%;
+}
+
+.black-hole-announcement,
+.black-hole-details {
+    grid-area: 1 / 1;
+
+    width: 100%;
+
     opacity: 0;
 
     transform:
         translateY(10px);
+}
 
+.black-hole-announcement {
+    transition:
+        opacity 450ms ease,
+        transform 600ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.black-hole-details {
     transition:
         opacity 900ms ease,
         transform 1100ms cubic-bezier(.22, 1, .36, 1);
 }
 
-.black-hole-easter-egg.is-copy-visible
-.black-hole-copy {
+.black-hole-easter-egg.is-announcement-visible
+.black-hole-announcement,
+.black-hole-easter-egg.is-details-visible
+.black-hole-details {
     opacity: 1;
 
     transform:
@@ -804,16 +826,16 @@ html.black-hole-active .homepage-copyright {
         infinite;
 }
 
-.black-hole-kicker {
-    margin: 0 0 14px;
+.black-hole-announcement {
+    margin: 0;
 
-    color: rgba(255, 255, 255, 0.52);
+    color: rgba(255, 255, 255, 0.68);
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
@@ -1017,7 +1039,8 @@ html.black-hole-active .homepage-copyright {
     #theme-toggle,
     .homepage-copyright,
     .black-hole-easter-egg,
-    .black-hole-copy {
+    .black-hole-announcement,
+    .black-hole-details {
         transition-duration: 1ms;
     }
 
