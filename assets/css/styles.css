@@ -154,6 +154,15 @@ body {
     background: transparent;
 
     touch-action: none;
+
+    transform-origin:
+        var(--black-hole-x, 50%)
+        var(--black-hole-y, 50%);
+
+    transition:
+        opacity 900ms ease,
+        filter 900ms ease,
+        transform 1100ms cubic-bezier(.7, 0, .84, 0);
 }
 
 /*
@@ -248,6 +257,9 @@ body {
     transform: translateX(-50%);
 
     pointer-events: none;
+
+    transition:
+        opacity 650ms ease;
 }
 
 
@@ -285,15 +297,38 @@ body {
     flex-direction: column;
     align-items: center;
     gap: clamp(8px, 1vw, 9px);
+
+    transition:
+        opacity 650ms ease,
+        filter 800ms ease,
+        transform 900ms cubic-bezier(.7, 0, .84, 0);
 }
 
 .profile-photo {
+    --profile-ring-color:
+        var(--page-foreground);
+
     position: relative;
 
     width: var(--profile-size);
     aspect-ratio: 1;
 
+    margin: 0;
+    padding: 0;
+
     overflow: hidden;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    color: inherit;
+    cursor: pointer;
+
+    transition:
+        background-color 260ms ease,
+        border-color 260ms ease,
+        box-shadow 260ms ease,
+        transform 350ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .profile-photo,
@@ -324,6 +359,10 @@ body {
         grayscale(0.85)
         saturate(0.55)
         contrast(0.96);
+
+    transition:
+        filter 350ms ease,
+        transform 500ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .profile-photo::after {
@@ -339,10 +378,10 @@ body {
     background:
         conic-gradient(
             from -35deg,
-            var(--page-foreground) 0 73%,
+            var(--profile-ring-color) 0 73%,
             transparent 73% 77%,
             var(--hover-color) 77% 88%,
-            var(--page-foreground) 88% 100%
+            var(--profile-ring-color) 88% 100%
         );
 
     -webkit-mask:
@@ -360,6 +399,60 @@ body {
         );
 
     pointer-events: none;
+
+    transition:
+        filter 300ms ease,
+        transform 600ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.profile-photo:hover,
+.profile-photo:focus-visible {
+    --profile-ring-color:
+        var(--page-background);
+
+    border-color:
+        var(--page-foreground);
+
+    background:
+        var(--page-foreground);
+
+    box-shadow:
+        0 0 0 1px var(--page-foreground),
+        0 0 18px rgba(127, 127, 127, 0.22);
+
+    transform:
+        scale(1.055);
+}
+
+.profile-photo:hover img,
+.profile-photo:focus-visible img {
+    filter:
+        grayscale(0.25)
+        saturate(0.8)
+        contrast(1.04);
+
+    transform:
+        scale(1.025);
+}
+
+.profile-photo:hover::after,
+.profile-photo:focus-visible::after {
+    filter:
+        drop-shadow(
+            0 0 2px
+            var(--page-foreground)
+        );
+
+    transform:
+        rotate(24deg);
+}
+
+.profile-photo:focus-visible {
+    outline:
+        1px solid
+        var(--page-foreground);
+
+    outline-offset: 5px;
 }
 
 .profile-links {
@@ -500,7 +593,9 @@ body {
         color 200ms ease,
         background-color 200ms ease,
         border-color 200ms ease,
-        opacity 200ms ease;
+        opacity 650ms ease,
+        filter 800ms ease,
+        transform 900ms cubic-bezier(.7, 0, .84, 0);
 }
 
 #theme-toggle:hover {
@@ -569,6 +664,301 @@ html[data-theme="light"]
 .theme-toggle-knob {
     transform:
         translateX(14px);
+}
+
+
+/* --------------------------------------------------
+   Black-hole portrait easter egg
+-------------------------------------------------- */
+
+html.black-hole-active #canvas {
+    opacity: 0;
+
+    filter:
+        blur(12px)
+        contrast(1.5);
+
+    transform:
+        scale(0.72)
+        rotate(-2deg);
+}
+
+html.black-hole-active .profile-controls {
+    opacity: 0;
+
+    filter:
+        blur(9px);
+
+    transform:
+        scale(0.55)
+        rotate(-10deg);
+}
+
+html.black-hole-active #theme-toggle {
+    opacity: 0;
+
+    filter:
+        blur(7px);
+
+    transform:
+        scale(0.75);
+}
+
+html.black-hole-active .homepage-copyright {
+    opacity: 0;
+}
+
+.black-hole-easter-egg {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+
+    display: grid;
+    place-items: center;
+
+    padding:
+        max(28px, env(safe-area-inset-top))
+        max(24px, env(safe-area-inset-right))
+        max(28px, env(safe-area-inset-bottom))
+        max(24px, env(safe-area-inset-left));
+
+    background: #000000;
+    color: #ffffff;
+
+    visibility: hidden;
+    pointer-events: none;
+
+    clip-path:
+        circle(
+            0
+            at
+            var(--black-hole-x, 50%)
+            var(--black-hole-y, 50%)
+        );
+
+    -webkit-clip-path:
+        circle(
+            0
+            at
+            var(--black-hole-x, 50%)
+            var(--black-hole-y, 50%)
+        );
+
+    transition:
+        clip-path 1250ms cubic-bezier(.76, 0, .24, 1),
+        -webkit-clip-path 1250ms cubic-bezier(.76, 0, .24, 1),
+        visibility 0s linear 1250ms;
+}
+
+.black-hole-easter-egg.is-active {
+    visibility: visible;
+    pointer-events: auto;
+
+    clip-path:
+        circle(
+            160vmax
+            at
+            var(--black-hole-x, 50%)
+            var(--black-hole-y, 50%)
+        );
+
+    -webkit-clip-path:
+        circle(
+            160vmax
+            at
+            var(--black-hole-x, 50%)
+            var(--black-hole-y, 50%)
+        );
+
+    transition-delay: 0s;
+}
+
+.black-hole-easter-egg.is-active.is-closing {
+    clip-path:
+        circle(
+            0
+            at
+            var(--black-hole-x, 50%)
+            var(--black-hole-y, 50%)
+        );
+
+    -webkit-clip-path:
+        circle(
+            0
+            at
+            var(--black-hole-x, 50%)
+            var(--black-hole-y, 50%)
+        );
+
+    transition-duration: 950ms;
+}
+
+.black-hole-message {
+    width: min(100%, 520px);
+
+    opacity: 0;
+
+    text-align: center;
+
+    transform:
+        translateY(10px);
+
+    transition:
+        opacity 900ms ease,
+        transform 1100ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.black-hole-easter-egg.is-revealed
+.black-hole-message {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+.hawking-quantum {
+    display: block;
+
+    width: 4px;
+    height: 4px;
+
+    margin: 0 auto 42px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 7px 2px rgba(255, 255, 255, 0.9),
+        0 0 24px 7px rgba(160, 215, 255, 0.34);
+
+    animation:
+        hawkingQuantumDrift
+        3.6s
+        ease-in-out
+        infinite;
+}
+
+.black-hole-kicker {
+    margin: 0 0 14px;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.black-hole-message h2 {
+    max-width: 500px;
+
+    margin: 0 auto;
+
+    color: #ffffff;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:
+        clamp(1.15rem, 3vw, 1.55rem);
+
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.45;
+}
+
+.hawking-equation {
+    margin: 24px 0 30px;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:
+        clamp(0.84rem, 2vw, 1rem);
+
+    letter-spacing: 0.08em;
+}
+
+.black-hole-return {
+    min-height: 42px;
+    padding: 9px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 999px;
+
+    background: transparent;
+    color: rgba(255, 255, 255, 0.78);
+
+    cursor: pointer;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+.black-hole-return:hover,
+.black-hole-return:focus-visible {
+    border-color: #ffffff;
+    background: #ffffff;
+    color: #000000;
+
+    transform:
+        translateY(-1px);
+}
+
+.black-hole-return:focus-visible {
+    outline: 1px solid #ffffff;
+    outline-offset: 5px;
+}
+
+.black-hole-hint {
+    margin: 13px 0 0;
+
+    color: rgba(255, 255, 255, 0.32);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+}
+
+@keyframes hawkingQuantumDrift {
+    0%,
+    100% {
+        opacity: 0.7;
+
+        transform:
+            translate(-5px, 3px)
+            scale(0.85);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform:
+            translate(6px, -5px)
+            scale(1.15);
+    }
 }
 
 
@@ -654,5 +1044,18 @@ html[data-theme="light"]
 @media (prefers-reduced-motion: reduce) {
     #blur-overlay {
         animation-delay: 0ms;
+    }
+
+    #canvas,
+    .profile-controls,
+    #theme-toggle,
+    .homepage-copyright,
+    .black-hole-easter-egg,
+    .black-hole-message {
+        transition-duration: 1ms;
+    }
+
+    .hawking-quantum {
+        animation: none;
     }
 }

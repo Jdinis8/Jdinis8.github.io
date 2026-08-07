@@ -25,14 +25,22 @@ styles:
 
     <!-- Portrait and direct contact -->
     <div class="profile-controls">
-        <div class="profile-photo">
+        <button
+            id="black-hole-trigger"
+            class="profile-photo"
+            type="button"
+            aria-label="Cross the event horizon"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="black-hole-easter-egg"
+        >
             <img
                 src="/assets/images/photo.jpg"
                 alt="Portrait of João D. Álvares"
                 width="739"
                 height="1600"
             >
-        </div>
+        </button>
 
         <div
             class="profile-links"
@@ -189,6 +197,46 @@ styles:
         © <span data-current-year></span> João D. Álvares
         &middot; Rights reserved
     </p>
+
+    <!-- Black-hole easter egg, activated by the portrait. -->
+    <div
+        id="black-hole-easter-egg"
+        class="black-hole-easter-egg"
+        aria-hidden="true"
+    >
+        <div
+            class="black-hole-message"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="black-hole-title"
+            aria-describedby="black-hole-description"
+        >
+            <span class="hawking-quantum" aria-hidden="true"></span>
+
+            <p class="black-hole-kicker">A quantum escaped.</p>
+
+            <h2 id="black-hole-title">
+                Even black holes are not entirely black.
+            </h2>
+
+            <p
+                id="black-hole-description"
+                class="hawking-equation"
+            >
+                T<sub>H</sub> = ℏc<sup>3</sup> / (8πGMk<sub>B</sub>)
+            </p>
+
+            <button
+                id="black-hole-return"
+                class="black-hole-return"
+                type="button"
+            >
+                Return with it
+            </button>
+
+            <p class="black-hole-hint">or press Esc</p>
+        </div>
+    </div>
 
     <!-- Opening blur animation -->
     <div

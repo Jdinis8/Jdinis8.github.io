@@ -1,4 +1,5 @@
 import { HomeScene } from "./home/home-scene.js";
+import { BlackHoleEasterEgg } from "./home/black-hole-easter-egg.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -108,6 +109,11 @@ const mouse = {
 
 const scene = new HomeScene(canvas, ctx, mouse);
 scene.init();
+
+const blackHoleEasterEgg =
+    new BlackHoleEasterEgg();
+
+blackHoleEasterEgg.init();
 
 function resize() {
     scene.onResize();
