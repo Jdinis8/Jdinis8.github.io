@@ -24,6 +24,12 @@ section {
     scroll-margin-top: 40px;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 
 /* --------------------------------------------------
    Header and navigation
@@ -61,33 +67,92 @@ h1 {
     line-height: 1.6;
 }
 
+/*
+   In-page index. Each entry is boxed so it reads as a control: a down arrow
+   for a section further down the page, an up-right arrow for a document that
+   opens in a new tab.
+*/
 .page-nav {
-    margin: 24px 0 28px;
+    display: grid;
 
-    color: var(--faint-text);
+    grid-template-columns:
+        max-content
+        minmax(0, 1fr);
 
-    font-size: 0.85rem;
-    line-height: 1.9;
-    letter-spacing: 0.5px;
+    align-items: center;
+
+    gap: 10px 22px;
+
+    margin: 26px 0 28px;
+}
+
+.page-nav-label {
+    margin: 0;
+
+    color: var(--hover-color);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.page-nav-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
 }
 
 .page-nav a {
-    padding: 3px 4px;
+    display: inline-flex;
+
+    align-items: baseline;
+
+    gap: 8px;
+
+    padding: 7px 11px;
+
+    border:
+        1px solid
+        var(--border-color);
 
     color: var(--strong-link-color);
 
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
     text-decoration: none;
+    text-transform: uppercase;
 
-    transition: color 200ms ease;
+    transition:
+        color 160ms ease,
+        border-color 160ms ease;
 }
 
-.page-nav a:hover {
+.page-nav a span {
+    color: var(--faint-text);
+
+    transition: color 160ms ease;
+}
+
+.page-nav a:hover,
+.page-nav a:focus-visible,
+.page-nav a:hover span,
+.page-nav a:focus-visible span {
+    border-color: var(--hover-color);
+
     color: var(--hover-color);
 }
 
 .page-nav a:focus-visible {
-    color: var(--hover-color);
-
     outline:
         1px solid
         var(--hover-color);
@@ -750,7 +815,13 @@ blockquote {
     }
 
     .page-nav {
-        line-height: 2;
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+    }
+
+    .page-nav-list {
+        margin-bottom: 8px;
     }
 
     .thesis-box {
