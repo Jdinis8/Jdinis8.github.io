@@ -1,7 +1,7 @@
 [
   {
     "slug": "hellafull-sticker-sheet",
-    "title": "HellaFull - Sticker Sheet",
+    "title": "HellaFull — Sticker Sheet",
     "categories": ["Hella Full"],
     "cardSize": "wide",
     "year": "2025",
@@ -33,7 +33,7 @@
   },
   {
     "slug": "voynich-code-poster-series",
-    "title": "Voynich Code - Poster Series",
+    "title": "Voynich Code — Poster Series",
     "categories": ["Music"],
     "cardSize": "standard",
     "year": "2026",
@@ -121,12 +121,12 @@
   },
   {
     "slug": "reissner-nordstrom-black-hole-penrose-diagram",
-    "title": "Reissner-Nördstrom Black Hole Penrose Diagram",
+    "title": "Reissner–Nordström Black Hole Penrose Diagram",
     "categories": ["Scientific"],
     "cardSize": "standard",
     "year": "2025",
     "image": "/assets/images/design/physics/reissner-nordstrom.jpg",
-    "description": "Penrose diagram for a Reissner-Nördstrom black hole.",
+    "description": "Penrose diagram for a Reissner–Nordström black hole.",
     "tools": "Python",
     "layout": "portrait"
   },
@@ -154,7 +154,7 @@
   },
   {
     "slug": "hellafull-business-card-01",
-    "title": "HellaFull - Business Card 01",
+    "title": "HellaFull — Business Card 01",
     "categories": ["Hella Full"],
     "cardSize": "standard",
     "year": "2025",
@@ -165,7 +165,7 @@
   },
   {
     "slug": "vended-album-cover-series",
-    "title": "Vended - Album Cover Series",
+    "title": "Vended — Album Cover Series",
     "categories": ["Music"],
     "cardSize": "standard",
     "year": "2025",

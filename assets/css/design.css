@@ -474,10 +474,6 @@ h1 {
 
     object-fit: cover;
 
-    filter:
-        saturate(0.86)
-        contrast(1.02);
-
     transition:
         transform 500ms
             cubic-bezier(.2, .7, .2, 1),
@@ -508,10 +504,26 @@ h1 {
 .project-visual img {
     transform:
         scale(1.025);
+}
 
-    filter:
-        saturate(1)
-        contrast(1.04);
+/*
+   Cards are slightly muted until hovered. Touch screens have no hover, and
+   the modal shows finished work, so both keep the artwork's true colours.
+*/
+@media (hover: hover) {
+    .project-card
+    .project-visual img {
+        filter:
+            saturate(0.86)
+            contrast(1.02);
+    }
+
+    .project-card:hover
+    .project-visual img,
+    .project-card:focus-visible
+    .project-visual img {
+        filter: none;
+    }
 }
 
 
@@ -891,20 +903,9 @@ h1 {
         var(--design-heading);
 }
 
-.modal-close {
+.modal-close,
+.modal-step {
     position: fixed;
-
-    top:
-        max(
-            24px,
-            env(safe-area-inset-top)
-        );
-
-    right:
-        max(
-            27px,
-            env(safe-area-inset-right)
-        );
 
     width: 42px;
     height: 42px;
@@ -924,8 +925,54 @@ h1 {
     font-size: 1.2rem;
 }
 
+.modal-close {
+    top:
+        max(
+            24px,
+            env(safe-area-inset-top)
+        );
+
+    right:
+        max(
+            27px,
+            env(safe-area-inset-right)
+        );
+}
+
+.modal-step {
+    top: 50%;
+
+    font-family: var(--font-body);
+    font-size: 1rem;
+
+    transform:
+        translateY(-50%);
+}
+
+.modal-step[hidden] {
+    display: none;
+}
+
+.modal-step--previous {
+    left:
+        max(
+            21px,
+            env(safe-area-inset-left)
+        );
+}
+
+.modal-step--next {
+    right:
+        max(
+            21px,
+            env(safe-area-inset-right)
+        );
+}
+
 .modal-close:hover,
-.modal-close:focus-visible {
+.modal-close:focus-visible,
+.modal-step:hover,
+.modal-step:focus-visible {
     color:
         var(--design-heading);
 
@@ -933,7 +980,8 @@ h1 {
         var(--design-muted);
 }
 
-.modal-close:focus-visible {
+.modal-close:focus-visible,
+.modal-step:focus-visible {
     outline:
         1px solid
         var(--design-heading);
@@ -1066,6 +1114,27 @@ h1 {
         right:
             max(
                 12px,
+                env(safe-area-inset-right)
+            );
+    }
+
+    .modal-step {
+        width: 36px;
+        height: 36px;
+    }
+
+    .modal-step--previous {
+        left:
+            max(
+                8px,
+                env(safe-area-inset-left)
+            );
+    }
+
+    .modal-step--next {
+        right:
+            max(
+                8px,
                 env(safe-area-inset-right)
             );
     }

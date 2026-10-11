@@ -1,3 +1,10 @@
+/*
+ * Animation speeds are per millisecond, so the opening looks
+ * the same on every display refresh rate.
+ */
+const FADE_DURATION = 1000;
+const ROTATION_SPEED = 0.000024;
+
 export class UIOverlay {
     constructor(canvas) {
         this.canvas = canvas;
@@ -9,32 +16,32 @@ export class UIOverlay {
 
         this.fade = 0;
         this.rotation = 0;
-        this.hoveringInteractive = false;
 
         /*
          * These are the only navigation links displayed
-         * by this overlay.
+         * by this overlay. Each label is drawn on the canvas
+         * and the matching link from the page's navigation is
+         * kept on top of it, so it behaves like any other link.
          */
+        const linkElements =
+            document.querySelectorAll(
+                ".home-fallback-navigation a"
+            );
+
         this.subtitleLinks = [
-            {
-                label: "Black holes",
-                url: "research.html",
+            "Black holes",
+            "Graphic design",
+            "Preserving memory"
+        ].map(
+            (label, index) => ({
+                label,
                 hover: 0,
-                bounds: null
-            },
-            {
-                label: "Graphic design",
-                url: "design.html",
-                hover: 0,
-                bounds: null
-            },
-            {
-                label: "Preserving memory",
-                url: "history.html",
-                hover: 0,
-                bounds: null
-            }
-        ];
+                element:
+                    linkElements[index] ||
+                    null,
+                placement: ""
+            })
+        );
 
         this.mouse = {
             x: this.center.x,
@@ -42,14 +49,6 @@ export class UIOverlay {
         };
 
         this.metrics = {};
-
-        this.handlePointerUp =
-            this.handlePointerUp.bind(this);
-
-        this.canvas.addEventListener(
-            "pointerup",
-            this.handlePointerUp
-        );
 
         this.resize();
     }
@@ -179,7 +178,7 @@ export class UIOverlay {
         }
     }
 
-    update(mouse) {
+    update(dt, mouse) {
         if (
             mouse &&
             Number.isFinite(mouse.x) &&
@@ -192,18 +191,16 @@ export class UIOverlay {
             this.fade =
                 Math.min(
                     1,
-                    this.fade + 0.005
+                    this.fade +
+                        dt / FADE_DURATION
                 );
         }
 
         this.rotation +=
-            0.0004;
+            dt * ROTATION_SPEED;
     }
 
     draw(ctx) {
-        this.hoveringInteractive =
-            false;
-
         ctx.save();
 
         ctx.translate(
@@ -216,11 +213,6 @@ export class UIOverlay {
         this.drawSubtitle(ctx);
 
         ctx.restore();
-
-        this.canvas.style.cursor =
-            this.hoveringInteractive
-                ? "pointer"
-                : "default";
     }
 
     drawDeformedRing(ctx) {
@@ -426,6 +418,23 @@ export class UIOverlay {
             ).width;
 
         /*
+         * On narrow phones the links are split across two
+         * lines, so each link's active area is kept to its
+         * own line.
+         */
+        const twoRows =
+            compact &&
+            veryNarrow;
+
+        const rowSpacing =
+            subtitleSize * 1.65;
+
+        const hitHalfHeight =
+            twoRows
+                ? rowSpacing / 2
+                : subtitleSize + 6;
+
+        /*
          * Draw a centered row of clickable links.
          */
         const drawLinkRow = (
@@ -488,24 +497,33 @@ export class UIOverlay {
 
                         top:
                             y -
-                            subtitleSize -
-                            6,
+                            hitHalfHeight,
 
                         bottom:
                             y +
-                            subtitleSize +
-                            6
+                            hitHalfHeight
                     };
 
+                    /*
+                     * A link also lights up while it has
+                     * keyboard focus.
+                     */
                     const isHovered =
-                        localMouseX >=
-                            localBounds.left &&
-                        localMouseX <=
-                            localBounds.right &&
-                        localMouseY >=
-                            localBounds.top &&
-                        localMouseY <=
-                            localBounds.bottom;
+                        (
+                            localMouseX >=
+                                localBounds.left &&
+                            localMouseX <=
+                                localBounds.right &&
+                            localMouseY >=
+                                localBounds.top &&
+                            localMouseY <=
+                                localBounds.bottom
+                        ) ||
+                        Boolean(
+                            link.element?.matches(
+                                ":focus-visible"
+                            )
+                        );
 
                     const hoverTarget =
                         isHovered
@@ -519,32 +537,10 @@ export class UIOverlay {
                         ) *
                         0.15;
 
-                    if (isHovered) {
-                        this.hoveringInteractive =
-                            true;
-                    }
-
-                    /*
-                     * Store absolute canvas coordinates for
-                     * pointer clicks and touchscreen taps.
-                     */
-                    link.bounds = {
-                        left:
-                            this.center.x +
-                            localBounds.left,
-
-                        right:
-                            this.center.x +
-                            localBounds.right,
-
-                        top:
-                            this.center.y +
-                            localBounds.top,
-
-                        bottom:
-                            this.center.y +
-                            localBounds.bottom
-                    };
+                    this.placeLinkElement(
+                        link,
+                        localBounds
+                    );
 
                     /*
                      * Normal opacity is 0.5 and increases
@@ -660,10 +656,7 @@ export class UIOverlay {
          * Split the subtitle across two lines on narrow
          * phones.
          */
-        if (
-            compact &&
-            veryNarrow
-        ) {
+        if (twoRows) {
             drawLinkRow(
                 [0, 1],
                 firstLineY
@@ -672,8 +665,7 @@ export class UIOverlay {
             drawLinkRow(
                 [2],
                 firstLineY +
-                    subtitleSize *
-                        1.65
+                    rowSpacing
             );
         } else {
             drawLinkRow(
@@ -683,78 +675,65 @@ export class UIOverlay {
         }
     }
 
-    pointInsideBounds(
-        x,
-        y,
-        bounds
+    /*
+     * Move the page link over its drawn label. The style
+     * is only written when the position has changed.
+     */
+    placeLinkElement(
+        link,
+        localBounds
     ) {
-        return Boolean(
-            bounds &&
-            x >= bounds.left &&
-            x <= bounds.right &&
-            y >= bounds.top &&
-            y <= bounds.bottom
-        );
-    }
+        if (!link.element) {
+            return;
+        }
 
-    canvasCoordinatesFromEvent(
-        event
-    ) {
-        const rect =
-            this.canvas
-                .getBoundingClientRect();
-
-        return {
-            x:
-                (
-                    event.clientX -
-                    rect.left
-                ) *
-                (
-                    this.canvas.clientWidth /
-                    rect.width
-                ),
-
-            y:
-                (
-                    event.clientY -
-                    rect.top
-                ) *
-                (
-                    this.canvas.clientHeight /
-                    rect.height
-                )
-        };
-    }
-
-    handlePointerUp(event) {
-        const point =
-            this.canvasCoordinatesFromEvent(
-                event
+        const left =
+            Math.round(
+                this.center.x +
+                localBounds.left
             );
 
-        const selectedSubtitleLink =
-            this.subtitleLinks.find(
-                link =>
-                    this.pointInsideBounds(
-                        point.x,
-                        point.y,
-                        link.bounds
-                    )
+        const top =
+            Math.round(
+                this.center.y +
+                localBounds.top
             );
+
+        const width =
+            Math.round(
+                localBounds.right -
+                localBounds.left
+            );
+
+        const height =
+            Math.round(
+                localBounds.bottom -
+                localBounds.top
+            );
+
+        const placement =
+            `${left},${top},${width},${height}`;
 
         if (
-            selectedSubtitleLink?.url
+            link.placement ===
+            placement
         ) {
-            window.location.href =
-                selectedSubtitleLink.url;
+            return;
         }
-    }
 
-    destroy() {
-        this.canvas.removeEventListener(
-            "pointerup",
-            this.handlePointerUp
-        );
+        link.placement =
+            placement;
+
+        link.element.style.left =
+            `${left}px`;
+
+        link.element.style.top =
+            `${top}px`;
+
+        link.element.style.width =
+            `${width}px`;
+
+        link.element.style.height =
+            `${height}px`;
     }
 }

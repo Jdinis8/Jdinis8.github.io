@@ -23,6 +23,8 @@ const filters = document.getElementById("filters");
 const count = document.getElementById("project-count");
 const modal = document.getElementById("project-modal");
 const modalClose = document.getElementById("modal-close");
+const modalPrevious = document.getElementById("modal-previous");
+const modalNext = document.getElementById("modal-next");
 const modalMedia = document.getElementById("modal-media");
 const modalTitle = document.getElementById("modal-title");
 const modalDescription = document.getElementById("modal-description");
@@ -250,14 +252,16 @@ function createProjectInfo(project) {
     return info;
 }
 
+function getVisibleProjects() {
+    return activeCategory === "All"
+        ? projects
+        : projects.filter((project) =>
+              getProjectCategories(project).includes(activeCategory),
+          );
+}
+
 function renderProjects() {
-    const visibleProjects =
-        activeCategory === "All"
-            ? projects
-            : projects.filter(
-                  (project) =>
-                      getProjectCategories(project).includes(activeCategory),
-              );
+    const visibleProjects = getVisibleProjects();
 
     grid.replaceChildren();
     count.textContent = `${visibleProjects.length
@@ -314,6 +318,11 @@ function getProjectUrl(slug = null) {
 }
 
 function openProject(project, index, updateUrl = false) {
+    const wasOpen = modal.classList.contains("is-open");
+    const hasSiblings = getVisibleProjects().length > 1;
+
+    modalPrevious.hidden = !hasSiblings;
+    modalNext.hidden = !hasSiblings;
     modalTitle.textContent = project.title;
     modalDescription.textContent = project.description;
     modalMedia.replaceChildren(createVisual(project, index, true));
@@ -323,7 +332,10 @@ function openProject(project, index, updateUrl = false) {
         getProjectCategories(project).join(" · "),
     );
     appendMetadata("Year", project.year);
-    appendMetadata("Tools", project.tools || "—");
+
+    if (project.tools) {
+        appendMetadata("Tools", project.tools);
+    }
 
     if (project.link) {
         const link = document.createElement("a");
@@ -351,7 +363,39 @@ function openProject(project, index, updateUrl = false) {
         );
     }
 
-    modalClose.focus();
+    if (!wasOpen) {
+        modalClose.focus();
+    }
+}
+
+// Steps through the projects of the active filter, wrapping at either end.
+function showAdjacentProject(step) {
+    const visibleProjects = getVisibleProjects();
+    const currentIndex = visibleProjects.findIndex(
+        (project) => project.slug === modal.dataset.projectSlug,
+    );
+
+    if (visibleProjects.length < 2) {
+        return;
+    }
+
+    const index =
+        currentIndex < 0
+            ? 0
+            : (currentIndex + step + visibleProjects.length) %
+              visibleProjects.length;
+    const project = visibleProjects[index];
+
+    openProject(project, index, false);
+
+    // Replace rather than push, so Back still closes the modal in one step.
+    window.history.replaceState(
+        window.history.state && window.history.state.designProjectModal
+            ? { designProjectModal: true, project: project.slug }
+            : window.history.state,
+        "",
+        getProjectUrl(project.slug),
+    );
 }
 
 function closeProject(restoreFocus = true) {
@@ -425,14 +469,24 @@ async function initializeDesignArchive() {
 }
 
 modalClose.addEventListener("click", requestProjectClose);
+modalPrevious.addEventListener("click", () => showAdjacentProject(-1));
+modalNext.addEventListener("click", () => showAdjacentProject(1));
 modal.addEventListener("click", (event) => {
     if (event.target === modal) {
         requestProjectClose();
     }
 });
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+    if (!modal.classList.contains("is-open")) {
+        return;
+    }
+
+    if (event.key === "Escape") {
         requestProjectClose();
+    } else if (event.key === "ArrowLeft") {
+        showAdjacentProject(-1);
+    } else if (event.key === "ArrowRight") {
+        showAdjacentProject(1);
     }
 });
 window.addEventListener("popstate", () => {

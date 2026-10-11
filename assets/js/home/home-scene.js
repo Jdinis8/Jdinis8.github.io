@@ -39,6 +39,10 @@ export class HomeScene {
         this.onMouseMove = this.onMouseMove.bind(this);
 
         this.canvas.addEventListener("pointermove", this.onMouseMove, { passive: true });
+
+        // The page links sit on top of the canvas, so track the pointer over them too.
+        this.linkLayer = document.querySelector(".home-fallback-navigation");
+        this.linkLayer?.addEventListener("pointermove", this.onMouseMove, { passive: true });
     }
 
     onMouseMove(e) {
@@ -58,20 +62,20 @@ export class HomeScene {
         this.layers.forEach(layer => {
             layer.update(dt, this.mouse);
         });
+
+        this.ui.update(dt, this.mouse);
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.layers.forEach(layer => layer.draw(this.ctx, this.mouse));
 
-        // update & draw UI overlay
-        this.ui.update(this.mouse);
         this.ui.draw(this.ctx);
     }
 
     destroy() {
         this.canvas.removeEventListener("pointermove", this.onMouseMove);
-        this.ui.destroy();
+        this.linkLayer?.removeEventListener("pointermove", this.onMouseMove);
     }
 
     onResize() {

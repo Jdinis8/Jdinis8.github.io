@@ -37,9 +37,6 @@
     }
 }
 
-.home-canvas-ready .home-fallback {
-    animation: none;
-}
 
 .home-fallback header {
     max-width: 720px;
@@ -90,14 +87,30 @@
     outline-offset: 5px;
 }
 
-/* The canvas becomes the visual interface only after it has drawn successfully. */
-.home-canvas-ready .home-fallback:not(:focus-within) {
+/*
+   The canvas becomes the visual interface only after it has drawn
+   successfully. The fallback then turns into an invisible layer above it: the
+   heading stays available to assistive technology, and ui-overlay.js keeps
+   each link on top of the matching label drawn on the canvas.
+*/
+.home-canvas-ready .home-fallback {
+    display: block;
+
+    padding: 0;
+
+    background: none;
+
+    pointer-events: none;
+
+    animation: none;
+}
+
+.home-canvas-ready .home-fallback header {
     position: absolute;
 
     width: 1px;
     height: 1px;
 
-    padding: 0;
     margin: -1px;
 
     overflow: hidden;
@@ -106,27 +119,18 @@
     clip-path: inset(50%);
 
     white-space: nowrap;
-
-    border: 0;
 }
 
-.home-canvas-ready .home-fallback:focus-within {
-    inset: auto 50% max(68px, calc(env(safe-area-inset-bottom) + 58px));
+.home-canvas-ready .home-fallback-navigation a {
+    position: absolute;
 
-    width: min(90vw, 720px);
-    padding: 18px 22px;
+    overflow: hidden;
 
-    border: 1px solid var(--control-border);
-    background: var(--control-background);
+    color: transparent;
 
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    white-space: nowrap;
 
-    transform: translateX(-50%);
-}
-
-.home-canvas-ready .home-fallback:focus-within header {
-    display: none;
+    pointer-events: auto;
 }
 
 html,

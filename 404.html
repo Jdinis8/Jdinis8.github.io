@@ -1,0 +1,43 @@
+---
+title: Page not found
+description: This page does not exist on the website of João D. Álvares.
+permalink: /404.html
+styles:
+  - /assets/css/history.css
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include document-head.html %}
+    <meta name="robots" content="noindex">
+</head>
+
+<body>
+    <div class="container">
+        {% include site-shell.html %}
+
+        <header>
+            <p class="eyebrow">
+                Error / 404
+            </p>
+
+            <h1>
+                PAGE NOT FOUND
+            </h1>
+
+            <p class="intro">
+                Nothing lives at this address. The page may have moved, or the
+                link may be mistyped. Try the
+                <a href="/">main page</a>, or go to
+                <a href="/research.html">research</a>,
+                <a href="/design.html">design</a>, or
+                <a href="/history.html">history</a>.
+            </p>
+        </header>
+
+        {% include site-footer.html %}
+    </div>
+
+    <script src="/assets/js/site.js" defer></script>
+</body>
+</html>

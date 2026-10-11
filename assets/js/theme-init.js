@@ -1,10 +1,12 @@
 (() => {
-    let theme = "light";
+    let theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
 
     try {
         theme = localStorage.getItem("theme") || theme;
     } catch {
-        // Keep the default when storage is unavailable.
+        // Keep the system preference when storage is unavailable.
     }
 
     document.documentElement.dataset.theme = theme;

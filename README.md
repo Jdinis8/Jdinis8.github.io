@@ -52,6 +52,21 @@ python3 -m http.server 8000 --directory _site
 The `Validate site` GitHub Actions workflow runs the same build and validation
 for every push and pull request.
 
+## Updating the share image
+
+`assets/images/brand/share.png` is the 1200 × 630 image shown when a link to the
+site is shared: the logo centred on a white background. History articles use
+their own `list_image` instead. To rebuild it after changing the logo:
+
+```sh
+convert -size 1200x630 xc:white \
+  \( assets/images/brand/logo-512.png -resize 440x440 \) \
+  -gravity center -composite -strip assets/images/brand/share.png
+```
+
+The logo file itself is not used directly because its transparent corners turn
+black in some apps and wide previews would crop a square image.
+
 ## Adding a history article
 
 Add an HTML or Markdown document to `_history/`. Copy the front matter from an
