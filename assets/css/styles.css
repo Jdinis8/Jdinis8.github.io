@@ -17,6 +17,28 @@
     color: var(--page-text);
 
     text-align: center;
+
+    /*
+       The canvas normally takes over within a moment, so the fallback waits
+       instead of flashing during loading. It appears only when the canvas
+       has still not drawn after the delay. index.html removes the delay for
+       visitors without JavaScript.
+    */
+    animation: home-fallback-reveal 0s linear 4s both;
+}
+
+@keyframes home-fallback-reveal {
+    from {
+        visibility: hidden;
+    }
+
+    to {
+        visibility: visible;
+    }
+}
+
+.home-canvas-ready .home-fallback {
+    animation: none;
 }
 
 .home-fallback header {

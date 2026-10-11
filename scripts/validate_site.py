@@ -23,6 +23,9 @@ HTML_ATTRIBUTES = {
     "video": ("poster", "src"),
 }
 
+DESIGN_IMAGE_ROOT = "/assets/images/design/"
+DESIGN_THUMBNAIL_ROOT = DESIGN_IMAGE_ROOT + "thumbnails/"
+
 
 class DocumentParser(HTMLParser):
     def __init__(self) -> None:
@@ -144,6 +147,17 @@ def validate_javascript(site_root: Path, script: Path) -> list[str]:
     return errors
 
 
+def design_thumbnail_url(image_url: str) -> str | None:
+    # Mirrors getThumbnailUrl in assets/js/design.js.
+    if not image_url.startswith(DESIGN_IMAGE_ROOT) or image_url.startswith(
+        DESIGN_THUMBNAIL_ROOT
+    ):
+        return None
+
+    relative_path = Path(image_url[len(DESIGN_IMAGE_ROOT):])
+    return DESIGN_THUMBNAIL_ROOT + relative_path.with_suffix(".webp").as_posix()
+
+
 def validate_json_assets(site_root: Path, data_file: Path) -> list[str]:
     errors: list[str] = []
 
@@ -213,6 +227,23 @@ def validate_json_assets(site_root: Path, data_file: Path) -> list[str]:
                     )
                 else:
                     project_slugs.append(project_slug)
+
+                image = project.get("image")
+                thumbnail = (
+                    design_thumbnail_url(image)
+                    if isinstance(image, str)
+                    else None
+                )
+
+                if thumbnail is not None:
+                    target = local_target(site_root, data_file, thumbnail)
+
+                    if target is not None and not target.exists():
+                        errors.append(
+                            f"{data_file}: project {index} has no thumbnail "
+                            f"at {thumbnail}; run "
+                            "scripts/make_design_thumbnails.py"
+                        )
 
             for project_slug, count in Counter(project_slugs).items():
                 if count > 1:

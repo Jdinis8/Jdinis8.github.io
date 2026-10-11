@@ -11,6 +11,13 @@ styles:
 <head>
     {% include document-head.html %}
     {% include home-head-extra.html %}
+    <noscript>
+        <style>
+            .home-fallback {
+                animation: none;
+            }
+        </style>
+    </noscript>
 </head>
 
 <body>
@@ -153,8 +160,9 @@ styles:
     </button>
 
     <!--
-        Visible until the canvas completes its first frame. It remains available
-        to assistive technology and reappears when its links receive focus.
+        Shown without JavaScript, or when the canvas has not drawn a frame a
+        few seconds after loading. It remains available to assistive technology
+        and reappears when its links receive focus.
     -->
     <main class="home-fallback">
         <header>

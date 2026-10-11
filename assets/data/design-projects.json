@@ -184,5 +184,57 @@
     "description": "Alternative cover for the first single of Grão de Areia.",
     "tools": "Photoshop",
     "layout": "portrait"
+  },
+  {
+    "slug": "schwarzschild-black-hole-with-isoradials",
+    "title": "Schwarzschild Black Hole with Isoradials",
+    "categories": ["Scientific"],
+    "cardSize": "standard",
+    "year": "2026",
+    "image": "/assets/images/design/physics/BlackHoleExperiments.png",
+    "description": "A Schwarzschild black hole drawn with its isoradial curves.",
+    "layout": "portrait"
+  },
+  {
+    "slug": "pulsar-magazine-cover",
+    "title": "Cover for PULSAR Magazine",
+    "categories": ["Editorial"],
+    "cardSize": "standard",
+    "year": "2023",
+    "image": "/assets/images/design/physics/capa_photoshop.png",
+    "description": "Front cover for edition 43 of PULSAR magazine, September 2023.",
+    "tools": "Photoshop",
+    "layout": "portrait"
+  },
+  {
+    "slug": "pulsar-magazine-back-cover",
+    "title": "Back for PULSAR Magazine",
+    "categories": ["Editorial"],
+    "cardSize": "standard",
+    "year": "2023",
+    "image": "/assets/images/design/physics/contracapa.png",
+    "description": "Back cover for edition 43 of PULSAR magazine, September 2023.",
+    "tools": "Photoshop",
+    "layout": "portrait"
+  },
+  {
+    "slug": "instituto-superior-tecnico-contest-poster-2",
+    "title": "Instituto Superior Técnico Contest — Poster #2",
+    "categories": ["Poster"],
+    "cardSize": "standard",
+    "year": "2025",
+    "image": "/assets/images/design/misc/concurso-tecnico/tecnico2.png",
+    "description": "Poster #2 done for a contest of Instituto Superior Técnico.",
+    "layout": "portrait"
+  },
+  {
+    "slug": "instituto-superior-tecnico-contest-poster-1",
+    "title": "Instituto Superior Técnico Contest — Poster #1",
+    "categories": ["Poster"],
+    "cardSize": "standard",
+    "year": "2025",
+    "image": "/assets/images/design/misc/concurso-tecnico/whysoalone.png",
+    "description": "Poster #1 done for a contest of Instituto Superior Técnico. It talks about how the lack of communication in science destroys science itself.",
+    "layout": "portrait"
   }
 ]

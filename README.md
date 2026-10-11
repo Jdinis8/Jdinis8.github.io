@@ -68,6 +68,20 @@ Edit `assets/data/design-projects.json`. Each `image` or `pdf` path must point t
 a published file under `assets/`. The design page reads this file at runtime;
 no HTML changes are required for a new project.
 
+The project grid shows a downsized WebP copy of each image and the modal loads
+the original. After adding or replacing an image under `assets/images/design/`,
+generate its thumbnail and commit it with the original:
+
+```sh
+python3 scripts/make_design_thumbnails.py
+```
+
+The script needs Pillow (`python3 -m pip install Pillow`) and only writes the
+thumbnails that are missing or older than their source. Each one is stored at
+the same relative path under `assets/images/design/thumbnails/`, so the
+catalogue lists only the full-size `image`. Site validation fails when a
+catalogue image has no thumbnail.
+
 Every project must have a unique lowercase `slug`. Opening a project adds that
 slug to the design-page URL, for example `/design.html?project=example-project`.
 That URL can be copied or shared and will reopen the same project modal. Keep
