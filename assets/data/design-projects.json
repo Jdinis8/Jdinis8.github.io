@@ -197,7 +197,7 @@
   },
   {
     "slug": "pulsar-magazine-cover",
-    "title": "Cover for PULSAR Magazine",
+    "title": "Front cover for PULSAR Magazine",
     "categories": ["Editorial"],
     "cardSize": "standard",
     "year": "2023",
@@ -208,7 +208,7 @@
   },
   {
     "slug": "pulsar-magazine-back-cover",
-    "title": "Back for PULSAR Magazine",
+    "title": "Back cover for PULSAR Magazine",
     "categories": ["Editorial"],
     "cardSize": "standard",
     "year": "2023",

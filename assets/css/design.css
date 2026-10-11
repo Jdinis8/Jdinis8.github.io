@@ -683,7 +683,7 @@ h1 {
 
     place-items: center;
 
-    padding: 24px;
+    padding: 24px 84px;
 
     background:
         var(--modal-backdrop);
@@ -700,10 +700,14 @@ h1 {
 }
 
 .modal-panel {
-    width:
+    display: flex;
+
+    width: fit-content;
+
+    max-width:
         min(
             100%,
-            980px
+            1180px
         );
 
     max-height:
@@ -716,7 +720,7 @@ h1 {
             100dvh - 48px
         );
 
-    overflow: auto;
+    overflow: hidden;
 
     border:
         1px solid
@@ -734,36 +738,83 @@ h1 {
 }
 
 .modal-media {
+    display: grid;
+
+    place-items: center;
+
+    flex: 0 1 auto;
+
+    min-width: 280px;
     min-height: 280px;
 
     background:
         var(--modal-media);
 }
 
-.modal-media img {
+/*
+   The grid card frames its artwork in a fixed aspect ratio. In the modal the
+   frame is dropped so the panel takes the shape of the artwork itself.
+*/
+.modal-media .project-visual {
     display: block;
 
-    width: 100%;
-    max-height: 66vh;
-    max-height: 66dvh;
+    min-width: 0;
+
+    aspect-ratio: auto;
+
+    padding: 0;
+
+    background: none;
+}
+
+.modal-media img,
+.modal-media .pdf-preview {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+
+    max-height:
+        calc(
+            100vh - 50px
+        );
+
+    max-height:
+        calc(
+            100dvh - 50px
+        );
 
     object-fit: contain;
+}
 
-    background:
-        var(--modal-media);
+.modal-media .project-fallback {
+    width:
+        min(
+            50vw,
+            520px
+        );
+
+    height: auto;
+
+    aspect-ratio: 4 / 5;
 }
 
 .modal-copy {
-    display: grid;
+    display: flex;
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(220px, 0.36fr);
+    flex: none;
+    flex-direction: column;
 
-    gap: 40px;
+    width: 340px;
+
+    gap: 34px;
 
     padding:
-        27px 30px 32px;
+        30px 30px 32px;
+
+    overflow: auto;
 }
 
 .modal-copy h2 {
@@ -777,11 +828,14 @@ h1 {
         clamp(
             1.35rem,
             3vw,
-            2.2rem
+            1.8rem
         );
 
     font-weight: 400;
     letter-spacing: -0.04em;
+    line-height: 1.25;
+
+    overflow-wrap: break-word;
 }
 
 .modal-description {
@@ -925,10 +979,42 @@ h1 {
             16 / 10;
     }
 
-    .modal-copy {
-        grid-template-columns: 1fr;
+    .modal {
+        padding: 24px;
+    }
 
+    .modal-panel {
+        display: block;
+
+        width: 100%;
+
+        overflow: auto;
+    }
+
+    .modal-media {
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .modal-media img,
+    .modal-media .pdf-preview {
+        max-height: 62vh;
+        max-height: 62dvh;
+    }
+
+    .modal-media .project-fallback {
+        width: 100%;
+
+        aspect-ratio: 16 / 10;
+    }
+
+    .modal-copy {
         gap: 22px;
+
+        width: auto;
+
+        padding:
+            24px 24px 30px;
     }
 }
 
