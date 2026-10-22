@@ -87,7 +87,14 @@ const mouse = {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
     vx: 0,
-    vy: 0
+    vy: 0,
+
+    /*
+     * False until the pointer's real position is known,
+     * and again after a touch ends, since the next touch
+     * can start anywhere.
+     */
+    active: false
 };
 
 const scene = new HomeScene(canvas, ctx, mouse);

@@ -204,6 +204,26 @@ clicked. Each deck is one self-contained HTML file in `presentations/`.
    quarto render presentation.qmd -M embed-resources:true -o aps-2027.html
    ```
 
+   On screens narrower than 435px, such as a phone held upright, reveal.js
+   switches to its "scroll view", which cuts off the top of a 16:9 title
+   slide. To keep the normal slide view on phones, add this under
+   `format: revealjs:` in the `.qmd` before rendering:
+
+   ```yaml
+       include-after-body:
+         text: |
+           <script>
+             window.addEventListener("load", () => {
+               Reveal.configure({ scrollActivationWidth: null });
+               if (Reveal.isScrollView()) Reveal.toggleScrollView(false);
+             });
+           </script>
+   ```
+
+   Quarto's own `scroll-view: activation-width: 0` setting has no effect
+   unless scroll view is turned on for every screen size, so the script is
+   needed.
+
 2. Copy the result into the site with a lowercase, hyphenated filename:
 
    ```sh

@@ -2345,6 +2345,12 @@ window.QuartoSupport = function () {
         }
       });
       </script>
+    <script>
+      window.addEventListener("load", () => {
+        Reveal.configure({ scrollActivationWidth: null });
+        if (Reveal.isScrollView()) Reveal.toggleScrollView(false);
+      });
+    </script>
     
 
 </body></html>

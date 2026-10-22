@@ -37,12 +37,16 @@ export class HomeScene {
         ];
 
         this.onMouseMove = this.onMouseMove.bind(this);
+        this.onPointerUp = this.onPointerUp.bind(this);
 
         this.canvas.addEventListener("pointermove", this.onMouseMove, { passive: true });
 
         // The page links sit on top of the canvas, so track the pointer over them too.
         this.linkLayer = document.querySelector(".home-fallback-navigation");
         this.linkLayer?.addEventListener("pointermove", this.onMouseMove, { passive: true });
+
+        window.addEventListener("pointerup", this.onPointerUp, { passive: true });
+        window.addEventListener("pointercancel", this.onPointerUp, { passive: true });
     }
 
     onMouseMove(e) {
@@ -56,6 +60,13 @@ export class HomeScene {
 
         this.mouse.x = x;
         this.mouse.y = y;
+        this.mouse.active = true;
+    }
+
+    onPointerUp(e) {
+        if (e.pointerType === "touch") {
+            this.mouse.active = false;
+        }
     }
 
     update(dt) {
@@ -76,6 +87,8 @@ export class HomeScene {
     destroy() {
         this.canvas.removeEventListener("pointermove", this.onMouseMove);
         this.linkLayer?.removeEventListener("pointermove", this.onMouseMove);
+        window.removeEventListener("pointerup", this.onPointerUp);
+        window.removeEventListener("pointercancel", this.onPointerUp);
     }
 
     onResize() {

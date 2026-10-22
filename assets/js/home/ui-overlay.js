@@ -271,6 +271,18 @@ export class UIOverlay {
         this.previousMouseDistance =
             distance;
 
+        /*
+         * Until the pointer's real position is known, the
+         * stored one is only a placeholder. Moving away from
+         * it is not a crossing, so start measuring afresh.
+         */
+        if (!this.mouse.active) {
+            this.previousMouseDistance =
+                null;
+
+            return;
+        }
+
         if (
             previousDistance === null ||
             dt <= 0 ||
@@ -814,10 +826,13 @@ export class UIOverlay {
 
                     /*
                      * A link also lights up while it has
-                     * keyboard focus.
+                     * keyboard focus. The pointer only counts
+                     * once its real position is known, and
+                     * not after a finger has been lifted.
                      */
                     const isHovered =
                         (
+                            this.mouse.active &&
                             localMouseX >=
                                 localBounds.left &&
                             localMouseX <=
