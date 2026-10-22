@@ -1,0 +1,52 @@
+{% assign presentations = site.data.presentations | sort: "date" | reverse %}
+<div class="section-heading-row">
+    <div>
+        <p class="section-kicker">Talks &amp; slides</p>
+        <h2>Presentations</h2>
+    </div>
+
+    <span
+        class="section-count"
+        aria-label="{{ presentations.size }} presentations"
+    >
+        {% if presentations.size < 10 %}0{% endif %}{{ presentations.size }}
+    </span>
+</div>
+
+<p class="notes-intro">
+    Slides from conference talks and seminars.
+</p>
+
+{% if presentations.size > 0 %}
+<div class="note-list">
+    {% for presentation in presentations %}
+    <article class="note-entry">
+        <a
+            class="note-link"
+            href="{{ presentation.url | relative_url }}"
+        >
+            <span class="note-index">
+                {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}
+            </span>
+
+            <div class="note-content">
+                <h3 class="note-title">{{ presentation.title }}</h3>
+                <p class="note-summary">{{ presentation.description }}</p>
+
+                <div class="note-meta">
+                    <span>{{ presentation.kind | default: "Talk" }}</span>
+                    <span>{% if presentation.display_date %}{{ presentation.display_date }}{% else %}{{ presentation.date | date: "%d %b %Y" }}{% endif %}</span>
+                    {% if presentation.event %}
+                    <span>{{ presentation.event }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <span class="note-arrow" aria-hidden="true">→</span>
+        </a>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<p class="notes-empty">Presentations will appear here as they are given.</p>
+{% endif %}

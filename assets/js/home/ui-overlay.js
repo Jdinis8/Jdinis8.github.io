@@ -5,6 +5,22 @@
 const FADE_DURATION = 1000;
 const ROTATION_SPEED = 0.000024;
 
+/*
+ * Crossing the ring drops a "stone" on it. Each one sends
+ * a soft train of waves both ways around the ring, like
+ * the rings on a pond. Lengths are fractions of the ring
+ * radius, so the ripples look the same on every screen.
+ */
+const RIPPLE_WAVELENGTH = 0.42;
+const RIPPLE_SPEED = 0.0007;
+const RIPPLE_WIDTH = 0.24;
+const RIPPLE_SPREAD = 0.00012;
+const RIPPLE_RISE = 150;
+const RIPPLE_DECAY = 2200;
+const RIPPLE_COOLDOWN = 60;
+const RIPPLE_MAX_SOURCES = 12;
+const RIPPLE_MAX_HEIGHT = 0.075;
+
 export class UIOverlay {
     constructor(canvas) {
         this.canvas = canvas;
@@ -49,6 +65,19 @@ export class UIOverlay {
         };
 
         this.metrics = {};
+
+        this.ripple = {
+            displacement: new Float32Array(0),
+            sources: [],
+            sinceLastSource: Infinity
+        };
+
+        this.previousMouseDistance = null;
+
+        this.prefersReducedMotion =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            );
 
         this.resize();
     }
@@ -138,8 +167,8 @@ export class UIOverlay {
 
             ringSegments:
                 compact
-                    ? 120
-                    : 160,
+                    ? 180
+                    : 240,
 
             nameSize:
                 this.clamp(
@@ -157,6 +186,19 @@ export class UIOverlay {
                     14
                 )
         };
+
+        /*
+         * Each ring segment carries its own ripple height.
+         */
+        if (
+            this.ripple.displacement.length !==
+            this.metrics.ringSegments
+        ) {
+            this.ripple.displacement =
+                new Float32Array(
+                    this.metrics.ringSegments
+                );
+        }
 
         /*
          * Keep the pointer position valid after a resize
@@ -198,6 +240,269 @@ export class UIOverlay {
 
         this.rotation +=
             dt * ROTATION_SPEED;
+
+        this.detectRingCrossing(dt);
+        this.updateRipples(dt);
+    }
+
+    /*
+     * Kick the ring where the pointer passes through it.
+     * Moving outwards pushes the ring out, moving inwards
+     * pulls it in, and faster crossings make bigger waves.
+     */
+    detectRingCrossing(dt) {
+        const mouseDx =
+            this.mouse.x -
+            this.center.x;
+
+        const mouseDy =
+            this.mouse.y -
+            this.center.y;
+
+        const distance =
+            Math.hypot(
+                mouseDx,
+                mouseDy
+            );
+
+        const previousDistance =
+            this.previousMouseDistance;
+
+        this.previousMouseDistance =
+            distance;
+
+        if (
+            previousDistance === null ||
+            dt <= 0 ||
+            this.prefersReducedMotion.matches
+        ) {
+            return;
+        }
+
+        const { ringRadius } =
+            this.metrics;
+
+        const crossed =
+            (previousDistance - ringRadius) *
+            (distance - ringRadius) <
+            0;
+
+        if (!crossed) {
+            return;
+        }
+
+        const radialSpeed =
+            (distance - previousDistance) /
+            dt;
+
+        /*
+         * Pointer jitter right on the line would otherwise
+         * drop a burst of stones at once.
+         */
+        if (
+            this.ripple.sinceLastSource <
+            RIPPLE_COOLDOWN
+        ) {
+            return;
+        }
+
+        this.ripple.sinceLastSource = 0;
+
+        const strength =
+            Math.min(
+                0.045,
+                0.02 +
+                Math.abs(radialSpeed) *
+                    0.02
+            );
+
+        /*
+         * The ripple lives on the rotating ring, so the
+         * crossing angle is measured in the ring's frame.
+         */
+        const angle =
+            Math.atan2(
+                mouseDy,
+                mouseDx
+            ) -
+            this.rotation;
+
+        const { sources } =
+            this.ripple;
+
+        sources.push({
+            angle,
+            amplitude:
+                Math.sign(radialSpeed) *
+                strength,
+            age: 0
+        });
+
+        if (
+            sources.length >
+            RIPPLE_MAX_SOURCES
+        ) {
+            sources.shift();
+        }
+    }
+
+    /*
+     * Work out the ripple height at every ring segment.
+     * Each stone makes two wave trains, one going each way.
+     * Their fronts travel outwards, the train lengthens as
+     * it goes, and everything fades out slowly.
+     */
+    updateRipples(dt) {
+        const {
+            displacement,
+            sources
+        } = this.ripple;
+
+        const { ringRadius } =
+            this.metrics;
+
+        const segments =
+            displacement.length;
+
+        const circumference =
+            Math.PI * 2;
+
+        const waveNumber =
+            circumference /
+            RIPPLE_WAVELENGTH;
+
+        this.ripple.sinceLastSource += dt;
+
+        sources.forEach(source => {
+            source.age += dt;
+        });
+
+        while (
+            sources.length &&
+            sources[0].age >
+                RIPPLE_DECAY * 5
+        ) {
+            sources.shift();
+        }
+
+        displacement.fill(0);
+
+        if (!sources.length) {
+            return;
+        }
+
+        sources.forEach(source => {
+            const { age } = source;
+
+            const front =
+                RIPPLE_SPEED * age;
+
+            const width =
+                RIPPLE_WIDTH +
+                RIPPLE_SPREAD * age;
+
+            /*
+             * The surface rises gently instead of jumping,
+             * and a lengthening train spreads its energy.
+             */
+            const amplitude =
+                source.amplitude *
+                (
+                    1 -
+                    Math.exp(
+                        -age /
+                        RIPPLE_RISE
+                    )
+                ) *
+                Math.exp(
+                    -age /
+                    RIPPLE_DECAY
+                ) *
+                Math.sqrt(
+                    RIPPLE_WIDTH /
+                    width
+                );
+
+            for (
+                let i = 0;
+                i < segments;
+                i += 1
+            ) {
+                let offset =
+                    (
+                        (i / segments) *
+                        circumference -
+                        source.angle
+                    ) %
+                    circumference;
+
+                if (offset < 0) {
+                    offset +=
+                        circumference;
+                }
+
+                /*
+                 * Distances are in ring radii. Adding the
+                 * neighbouring laps keeps the curve smooth
+                 * where the two trains meet behind the ring.
+                 */
+                let height = 0;
+
+                for (
+                    let lap = -1;
+                    lap <= 1;
+                    lap += 1
+                ) {
+                    const distance =
+                        offset +
+                        lap * circumference;
+
+                    for (
+                        const travelled of [
+                            distance - front,
+                            distance + front
+                        ]
+                    ) {
+                        const shape =
+                            travelled /
+                            width;
+
+                        height +=
+                            Math.exp(
+                                -0.5 *
+                                shape *
+                                shape
+                            ) *
+                            Math.cos(
+                                waveNumber *
+                                travelled
+                            );
+                    }
+                }
+
+                displacement[i] +=
+                    amplitude *
+                    height;
+            }
+        });
+
+        /*
+         * Overlapping ripples flatten out smoothly at the
+         * maximum height instead of being cut off.
+         */
+        for (
+            let i = 0;
+            i < segments;
+            i += 1
+        ) {
+            displacement[i] =
+                ringRadius *
+                RIPPLE_MAX_HEIGHT *
+                Math.tanh(
+                    displacement[i] /
+                    RIPPLE_MAX_HEIGHT
+                );
+        }
     }
 
     draw(ctx) {
@@ -310,7 +615,10 @@ export class UIOverlay {
 
             const radius =
                 ringRadius +
-                deform;
+                deform +
+                this.ripple.displacement[
+                    i % ringSegments
+                ];
 
             const x =
                 Math.cos(t) *

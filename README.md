@@ -9,6 +9,8 @@ live in one place.
 - `_history/` contains the six history article bodies and their front matter.
 - `_notes/` contains physics notes and essays; its entries appear automatically
   on `research.html`.
+- `presentations/` contains self-contained slide decks; they are listed on
+  `research.html` from `_data/presentations.yml`.
 - `_layouts/` contains the shared history-article and physics-note shells.
 - `_includes/` contains shared document-head and archive-list markup.
 - `_data/papers.json` is the generated publication metadata used by `research.html`.
@@ -186,6 +188,67 @@ when possible because their intent is unambiguous in prose. The note files are
 local, but the lightweight setup downloads MathJax from its pinned CDN URL when
 a reader opens a note, so a local preview needs an internet connection to render
 the equations.
+
+## Adding a presentation
+
+Presentations are slide decks, such as Quarto reveal.js talks, that open as a
+full page when their entry under "Presentations" on the research page is
+clicked. Each deck is one self-contained HTML file in `presentations/`.
+
+1. Render the deck as a single file. A normal Quarto render writes a
+   `presentation.html` that depends on a `presentation_files/` folder, fonts,
+   logos and videos next to it; `embed-resources` bundles all of them, videos
+   included, into one file. In the folder with the `.qmd` file, run:
+
+   ```sh
+   quarto render presentation.qmd -M embed-resources:true -o aps-2027.html
+   ```
+
+2. Copy the result into the site with a lowercase, hyphenated filename:
+
+   ```sh
+   cp ~/Dropbox/PhD/APS_2027_Presentation/aps-2027.html presentations/
+   ```
+
+3. Add an entry to `_data/presentations.yml`:
+
+   ```yaml
+   - title: "Inspiral of Eccentric, Spin-Precessing Black Hole Binaries without Averaging"
+     description: With Leo C. Stein, University of Mississippi.
+     date: 2027-01-01
+     display_date: "2027"
+     kind: Talk
+     event: APS Global Physics Summit 2027, Atlanta, GA
+     url: /presentations/aps-2027.html
+   ```
+
+   Entries are sorted newest first by `date`. `display_date` is shown exactly as
+   written, so it can be `"2027"`, `Mar 2027`, or `16 Mar 2027`; without it the
+   `date` is shown as `16 Mar 2027`. `kind` can be `Talk`, `Seminar`, `Poster`,
+   or another short label, and `event` is optional.
+
+4. Build and validate the site, then open the research page and click the new
+   entry to check that the slides and any videos play:
+
+   ```sh
+   bundle exec jekyll build
+   python3 scripts/validate_site.py _site
+   ```
+
+To update a deck, render it again and overwrite its file in `presentations/`.
+Keep a published filename stable because it is the deck's URL.
+
+Embedded videos make up most of a deck's size. GitHub warns about files over
+50 MB and rejects files over 100 MB, so shorten or compress a long video before
+rendering. For example, to re-encode a WebM video at a lower quality (a higher
+`-crf` means a smaller file):
+
+```sh
+ffmpeg -i video.webm -c:v libvpx-vp9 -crf 40 -b:v 0 video-small.webm
+```
+
+Videos with a transparent background, such as the orbit animation, also need
+`-pix_fmt yuva420p -auto-alt-ref 0` to keep their transparency.
 
 ## License
 

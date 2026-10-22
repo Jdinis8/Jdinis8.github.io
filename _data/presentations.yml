@@ -1,0 +1,9 @@
+# Talks listed under "Presentations" on the research page.
+# Each url points to a self-contained slide deck in /presentations/.
+- title: "Inspiral of Eccentric, Spin-Precessing Black Hole Binaries without Averaging"
+  description: With Leo C. Stein, University of Mississippi.
+  date: 2027-01-01
+  display_date: "2027"
+  kind: Talk
+  event: APS Global Physics Summit 2027, Atlanta, GA
+  url: /presentations/aps-2027.html
