@@ -148,6 +148,21 @@ h1 {
     margin-bottom: 8px;
 }
 
+.note-body sup {
+    font-size: 0.7em;
+    line-height: 0;
+}
+
+.note-references {
+    margin-top: 52px;
+    padding-top: 4px;
+    border-top: 1px solid var(--border-color);
+}
+
+.note-references li {
+    margin-bottom: 10px;
+}
+
 .note-body code {
     padding: 0.08em 0.28em;
     background: rgba(127, 127, 127, 0.08);

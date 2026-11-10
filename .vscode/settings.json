@@ -1,0 +1,9 @@
+{
+  "[html]": {
+    "editor.inlineSuggest.enabled": false
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "html": false
+  }
+}

@@ -1,0 +1,46 @@
+---
+title: "Glasser's Master Theorem"
+description: Deriving Glasser's Master Theorem.
+date: 2026-11-09
+display_date: 09 Nov 2026
+kind: Derivation
+topics:
+  - Mathematics
+  - Analysis
+---
+
+<h2>Statement of the Theorem</h2>
+Glasser's Master Theorem<sup><a href="#ref-1">[1]</a></sup> is a generalization of an older theorem by Cauchy, that says
+\[
+    \int_{-\infty}^{+\infty} f\left(1-\frac{1}{x}\right)dx = \int_{-\infty}^{+\infty} f(x) dx\,,
+\]
+
+<p>
+    where $f(\cdot)$ is an integrable function and all the integrals imply the Cauchy principal value. This meaning that if $f(\cdot)$ blows up at some $x$, we should try to see if this blow up cancels on either side of the integral. In other words, the Cauchy principal value is defined as
+</p>
+
+\[
+    \text{P.V.} \int_a^b f(x) dx= \lim_{\epsilon\rightarrow 0^+}\left[\int_a^{c-\epsilon}f(x)dx + \int_{c+\epsilon}^b f(x)dx \right]
+\]
+
+<p>
+    Glasser's theorem states then that,
+</p>
+
+\[
+    \int_{-\infty}^{+\infty} f\left(x - \sum_{j=1}^{n-1}\frac{a_j}{x-C_j}\right) dx = \int_{-\infty}^{+\infty} f(x)dx
+\]
+
+<h2>Proof of Cauchy's Theorem</h2>
+
+<h2>Proof of Glasser's Theorem</h2>
+
+<section class="note-references" aria-labelledby="references">
+    <h2 id="references">References</h2>
+    <ol>
+        <li id="ref-1">
+            M. L. Glasser, “A remarkable property of definite integrals,”
+            <em>Mathematics of Computation</em> <strong>40</strong>, 561–563 (1983).
+        </li>
+    </ol>
+</section>
