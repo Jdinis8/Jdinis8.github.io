@@ -33,6 +33,47 @@ Glasser's Master Theorem<sup><a href="#ref-1">[1]</a></sup> is a generalization 
 
 <h2>Proof of Cauchy's Theorem</h2>
 
+To prove
+\[
+    \int_{-\infty}^{+\infty} f\left(1-\frac{1}{x}\right)dx = \int_{-\infty}^{+\infty} f(x) dx\,,
+\]
+
+let's first do a substitution, $u = x - \frac{1}{x}$. Solving this for $x$ we get
+\[
+    x^2 - u x - 1 = 0 \iff x = \frac{1}{2}\left(u \pm \sqrt{u^2 + 4} \right)\,.
+\]
+
+Now, notice that either solution to $x$ will either be strictly non-negative or strictly non-positive, because the sign is completely dominated by the square root. However, if we separate the original integral as
+
+\[
+    \int_{-\infty}^{+\infty} f\left(1-\frac{1}{x}\right) dx = \int_{-\infty}^{0} f\left(1-\frac{1}{x}\right) dx + \int_{0}^{+\infty} f\left(1-\frac{1}{x}\right) dx \,,
+\]
+
+then we just need to choose the appropriate root for each integral. Before we substitute, note also that
+
+\[
+    dx = \frac{1}{2}\left(1 \pm \frac{u}{\sqrt{u^2+4}}\right)du\,,
+\]
+and we still need to calculate the limits of the integrals. These can be summed up as follows,
+
+\[
+    \lim_{x\rightarrow 0^+} u = -\infty \quad \lim_{x\rightarrow 0^-} u = +\infty\\
+    \lim_{x\rightarrow +\infty} u = +\infty \quad    \lim_{x\rightarrow -\infty} u = -\infty
+\]
+
+
+Thus,
+\[
+    \int_{-\infty}^{0} f\left(1-\frac{1}{x}\right) dx + \int_{0}^{+\infty} f\left(1-\frac{1}{x}\right) dx =\\
+    \frac{1}{2}\left[\int_{-\infty}^{+\infty} f(u) \left(1 - \frac{u}{\sqrt{u^2+4}}\right)du + \int_{-\infty}^{+\infty} f(u) \left(1 + \frac{u}{\sqrt{u^2+4}}\right)du\right] \,.
+\]
+
+But notice that the domains of integration under the change of variables suddenly becomes the same! This means that we can collect everything under the same integral.
+
+\[
+    \frac{1}{2}\left[\int_{-\infty}^{+\infty} f(u) \left(1 - \frac{u}{\sqrt{u^2+4}}\right)+ f(u) \left(1 + \frac{u}{\sqrt{u^2+4}}\right)du\right] = \int_{-\infty}^{+\infty} f(u) du\,.
+\]
+
 <h2>Proof of Glasser's Theorem</h2>
 
 <section class="note-references" aria-labelledby="references">
