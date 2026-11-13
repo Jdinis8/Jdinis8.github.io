@@ -76,6 +76,38 @@ But notice that the domains of integration under the change of variables suddenl
 
 <h2>Proof of Glasser's Theorem</h2>
 
+In a similar spirit to what we did with Cauchy's theorem, we do a change of variable,
+
+\[
+    x - \sum_{j=1}^{n-1}\frac{a_j}{x-C_j} = u\,.
+\]
+
+Let's get rid of the numerators first,
+
+\[
+    \prod_{k=1}^{n-1}\left(x-C_k \right)\left[ x - \sum_{j=1}^{n-1}\frac{a_j}{x-C_j} \right] = u\,\prod_{k=1}^{n-1}\left(x-C_k \right)
+\]
+
+We will now write the coefficients of $x^n$ and $x^{n-1}$, for reasons that will become apparent in a second,
+
+\[
+    x^n - x^{n-1}\left(u - \sum_{k=1}^{n-1}C_k\right) + (\dots) = 0\,.
+\]
+
+This is an $n$-degree polynomial and therefore it has $n$ roots. The roots are all different because we take the $C_k$'s to be all different. This fact tells us that the above polynomial can also be written in terms of its roots, $x_i(u)$, as follows
+
+\[
+    (x - x_1(u))(x - x_2(u))(\dots)(x - x_n(u)) = x^n - x^{n-1}\left( \sum_{i=1}^n x_i(u) \right) + (\dots) = 0\,.
+\]
+
+This allows us to identify
+
+\[
+    \sum_{i=1}^n x_i(u) = u - \sum_{k=1}^{n-1}C_k\implies \sum_{i=1}^n x_i^\prime(u) = 1
+\]
+
+Still to be finished
+
 <section class="note-references" aria-labelledby="references">
     <h2 id="references">References</h2>
     <ol>
