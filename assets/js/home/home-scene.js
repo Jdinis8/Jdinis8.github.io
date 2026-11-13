@@ -38,6 +38,10 @@ export class HomeScene {
 
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onPointerUp = this.onPointerUp.bind(this);
+        this.onPointerOut = this.onPointerOut.bind(this);
+
+        // Leaving the browser window hides the dots around the pointer.
+        document.addEventListener("pointerout", this.onPointerOut, { passive: true });
 
         this.canvas.addEventListener("pointermove", this.onMouseMove, { passive: true });
 
@@ -65,8 +69,21 @@ export class HomeScene {
 
     onPointerUp(e) {
         if (e.pointerType === "touch") {
-            this.mouse.active = false;
+            this.releasePointer();
         }
+    }
+
+    onPointerOut(e) {
+        // relatedTarget is null only when the pointer leaves the page itself.
+        if (e.pointerType === "mouse" && !e.relatedTarget) {
+            this.releasePointer();
+        }
+    }
+
+    releasePointer() {
+        this.mouse.active = false;
+        this.mouse.vx = 0;
+        this.mouse.vy = 0;
     }
 
     update(dt) {
@@ -89,6 +106,7 @@ export class HomeScene {
         this.linkLayer?.removeEventListener("pointermove", this.onMouseMove);
         window.removeEventListener("pointerup", this.onPointerUp);
         window.removeEventListener("pointercancel", this.onPointerUp);
+        document.removeEventListener("pointerout", this.onPointerOut);
     }
 
     onResize() {

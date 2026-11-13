@@ -1,13 +1,12 @@
 {% assign physics_notes = site.notes | sort: "date" | reverse %}
 <div class="section-heading-row">
     <div>
-        <p class="section-kicker">Informal writing</p>
-        <h2>Physics Notes &amp; Essays</h2>
+        <h2>Notes</h2>
     </div>
 
     <span
         class="section-count"
-        aria-label="{{ physics_notes.size }} physics notes and essays"
+        aria-label="{{ physics_notes.size }} notes"
     >
         {% if physics_notes.size < 10 %}0{% endif %}{{ physics_notes.size }}
     </span>
