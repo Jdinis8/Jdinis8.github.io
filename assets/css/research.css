@@ -79,7 +79,7 @@ h1 {
         max-content
         minmax(0, 1fr);
 
-    align-items: center;
+    align-items: baseline;
 
     gap: 10px 22px;
 
@@ -103,7 +103,7 @@ h1 {
 
     flex-wrap: wrap;
 
-    gap: 8px;
+    gap: 6px 24px;
 
     margin: 0;
     padding: 0;
@@ -112,17 +112,7 @@ h1 {
 }
 
 .page-nav a {
-    display: inline-flex;
-
-    align-items: baseline;
-
-    gap: 8px;
-
-    padding: 7px 11px;
-
-    border:
-        1px solid
-        var(--border-color);
+    display: inline-block;
 
     color: var(--strong-link-color);
 
@@ -132,23 +122,11 @@ h1 {
     text-decoration: none;
     text-transform: uppercase;
 
-    transition:
-        color 160ms ease,
-        border-color 160ms ease;
-}
-
-.page-nav a span {
-    color: var(--faint-text);
-
     transition: color 160ms ease;
 }
 
 .page-nav a:hover,
-.page-nav a:focus-visible,
-.page-nav a:hover span,
-.page-nav a:focus-visible span {
-    border-color: var(--hover-color);
-
+.page-nav a:focus-visible {
     color: var(--hover-color);
 }
 

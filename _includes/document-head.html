@@ -47,6 +47,10 @@
 >
 <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
 <script src="{{ '/assets/js/theme-init.js' | relative_url }}"></script>
+<!-- Site fonts: Playfair Display (display) and National Park (sans). See the font variables in theme.css. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap">
 <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
 {% for stylesheet in page.styles %}
 <link rel="stylesheet" href="{{ stylesheet | relative_url }}">

@@ -19,7 +19,14 @@ const RIPPLE_RISE = 150;
 const RIPPLE_DECAY = 2200;
 const RIPPLE_COOLDOWN = 60;
 const RIPPLE_MAX_SOURCES = 12;
-const RIPPLE_MAX_HEIGHT = 0.075;
+const RIPPLE_MAX_HEIGHT = 0.05;
+
+/*
+ * How much the ring leans towards the pointer as it moves
+ * around the page. 0 keeps the ring still (only the ripples
+ * move it); the original value was 0.6.
+ */
+const RING_POINTER_PULL = 0;
 
 export class UIOverlay {
     constructor(canvas) {
@@ -78,6 +85,56 @@ export class UIOverlay {
             window.matchMedia(
                 "(prefers-reduced-motion: reduce)"
             );
+
+        /*
+         * Canvas text cannot use CSS variables directly, so the
+         * font stacks from theme.css are read once here: the
+         * name uses --font-display and the links --font-sans.
+         * Changing those variables changes the canvas text too.
+         */
+        const rootStyle =
+            getComputedStyle(
+                document.documentElement
+            );
+
+        const readFont = (
+            name,
+            fallback
+        ) =>
+            rootStyle
+                .getPropertyValue(name)
+                .replace(/\s+/g, " ")
+                .trim() ||
+            fallback;
+
+        this.nameFont =
+            readFont(
+                "--font-display",
+                "Georgia, serif"
+            );
+
+        this.linkFont =
+            readFont(
+                "--font-sans",
+                "sans-serif"
+            );
+
+        /*
+         * A web font used only on a canvas is not always
+         * downloaded by the browser on its own, so ask for it.
+         * The canvas is redrawn every frame, so the text
+         * switches to the font as soon as it arrives.
+         */
+        if (document.fonts) {
+            [
+                this.nameFont,
+                this.linkFont
+            ].forEach(font => {
+                document.fonts
+                    .load(`16px ${font}`)
+                    .catch(() => {});
+            });
+        }
 
         this.resize();
     }
@@ -148,13 +205,13 @@ export class UIOverlay {
 
         const ringRadius =
             this.clamp(
-                82,
+                90,
                 minimumDimension * (
                     compact
-                        ? 0.245
-                        : 0.235
+                        ? 0.27
+                        : 0.26
                 ),
-                180
+                200
             );
 
         this.metrics = {
@@ -172,10 +229,10 @@ export class UIOverlay {
 
             nameSize:
                 this.clamp(
-                    22,
+                    20,
                     minimumDimension *
-                        0.047,
-                    36
+                        0.04,
+                    31
                 ),
 
             subtitleSize:
@@ -322,10 +379,10 @@ export class UIOverlay {
 
         const strength =
             Math.min(
-                0.045,
-                0.02 +
+                0.03,
+                0.013 +
                 Math.abs(radialSpeed) *
-                    0.02
+                    0.013
             );
 
         /*
@@ -623,7 +680,7 @@ export class UIOverlay {
                     mouseDist *
                         0.03
                 ) *
-                0.6;
+                RING_POINTER_PULL;
 
             const radius =
                 ringRadius +
@@ -679,7 +736,7 @@ export class UIOverlay {
 
         ctx.font =
             `300 ${nameSize}px ` +
-            `'Courier New', monospace`;
+            this.nameFont;
 
         ctx.textAlign =
             "center";
@@ -693,7 +750,7 @@ export class UIOverlay {
             })`;
 
         ctx.fillText(
-            "JOÃO DINIS ÁLVARES",
+            "João Dinis Álvares",
             0,
             -nameSize * 0.28
         );
@@ -713,7 +770,7 @@ export class UIOverlay {
 
         ctx.font =
             `${subtitleSize}px ` +
-            `'Courier New', monospace`;
+            this.linkFont;
 
         ctx.textAlign =
             "left";

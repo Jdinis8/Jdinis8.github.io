@@ -42,9 +42,18 @@ export class DotGrid {
         * spotlightInnerRatio:
         *   Portion of the radius that remains fully visible.
         */
-        this.ambientVisibility = 0.08;
+        this.ambientVisibility = 0;
         this.spotlightRadius = 260;
         this.spotlightInnerRatio = 0.2;
+
+        /*
+         * How visible the spotlight currently is: it eases to 1
+         * while the pointer is on the page and back to 0 when it
+         * leaves, so the dots fade in and out instead of popping.
+         * presenceFadeTime is roughly how long that takes, in ms.
+         */
+        this.presence = 0;
+        this.presenceFadeTime = 350;
 
         this.initDots();
     }
@@ -171,6 +180,16 @@ export class DotGrid {
                 this.canvas.clientHeight / 2
             );
 
+        const presenceTarget =
+            mouse.active ? 1 : 0;
+
+        this.presence +=
+            (presenceTarget - this.presence) *
+            Math.min(
+                1,
+                dt / this.presenceFadeTime
+            );
+
         /*
          * Rotation target from the pointer and scrolling.
          */
@@ -271,7 +290,11 @@ export class DotGrid {
             */
             const exclusionRadius = 28;
 
-            if (dist < pullRadius) {
+            /*
+             * Without a pointer on the page there is nothing
+             * to cling to, so the dots relax back into the grid.
+             */
+            if (mouse.active && dist < pullRadius) {
                 if (dist > exclusionRadius) {
                     /*
                     * Normal attraction outside the exclusion zone.
@@ -551,7 +574,8 @@ export class DotGrid {
             const alpha =
                 link.strength *
                 0.18 *
-                this.opacity;
+                this.opacity *
+                this.presence;
 
             ctx.beginPath();
 
@@ -647,7 +671,8 @@ export class DotGrid {
                     1 -
                     this.ambientVisibility
                 ) *
-                fade;
+                fade *
+                this.presence;
 
             const alpha =
                 this.opacity *
